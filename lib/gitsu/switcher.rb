@@ -11,7 +11,11 @@ module GitSu
         
         def print_current
             user = @git.selected_user
-            @output.puts "Current user: #{user}"
+            if user.nil?
+                @output.puts "Current user: (none)"
+            else
+                @output.puts "Current user: #{user}"
+            end
         end
     end
 end

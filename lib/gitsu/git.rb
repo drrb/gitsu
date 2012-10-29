@@ -13,8 +13,12 @@ module GitSu
 
         def selected_user
             name = @shell.execute "git config --global user.name"
-            email = @shell.execute "git config --global user.email"
-            "#{name} <#{email}>"
+            if name.empty?
+                nil
+            else
+                email = @shell.execute "git config --global user.email"
+                "#{name} <#{email}>"
+            end
         end
     end
 end

@@ -14,10 +14,19 @@ module GitSu
         end
 
         describe '#selected_user' do
-            it 'returns the current user' do
-                shell.should_receive(:execute).with("git config --global user.name").and_return("John Galt")
-                shell.should_receive(:execute).with("git config --global user.email").and_return("jgalt@example.com")
-                git.selected_user.should == "John Galt <jgalt@example.com>"
+            context 'a user is selected' do
+                it 'returns the current user' do
+                    shell.should_receive(:execute).with("git config --global user.name").and_return("John Galt")
+                    shell.should_receive(:execute).with("git config --global user.email").and_return("jgalt@example.com")
+                    git.selected_user.should == "John Galt <jgalt@example.com>"
+                end
+            end
+
+            context 'no user is selected' do
+                it 'returns nil' do
+                    shell.should_receive(:execute).with("git config --global user.name").and_return("")
+                    git.selected_user.should be nil
+                end
             end
         end
     end

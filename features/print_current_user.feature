@@ -3,7 +3,12 @@ Feature: Print the current user
     I want to see who is currently logged in 
     So that I know if I need to switch users 
 
-    Scenario: Print the current user
+    Scenario: User is selected
         Given user "John Galt <jg@example.com>" is selected
         When I request the current user 
         Then I should see "Current user: John Galt <jg@example.com>"
+
+    Scenario: No user is selected
+        Given no user is selected
+        When I request the current user 
+        Then I should see "Current user: (none)"
