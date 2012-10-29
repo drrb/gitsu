@@ -12,5 +12,13 @@ module GitSu
                 switcher.request('John Galt <jgalt@example.com>')
             end
         end
+        
+        describe '#print_current' do
+            it "prints the current user" do
+                git.should_receive(:selected_user).and_return("John Galt <jgalt@example.com>")
+                output.should_receive(:puts).with("Current user: John Galt <jgalt@example.com>")
+                switcher.print_current
+            end
+        end
     end
 end

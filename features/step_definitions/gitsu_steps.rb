@@ -1,15 +1,23 @@
 Given /^no user is selected$/ do
 end
 
-When /^I request '([^']+)'$/ do |user|
+Given /^user "(.*?)" is selected$/ do |user|
+    git.select_user user
+end
+
+When /^I request "(.*?)"$/ do |user|
     switcher.request user  
 end
 
-Then /^I see '([^']+)'$/ do |expected_output|
+When /^I request the current user$/ do
+    switcher.print_current
+end
+
+Then /^I should see "(.*?)"$/ do |expected_output|
     output.messages.should include expected_output
 end
 
-Then /^user '([^']+)' is selected$/ do |user|
+Then /^user "(.*?)" should be selected$/ do |user|
     git.selected_user.should == user
 end
 

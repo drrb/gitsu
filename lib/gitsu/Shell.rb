@@ -1,7 +1,7 @@
 module GitSu
     class Shell
         def execute(command)
-            system command
+            `#{command}`.strip
         end
     end
 end

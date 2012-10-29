@@ -5,6 +5,6 @@ Feature: Switch to fully qualified user
 
     Scenario: Switch to fully qualified user
         Given no user is selected
-        When I request 'John Galt <jg@example.com>'
-        Then I see 'Switched to user John Galt <jg@example.com>'
-        And user 'John Galt <jg@example.com>' is selected
+        When I request "John Galt <jg@example.com>"
+        Then I should see "Switched to user John Galt <jg@example.com>"
+        And user "John Galt <jg@example.com>" should be selected

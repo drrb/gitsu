@@ -12,5 +12,13 @@ module GitSu
                 git.select_user 'John Galt <jgalt@example.com>'
             end
         end
+
+        describe '#selected_user' do
+            it 'returns the current user' do
+                shell.should_receive(:execute).with("git config --global user.name").and_return("John Galt")
+                shell.should_receive(:execute).with("git config --global user.email").and_return("jgalt@example.com")
+                git.selected_user.should == "John Galt <jgalt@example.com>"
+            end
+        end
     end
 end

@@ -5,4 +5,8 @@ require 'gitsu'
 shell = GitSu::Shell.new
 git = GitSu::Git.new(shell)
 switcher = GitSu::Switcher.new(git, STDERR)
-switcher.request(ARGV.join " ")
+if ARGV.empty?
+    switcher.print_current
+else
+    switcher.request(ARGV.join " ")
+end

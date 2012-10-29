@@ -8,5 +8,10 @@ module GitSu
             @git.select_user user
             @output.puts "Switched to user #{user}"
         end
+        
+        def print_current
+            user = @git.selected_user
+            @output.puts "Current user: #{user}"
+        end
     end
 end
