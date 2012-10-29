@@ -1,0 +1,8 @@
+#!/usr/bin/env ruby
+$LOAD_PATH.unshift File.expand_path('../../lib', __FILE__)
+require 'gitsu'
+
+shell = GitSu::Shell.new
+git = GitSu::Git.new(shell)
+switcher = GitSu::Switcher.new(git, STDERR)
+switcher.request(ARGV.join " ")
