@@ -5,6 +5,10 @@ Given /^user "(.*?)" is selected$/ do |user|
     git.select_user user
 end
 
+And /^user list contains user "(.*?)" with email "(.*?)"$/ do |name, email|
+    user_list.add(email, name)
+end
+
 When /^I request "(.*?)"$/ do |user|
     switcher.request user  
 end
@@ -50,5 +54,9 @@ def git
 end
 
 def switcher
-    @switcher ||= GitSu::Switcher.new(git, output)
+    @switcher ||= GitSu::Switcher.new(git, user_list, output)
+end
+
+def user_list
+    @user_list ||= GitSu::UserList.new("/tmp/#{rand}")
 end

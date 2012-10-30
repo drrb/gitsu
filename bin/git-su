@@ -2,9 +2,12 @@
 $LOAD_PATH.unshift File.expand_path('../../lib', __FILE__)
 require 'gitsu'
 
+user_list_file = File.expand_path("~/.gitsu")
+
 shell = GitSu::Shell.new
 git = GitSu::Git.new(shell)
-switcher = GitSu::Switcher.new(git, STDERR)
+user_list = GitSu::UserList.new(user_list_file)
+switcher = GitSu::Switcher.new(git, user_list, STDERR)
 if ARGV.empty?
     switcher.print_current
 else
