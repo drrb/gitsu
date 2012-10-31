@@ -5,11 +5,8 @@ module GitSu
         end
 
         def request(user)
-            matching_users = @user_list.list.select { |email,name| name.downcase.include? user }
-            unless matching_users.empty?
-                matching_user = matching_users.find {true}
-                user = "#{matching_user[1]} <#{matching_user[0]}>"
-            end
+            matching_user = @user_list.find user
+            user = matching_user ? matching_user : user
             @git.select_user user
             @output.puts "Switched to user #{user}"
         end

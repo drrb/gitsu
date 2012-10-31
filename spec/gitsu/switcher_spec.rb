@@ -10,19 +10,17 @@ module GitSu
         describe '#request' do
             context "when fully qualified user specified" do
                 it "switches to the requested user" do
-                    user_list.should_receive(:list).and_return({})
+                    user_list.should_receive(:find).with('John Galt <jgalt@example.com>').and_return nil
                     git.should_receive(:select_user).with('John Galt <jgalt@example.com>')
                     switcher.request('John Galt <jgalt@example.com>')
                 end
             end
 
             context "when user is in user list" do
-                context "when first name is specified" do
-                    it "switches to requested user" do
-                        user_list.should_receive(:list).and_return({"jgalt@example.com" => "John Galt"})
-                        git.should_receive(:select_user).with('John Galt <jgalt@example.com>')
-                        switcher.request "john"
-                    end
+                it "switches to requested user" do
+                    user_list.should_receive(:find).with("john").and_return('John Galt <jgalt@example.com>')
+                    git.should_receive(:select_user).with('John Galt <jgalt@example.com>')
+                    switcher.request "john"
                 end
             end
         end

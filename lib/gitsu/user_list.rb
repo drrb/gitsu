@@ -16,9 +16,16 @@ module GitSu
             end
         end
 
-        def list
+        def find(search_term)
             yaml_list = YAML.parse_file(@file)
-            yaml_list ? yaml_list.transform : {}
+            users = yaml_list ? yaml_list.transform : {}
+            matching_users = users.select { |email,name| (name + email).downcase.include? search_term }
+            if matching_users.empty?
+                nil
+            else
+                matching_user = matching_users.find {true}
+                "#{matching_user[1]} <#{matching_user[0]}>"
+            end
         end
     end
 end

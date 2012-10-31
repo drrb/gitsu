@@ -17,12 +17,24 @@ module GitSu
             end
         end
 
-        describe "#list" do
-            it "provides a map of all users" do
-                user_list.add("jgalt@example.com", "John Galt")
+        describe "#find" do
+            context "when a matching user exists" do
+                it "returns the matching user by first name" do
+                    user_list.add("jgalt@example.com", "John Galt")
 
-                user_list.list.keys.should include("jgalt@example.com")
-                user_list.list["jgalt@example.com"].should == "John Galt" 
+                    user_list.find("john").should == "John Galt <jgalt@example.com>"
+                end
+                it "returns the matching user by email snippet" do
+                    user_list.add("jgalt@example.com", "John Galt")
+
+                    user_list.find("jg").should == "John Galt <jgalt@example.com>"
+                end
+            end
+
+            context "when no matching user exists" do
+                it "returns nil" do
+                    user_list.find("john").should be nil
+                end
             end
         end
     end
