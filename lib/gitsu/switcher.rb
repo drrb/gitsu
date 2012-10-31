@@ -6,9 +6,12 @@ module GitSu
 
         def request(user)
             matching_user = @user_list.find user
-            user = matching_user ? matching_user : user
-            @git.select_user user
-            @output.puts "Switched to user #{user}"
+            if matching_user
+                @git.select_user matching_user
+                @output.puts "Switched to user #{matching_user}"
+            else
+                @output.puts "No user found matching '#{user}'"
+            end
         end
         
         def print_current

@@ -25,6 +25,10 @@ Then /^user "(.*?)" should be selected$/ do |user|
     git.selected_user.should == user
 end
 
+Then /^no user should be selected$/ do
+    git.selected_user.should be nil
+end
+
 class Output 
     def messages
         @messages ||= []

@@ -14,3 +14,10 @@ Feature: Switch to stored user
             | request   | selected_user                           | output                                                    |
             | raphe     | Raphe Rackstraw <rrackstraw@github.com> | Switched to user Raphe Rackstraw <rrackstraw@github.com>  |
             | rrack     | Raphe Rackstraw <rrackstraw@github.com> | Switched to user Raphe Rackstraw <rrackstraw@github.com>  |
+
+    Scenario: No match found
+        Given no user is selected
+        And user list contains user "Raphe Rackstraw" with email "rrackstraw@github.com"
+        When I request "joe"
+        Then I should see "No user found matching 'joe'"
+        And no user should be selected

@@ -36,6 +36,12 @@ module GitSu
                     user_list.find("john").should be nil
                 end
             end
+
+            context "when request is fully qualified user" do
+                it "returns the request" do
+                    user_list.find("John Galt <jgalt@example.com>").should == "John Galt <jgalt@example.com>"
+                end
+            end
         end
     end
 end

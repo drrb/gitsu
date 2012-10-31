@@ -8,11 +8,10 @@ module GitSu
         let(:switcher) { Switcher.new(git, user_list, output) }
 
         describe '#request' do
-            context "when fully qualified user specified" do
-                it "switches to the requested user" do
-                    user_list.should_receive(:find).with('John Galt <jgalt@example.com>').and_return nil
-                    git.should_receive(:select_user).with('John Galt <jgalt@example.com>')
-                    switcher.request('John Galt <jgalt@example.com>')
+            context "when no matching user found" do
+                it "does not switch user" do
+                    user_list.should_receive(:find).with('asdfasdf').and_return nil
+                    switcher.request('asdfasdf')
                 end
             end
 

@@ -17,6 +17,9 @@ module GitSu
         end
 
         def find(search_term)
+            if search_term =~ /[^<]+ <.+@.+>/
+                return search_term
+            end
             yaml_list = YAML.parse_file(@file)
             users = yaml_list ? yaml_list.transform : {}
             matching_users = users.select { |email,name| (name + email).downcase.include? search_term }
