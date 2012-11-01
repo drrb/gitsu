@@ -2,8 +2,9 @@ require 'spec_helper'
 
 module GitSu
     describe Gitsu do
+        let(:output) { double('output') }
         let(:switcher) { double('switcher') }
-        let(:gitsu) { GitSu::Gitsu.new(switcher) }
+        let(:gitsu) { GitSu::Gitsu.new(switcher, output) }
 
         describe '#go' do
             context 'when query string provided' do

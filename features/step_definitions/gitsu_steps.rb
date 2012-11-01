@@ -13,8 +13,23 @@ When /^I request "(.*?)"$/ do |argline|
     gitsu.go argline.split " "
 end
 
+When /^I request the options$/ do
+    gitsu.go ["--help"]
+end
+
+When /^I request the current user$/ do
+    gitsu.go []
+end
+
+When /^I clear the user$/ do
+    gitsu.go ["--clear"]
+end
+
 Then /^I should see "(.*?)"$/ do |expected_output|
-    output.messages.should include expected_output
+    matching_messages = output.messages.select {|e| e.include? expected_output}
+    if matching_messages.empty?
+        fail "Expected [#{output.messages}] to contain '#{expected_output}'"
+    end
 end
 
 Then /^user "(.*?)" should be selected$/ do |user|
@@ -31,7 +46,7 @@ class Output
     end
 
     def puts(message)
-        messages << message
+        messages << "#{message}"
     end
 end
 
@@ -58,7 +73,7 @@ def git
 end
 
 def gitsu
-    @gitsu ||= GitSu::Gitsu.new(switcher)
+    @gitsu ||= GitSu::Gitsu.new(switcher, output)
 end
 
 def switcher

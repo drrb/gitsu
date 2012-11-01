@@ -5,6 +5,6 @@ Feature: Clear user
 
     Scenario: Clear user
         Given user "John Galt <jgalt@example.com>" is selected
-        When I request "-c"
+        When I clear the user
         Then no user should be selected
 

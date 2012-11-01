@@ -5,10 +5,10 @@ Feature: Print the current user
 
     Scenario: User is selected
         Given user "John Galt <jg@example.com>" is selected
-        When I request "" 
+        When I request the current user 
         Then I should see "Current user: John Galt <jg@example.com>"
 
     Scenario: No user is selected
         Given no user is selected
-        When I request ""
+        When I request the current user
         Then I should see "Current user: (none)"
