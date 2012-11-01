@@ -8,8 +8,5 @@ shell = GitSu::Shell.new
 git = GitSu::Git.new(shell)
 user_list = GitSu::UserList.new(user_list_file)
 switcher = GitSu::Switcher.new(git, user_list, STDERR)
-if ARGV.empty?
-    switcher.print_current
-else
-    switcher.request(ARGV.join " ")
-end
+git_su = GitSu::Gitsu.new(switcher)
+git_su.go ARGV

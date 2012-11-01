@@ -20,5 +20,10 @@ module GitSu
                 "#{name} <#{email}>"
             end
         end
+
+        def clear_user
+            @shell.execute "git config --unset --global user.name"
+            @shell.execute "git config --unset --global user.email"
+        end
     end
 end

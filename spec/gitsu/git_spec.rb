@@ -29,5 +29,13 @@ module GitSu
                 end
             end
         end
+
+        describe '#clear_user' do
+            it 'clears the current user' do
+                shell.should_receive(:execute).with("git config --unset --global user.name").and_return("")
+                shell.should_receive(:execute).with("git config --unset --global user.email").and_return("")
+                git.clear_user
+            end
+        end
     end
 end

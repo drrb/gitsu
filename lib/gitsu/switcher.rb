@@ -22,5 +22,9 @@ module GitSu
                 @output.puts "Current user: #{user}"
             end
         end
+
+        def clear
+            @git.clear_user
+        end
     end
 end

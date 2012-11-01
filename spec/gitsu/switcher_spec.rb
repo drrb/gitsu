@@ -41,5 +41,12 @@ module GitSu
                 end
             end
         end
+
+        describe '#clear' do
+            it "clears the current user" do
+                git.should_receive(:clear_user)
+                switcher.clear
+            end
+        end
     end
 end

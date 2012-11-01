@@ -9,12 +9,8 @@ And /^user list contains user "(.*?)" with email "(.*?)"$/ do |name, email|
     user_list.add(email, name)
 end
 
-When /^I request "(.*?)"$/ do |user|
-    switcher.request user  
-end
-
-When /^I request the current user$/ do
-    switcher.print_current
+When /^I request "(.*?)"$/ do |argline|
+    gitsu.go argline.split " "
 end
 
 Then /^I should see "(.*?)"$/ do |expected_output|
@@ -47,6 +43,10 @@ class StubGit
     def selected_user 
         @user
     end
+
+    def clear_user
+        @user = nil
+    end
 end
 
 def output
@@ -55,6 +55,10 @@ end
 
 def git
     @git ||= StubGit.new 
+end
+
+def gitsu
+    @gitsu ||= GitSu::Gitsu.new(switcher)
 end
 
 def switcher
