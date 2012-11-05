@@ -8,6 +8,9 @@ module GitSu
             unless File.exist? file
                 FileUtils.touch file
             end
+            if File.size(file) == 0
+                File.write(file, "\n")
+            end
         end
 
         def add(email, name)
@@ -19,6 +22,9 @@ module GitSu
         def find(search_term)
             if search_term =~ /[^<]+ <.+@.+>/
                 return search_term
+            end
+            File.open("tmpfile", "w") do |f|
+                f.write @file
             end
             yaml_list = YAML.parse_file(@file)
             users = yaml_list ? yaml_list.transform : {}
