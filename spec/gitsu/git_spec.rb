@@ -31,10 +31,22 @@ module GitSu
         end
 
         describe '#clear_user' do
-            it 'clears the current user' do
-                shell.should_receive(:execute).with("git config --unset --global user.name").and_return("")
-                shell.should_receive(:execute).with("git config --unset --global user.email").and_return("")
-                git.clear_user
+            context "when there's other user config" do
+                it 'clears the current user' do
+                    shell.should_receive(:execute).with("git config --unset --global user.name").and_return("")
+                    shell.should_receive(:execute).with("git config --unset --global user.email").and_return("")
+                    shell.should_receive(:execute).with("git config --list --global").and_return("ui.color=true\nuser.signingkey = something\nsomething.else")
+                    git.clear_user
+                end
+            end
+            context "when there's no other user config" do
+                it 'removes the user section of the config' do
+                    shell.should_receive(:execute).with("git config --unset --global user.name").and_return("")
+                    shell.should_receive(:execute).with("git config --unset --global user.email").and_return("")
+                    shell.should_receive(:execute).with("git config --list --global").and_return("")
+                    shell.should_receive(:execute).with("git config --remove-section --global user").and_return("")
+                    git.clear_user
+                end
             end
         end
     end

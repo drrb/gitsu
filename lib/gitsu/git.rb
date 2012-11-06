@@ -24,6 +24,9 @@ module GitSu
         def clear_user
             @shell.execute "git config --unset --global user.name"
             @shell.execute "git config --unset --global user.email"
+            if @shell.execute("git config --list --global").chomp.split("\n").select { |e| e =~ /^user\./ }.empty?
+                @shell.execute("git config --remove-section --global user")
+            end
         end
     end
 end

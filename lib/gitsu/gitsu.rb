@@ -16,6 +16,11 @@ module GitSu
                     options[:clear] = true
                 end
 
+                options[:add] = false
+                opts.on('-a', '--add USER <EMAIL>', 'Add a user in email format (e.g. John Citizen <jcitizen@example.com>)') do |user|
+                    options[:add] = user
+                end
+
                 options[:help] = false
                 opts.on('-h', '--help', 'Show this message') do
                     options[:help] = true
@@ -26,11 +31,23 @@ module GitSu
             optparse.parse! args
 
             if options[:help]
+                return
+            end
 
-            elsif options[:clear]
+            if options[:clear]
                 @switcher.clear
-            elsif args.empty?
-                @switcher.print_current
+            end
+
+            if options[:add]
+                @switcher.add options[:add]
+            end
+            
+            if args.empty?
+                if options[:add]
+                    @switcher.request options[:add]
+                else
+                    @switcher.print_current
+                end
             else
                 @switcher.request(args.join " ")
             end

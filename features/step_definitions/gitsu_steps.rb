@@ -25,6 +25,10 @@ When /^I clear the user$/ do
     gitsu.go ["--clear"]
 end
 
+When /^I add the user "(.*?)"$/ do |user|
+    gitsu.go ["--add", user]
+end
+
 Then /^I should see "(.*?)"$/ do |expected_output|
     matching_messages = output.messages.select {|e| e.include? expected_output}
     if matching_messages.empty?

@@ -26,5 +26,12 @@ module GitSu
         def clear
             @git.clear_user
         end
+
+        def add(user)
+            name = user[/^[^<]+/].strip
+            email = user[/<.*>/].delete "[<>]" 
+            @user_list.add email, name 
+            @output.puts "User '#{user}' added to users"
+        end
     end
 end

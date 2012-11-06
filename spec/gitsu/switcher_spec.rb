@@ -42,6 +42,14 @@ module GitSu
             end
         end
 
+        describe '#add' do
+            it "adds the specified user to the user list" do
+                user_list.should_receive(:add).with("jgalt@example.com", "John Galt")
+                output.should_receive(:puts).with("User 'John Galt <jgalt@example.com>' added to users")
+                switcher.add("John Galt <jgalt@example.com>")
+            end
+        end
+
         describe '#clear' do
             it "clears the current user" do
                 git.should_receive(:clear_user)

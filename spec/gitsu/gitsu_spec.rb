@@ -25,14 +25,34 @@ module GitSu
                 context 'short option (-c)' do
                     it 'clears the user' do
                         switcher.should_receive(:clear)
+                        switcher.should_receive(:print_current)
                         gitsu.go ["-c"]
                     end
                 end
 
                 context 'long option (--clear)' do
-                    it 'prints the current user' do
+                    it 'clears the user' do
                         switcher.should_receive(:clear)
+                        switcher.should_receive(:print_current)
                         gitsu.go ["--clear"]
+                    end
+                end
+            end
+            
+            context 'when "add" option passed' do
+                context 'short option (-a)' do
+                    it 'adds the specified user' do
+                        switcher.should_receive(:add).with("John Galt <jgalt@example.com>")
+                        switcher.should_receive(:request).with("John Galt <jgalt@example.com>")
+                        gitsu.go ["-a", "John Galt <jgalt@example.com>"]
+                    end
+                end
+
+                context 'long option (--add)' do
+                    it 'adds the specified user' do
+                        switcher.should_receive(:add).with("John Galt <jgalt@example.com>")
+                        switcher.should_receive(:request).with("John Galt <jgalt@example.com>")
+                        gitsu.go ["--add", "John Galt <jgalt@example.com>"]
                     end
                 end
             end
