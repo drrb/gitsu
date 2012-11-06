@@ -8,6 +8,10 @@ module GitSu
             @user_file.write(User.new(name, email))
         end
 
+        def list
+            @user_file.read
+        end
+
         def find(search_term)
             if search_term =~ /[^<]+ <.+@.+>/
                 return search_term

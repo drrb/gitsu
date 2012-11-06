@@ -17,7 +17,7 @@ module GitSu
 
         def write(user)
             File.open(@file, "a") do |file|
-                file.write "#{user.email} : #{user.name}"
+                file.write "\n#{user.email} : #{user.name}"
             end
         end
 

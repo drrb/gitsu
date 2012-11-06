@@ -17,6 +17,24 @@ module GitSu
             end
         end
 
+        describe "#list" do
+            context "when there are no users configured" do
+                it "returns an empty array" do
+                    user_list.list.should be_empty
+                end
+            end
+            
+            context "when there are users configured" do
+                it "returns an array of all the users" do
+                    user_list.add("jgalt@example.com", "John Galt")
+
+                    list = user_list.list
+                    list.size.should be 1
+                    list.should include User.new("John Galt", "jgalt@example.com")
+                end
+            end
+        end
+
         describe "#find" do
             context "when a matching user exists" do
                 it "returns the matching user by first name" do

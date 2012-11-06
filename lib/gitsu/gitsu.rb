@@ -11,17 +11,18 @@ module GitSu
             optparse = OptionParser.new do |opts|
                 opts.banner = "Usage: git-su [options] user"
 
-                options[:clear] = false
+                opts.on('-l', '--list', 'List the configured users') do
+                    options[:list] = true
+                end
+
                 opts.on('-c', '--clear', 'Clear the current user') do
                     options[:clear] = true
                 end
 
-                options[:add] = false
                 opts.on('-a', '--add USER <EMAIL>', 'Add a user in email format (e.g. John Citizen <jcitizen@example.com>)') do |user|
                     options[:add] = user
                 end
 
-                options[:help] = false
                 opts.on('-h', '--help', 'Show this message') do
                     options[:help] = true
                     @output.puts opts
@@ -31,6 +32,11 @@ module GitSu
             optparse.parse! args
 
             if options[:help]
+                return
+            end
+
+            if options[:list]
+                @switcher.list
                 return
             end
 

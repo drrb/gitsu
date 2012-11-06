@@ -26,6 +26,12 @@ module GitSu
         def clear
             @git.clear_user
         end
+        
+        def list
+            @user_list.list.each do |user|
+                @output.puts user
+            end
+        end
 
         def add(user)
             name = user[/^[^<]+/].strip

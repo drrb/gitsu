@@ -5,6 +5,9 @@ Given /^user "(.*?)" is selected$/ do |user|
     git.select_user user
 end
 
+Given /^user list is empty$/ do
+end
+
 And /^user list contains user "(.*?)" with email "(.*?)"$/ do |name, email|
     user_list.add(email, name)
 end
@@ -29,11 +32,19 @@ When /^I add the user "(.*?)"$/ do |user|
     gitsu.go ["--add", user]
 end
 
+When /^I list the users$/ do
+    gitsu.go ["--list"]
+end
+
 Then /^I should see "(.*?)"$/ do |expected_output|
     matching_messages = output.messages.select {|e| e.include? expected_output}
     if matching_messages.empty?
         fail "Expected [#{output.messages}] to contain '#{expected_output}'"
     end
+end
+
+Then /^I shouldn't see anything$/ do
+    output.messages.should be_empty
 end
 
 Then /^user "(.*?)" should be selected$/ do |user|

@@ -50,6 +50,18 @@ module GitSu
             end
         end
 
+        describe '#list' do
+            it "lists the configured users" do
+                users = []
+                users << "User One"
+                users << "User Two"
+                user_list.should_receive(:list).and_return(users)
+                output.should_receive(:puts).with("User One")
+                output.should_receive(:puts).with("User Two")
+                switcher.list
+            end
+        end
+
         describe '#clear' do
             it "clears the current user" do
                 git.should_receive(:clear_user)

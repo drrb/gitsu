@@ -56,6 +56,22 @@ module GitSu
                     end
                 end
             end
+
+            context 'when "list" option passed' do
+                context 'short option (-l)' do
+                    it 'lists the users' do
+                        switcher.should_receive(:list)
+                        gitsu.go ["-l"]
+                    end
+                end
+
+                context 'long option (--list)' do
+                    it 'lists the users' do
+                        switcher.should_receive(:list)
+                        gitsu.go ["--list"]
+                    end
+                end
+            end
         end
     end
 end
