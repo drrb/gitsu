@@ -29,6 +29,11 @@ module GitSu
 
                     user_list.find("jg").should == "John Galt <jgalt@example.com>"
                 end
+                it "returns the matching user by initials" do
+                    user_list.add("john.galt@example.com", "John Galt")
+
+                    user_list.find("jg").should == "John Galt <john.galt@example.com>"
+                end
             end
 
             context "when no matching user exists" do

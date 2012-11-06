@@ -5,15 +5,16 @@ Feature: Switch to stored user
 
     Scenario Outline: Switch to stored user
         Given no user is selected
-        And user list contains user "Raphe Rackstraw" with email "rrackstraw@github.com"
+        And user list contains user "Raphe Rackstraw" with email "rackstraw@github.com"
         When I request "<request>"
         Then I should see "<output>"
         And user "<selected_user>" should be selected
 
         Scenarios: Existing user match
-            | request   | selected_user                           | output                                                    |
-            | raphe     | Raphe Rackstraw <rrackstraw@github.com> | Switched to user Raphe Rackstraw <rrackstraw@github.com>  |
-            | rrack     | Raphe Rackstraw <rrackstraw@github.com> | Switched to user Raphe Rackstraw <rrackstraw@github.com>  |
+            | request   | selected_user                           | output                                                   |
+            | raphe     | Raphe Rackstraw <rackstraw@github.com>  | Switched to user Raphe Rackstraw <rackstraw@github.com>  |
+            | git       | Raphe Rackstraw <rackstraw@github.com>  | Switched to user Raphe Rackstraw <rackstraw@github.com>  |
+            | rr        | Raphe Rackstraw <rackstraw@github.com>  | Switched to user Raphe Rackstraw <rackstraw@github.com>  |
 
     Scenario: No match found
         Given no user is selected

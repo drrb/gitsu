@@ -3,13 +3,15 @@ require 'yaml'
 
 module GitSu
     class UserList
-        def initialize(file)
-            @file = file
-            unless File.exist? file
-                FileUtils.touch file
+        def initialize(file_name)
+            @file = file_name
+            unless File.exist? file_name
+                FileUtils.touch file_name
             end
-            if File.size(file) == 0
-                File.write(file, "\n")
+            if File.size(file_name) == 0
+                File.open(file_name, "w") do |file|
+                    file << "\n"
+                end
             end
         end
 
@@ -23,17 +25,22 @@ module GitSu
             if search_term =~ /[^<]+ <.+@.+>/
                 return search_term
             end
-            File.open("tmpfile", "w") do |f|
-                f.write @file
+            yaml_list = YAML.load_file(@file) or return nil
+            users = yaml_list.map do |email, name|
+                User.new(name, email)
             end
-            yaml_list = YAML.parse_file(@file)
-            users = yaml_list ? yaml_list.transform : {}
-            matching_users = users.select { |email,name| (name + email).downcase.include? search_term }
+            matching_users = users.select do |user|
+                ("#{user.name} #{user.email}").downcase.include? search_term 
+            end
+            matching_users += users.select do |user|
+                user.name.split(" ").map { |word| word.chars.first }.join.downcase.include? search_term
+            end
+
             if matching_users.empty?
                 nil
             else
                 matching_user = matching_users.find {true}
-                "#{matching_user[1]} <#{matching_user[0]}>"
+                "#{matching_user.name} <#{matching_user.email}>"
             end
         end
     end
