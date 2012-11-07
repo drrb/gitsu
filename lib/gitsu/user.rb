@@ -2,6 +2,15 @@ module GitSu
     class User
         attr_accessor :name, :email
 
+        def User.parse(string)
+            unless /^[^<]+<[^>]+>$/ =~ string
+                raise "Couldn't parse '#{string}' as user (expected user in format: 'John Smith <jsmith@example.com>')"
+            end
+            name = string[/^[^<]+/].strip
+            email = string[/<.*>/].delete "[<>]" 
+            User.new(name, email)
+        end
+
         def initialize(name, email)
             @name, @email = name, email
         end

@@ -5,10 +5,8 @@ module GitSu
         end
 
         def select_user(user)
-            name = user[/^[^<]+/].strip
-            email = user[/<.*>/].delete "[<>]" 
-            @shell.execute "git config --global user.name '#{name}'"
-            @shell.execute "git config --global user.email '#{email}'"
+            @shell.execute "git config --global user.name '#{user.name}'"
+            @shell.execute "git config --global user.email '#{user.email}'"
         end
 
         def selected_user
@@ -17,7 +15,7 @@ module GitSu
                 nil
             else
                 email = @shell.execute "git config --global user.email"
-                "#{name} <#{email}>"
+                User.new(name, email)
             end
         end
 

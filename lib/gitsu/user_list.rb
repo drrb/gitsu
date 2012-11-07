@@ -4,8 +4,8 @@ module GitSu
             @user_file = UserFile.new(file_name) 
         end
 
-        def add(email, name)
-            @user_file.write(User.new(name, email))
+        def add(user)
+            @user_file.write(user)
         end
 
         def list
@@ -13,9 +13,6 @@ module GitSu
         end
 
         def find(search_term)
-            if search_term =~ /[^<]+ <.+@.+>/
-                return search_term
-            end
             users = @user_file.read
             matching_users = users.select do |user|
                 ("#{user.name} #{user.email}").downcase.include? search_term 
@@ -27,8 +24,7 @@ module GitSu
             if matching_users.empty?
                 nil
             else
-                matching_user = matching_users.find {true}
-                "#{matching_user.name} <#{matching_user.email}>"
+                matching_users.find {true}
             end
         end
     end

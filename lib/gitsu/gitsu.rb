@@ -30,7 +30,14 @@ module GitSu
             end
 
             optparse.parse! args
+            begin
+                run(options, args)
+            rescue StandardError => error
+                @output.puts error
+            end
+        end
 
+        def run(options, args)
             if options[:help]
                 return
             end

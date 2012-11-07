@@ -2,14 +2,14 @@ Given /^no user is selected$/ do
 end
 
 Given /^user "(.*?)" is selected$/ do |user|
-    git.select_user user
+    git.select_user GitSu::User.parse(user)
 end
 
 Given /^user list is empty$/ do
 end
 
 And /^user list contains user "(.*?)" with email "(.*?)"$/ do |name, email|
-    user_list.add(email, name)
+    user_list.add GitSu::User.new(name, email)
 end
 
 When /^I request "(.*?)"$/ do |argline|
@@ -48,7 +48,8 @@ Then /^I shouldn't see anything$/ do
 end
 
 Then /^user "(.*?)" should be selected$/ do |user|
-    git.selected_user.should == user
+    git.selected_user.class.should == GitSu::User
+    git.selected_user.should == GitSu::User.parse(user)
 end
 
 Then /^no user should be selected$/ do

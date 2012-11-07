@@ -5,7 +5,11 @@ module GitSu
         end
 
         def request(user)
-            matching_user = @user_list.find user
+            if user =~ /[^<]+ <.+@.+>/
+                matching_user = User.parse(user)
+            else
+                matching_user = @user_list.find user
+            end
             if matching_user
                 @git.select_user matching_user
                 @output.puts "Switched to user #{matching_user}"
@@ -34,9 +38,7 @@ module GitSu
         end
 
         def add(user)
-            name = user[/^[^<]+/].strip
-            email = user[/<.*>/].delete "[<>]" 
-            @user_list.add email, name 
+            @user_list.add User.parse(user)
             @output.puts "User '#{user}' added to users"
         end
     end

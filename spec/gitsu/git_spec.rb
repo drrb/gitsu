@@ -9,7 +9,7 @@ module GitSu
             it 'switches to the specified user' do
                 shell.should_receive(:execute).with("git config --global user.name 'John Galt'")
                 shell.should_receive(:execute).with("git config --global user.email 'jgalt@example.com'")
-                git.select_user 'John Galt <jgalt@example.com>'
+                git.select_user User.new("John Galt", "jgalt@example.com")
             end
         end
 
@@ -18,7 +18,7 @@ module GitSu
                 it 'returns the current user' do
                     shell.should_receive(:execute).with("git config --global user.name").and_return("John Galt")
                     shell.should_receive(:execute).with("git config --global user.email").and_return("jgalt@example.com")
-                    git.selected_user.should == "John Galt <jgalt@example.com>"
+                    git.selected_user.should == User.new("John Galt", "jgalt@example.com")
                 end
             end
 
