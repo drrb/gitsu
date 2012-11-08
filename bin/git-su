@@ -9,4 +9,8 @@ git = GitSu::Git.new(shell)
 user_list = GitSu::UserList.new(user_list_file)
 switcher = GitSu::Switcher.new(git, user_list, STDERR)
 git_su = GitSu::Gitsu.new(switcher, STDERR)
-git_su.go ARGV
+begin
+    git_su.go ARGV
+rescue StandardError => error
+    STDERR.puts error
+end
