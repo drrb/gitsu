@@ -10,15 +10,15 @@ module GitSu
         describe '#request' do
             context "when request is a fully-qualified user string (e.g. 'John Galt <jgalt@example.com>'" do
                 it "switches to user" do
-                    git.should_receive(:select_user).with User.new('John Galt', 'jgalt@example.com')
-                    switcher.request('John Galt <jgalt@example.com>')
+                    git.should_receive(:select_user).with(User.new('John Galt', 'jgalt@example.com'), :global)
+                    switcher.request('John Galt <jgalt@example.com>', :global)
                 end
             end
 
             context "when no matching user found" do
                 it "does not switch user" do
                     user_list.should_receive(:find).with('asdfasdf').and_return nil
-                    switcher.request('asdfasdf')
+                    switcher.request('asdfasdf', :global)
                 end
             end
 
@@ -27,8 +27,8 @@ module GitSu
                     user = User.new('John Galt', 'jgalt@example.com')
 
                     user_list.should_receive(:find).with("john").and_return user 
-                    git.should_receive(:select_user).with user
-                    switcher.request "john"
+                    git.should_receive(:select_user).with user, :global
+                    switcher.request "john", :global
                 end
             end
         end

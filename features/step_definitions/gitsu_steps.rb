@@ -1,11 +1,23 @@
 Given /^no user is selected$/ do
+    step "no user is selected in any scope"
+end
+
+Given /^no user is selected in any scope$/ do
+    git.clear_user
 end
 
 Given /^user "(.*?)" is selected$/ do |user|
-    git.select_user GitSu::User.parse(user)
+    git.select_user(GitSu::User.parse(user), :global)
+end
+
+Given /^user "(.*?)" is selected in "(.*?)" scope$/ do |user, scope|
+    git.select_user(GitSu::User.parse(user), scope.to_sym)
 end
 
 Given /^user list is empty$/ do
+    File.open(user_list_file, "w") do |f|
+        f.write "\n"
+    end
 end
 
 And /^user list contains user "(.*?)" with email "(.*?)"$/ do |name, email|
@@ -14,6 +26,10 @@ end
 
 When /^I request "(.*?)"$/ do |argline|
     gitsu.go argline.split " "
+end
+
+When /^I request "(.*?)" in "(.*?)" scope$/ do |argline, scope|
+    gitsu.go(argline.split(" ") + ["--#{scope}"])
 end
 
 When /^I request the options$/ do
@@ -48,12 +64,19 @@ Then /^I shouldn't see anything$/ do
 end
 
 Then /^user "(.*?)" should be selected$/ do |user|
-    git.selected_user.class.should == GitSu::User
-    git.selected_user.should == GitSu::User.parse(user)
+    step %[user "#{user}" should be selected in "global" scope] 
+end
+
+Then /^user "(.*?)" should be selected in "(.*?)" scope$/ do |user, scope|
+    git.selected_user(scope.to_sym).should == GitSu::User.parse(user)
 end
 
 Then /^no user should be selected$/ do
-    git.selected_user.should be nil
+    step 'no user should be selected in "global" scope'
+end
+
+Then /^no user should be selected in "(.*?)" scope$/ do |scope|
+    git.selected_user(scope.to_sym).should be nil
 end
 
 class Output 
@@ -67,16 +90,21 @@ class Output
 end
 
 class StubGit 
-    def select_user(user)
-        @user = user
+
+    def initialize
+        clear_user
     end
 
-    def selected_user 
-        @user
+    def select_user(user, scope)
+        @users[scope] = user
+    end
+
+    def selected_user(scope)
+        @users[scope]
     end
 
     def clear_user
-        @user = nil
+        @users = {}
     end
 end
 
@@ -97,5 +125,13 @@ def switcher
 end
 
 def user_list
-    @user_list ||= GitSu::UserList.new("/tmp/#{rand}")
+    @user_list ||= GitSu::UserList.new(user_list_file)
+end
+
+def user_list_file
+    @user_list_file ||= "/tmp/#{rand}"
+end
+
+After do
+    File.delete user_list_file if File.exist? user_list_file
 end
