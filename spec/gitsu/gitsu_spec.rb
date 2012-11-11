@@ -38,9 +38,18 @@ module GitSu
             end
             
             context 'when no query provided' do
-                it 'prints the current user' do
-                    switcher.should_receive(:print_current)
-                    gitsu.go []
+                context 'when no scope specified' do
+                    it 'prints the current user derived by Git' do
+                        switcher.should_receive(:print_current).with(:derived)
+                        gitsu.go []
+                    end
+                end
+
+                context 'when scope specified' do
+                    it 'prints the current user in the specified scope' do
+                        switcher.should_receive(:print_current).with(:system)
+                        gitsu.go ["--system"]
+                    end
                 end
             end
             

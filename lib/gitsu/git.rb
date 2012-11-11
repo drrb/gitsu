@@ -4,26 +4,34 @@ module GitSu
             @shell = shell
         end
 
+        def config_command(scope, suffix)
+            if scope == :derived
+                "git config "
+            else
+                "git config --#{scope} "
+            end << suffix
+        end
+
         def select_user(user, scope)
-            @shell.execute "git config --#{scope} user.name '#{user.name}'"
-            @shell.execute "git config --#{scope} user.email '#{user.email}'"
+            @shell.execute config_command(scope, "user.name '#{user.name}'")
+            @shell.execute config_command(scope, "user.email '#{user.email}'")
         end
 
         def selected_user(scope)
-            name = @shell.execute "git config --#{scope} user.name"
+            name = @shell.execute config_command(scope, "user.name")
             if name.empty?
                 nil
             else
-                email = @shell.execute "git config --#{scope} user.email"
+                email = @shell.execute config_command(scope, "user.email")
                 User.new(name, email)
             end
         end
 
         def clear_user
-            @shell.execute "git config --unset --global user.name"
-            @shell.execute "git config --unset --global user.email"
-            if @shell.execute("git config --list --global").chomp.split("\n").select { |e| e =~ /^user\./ }.empty?
-                @shell.execute("git config --remove-section --global user")
+            @shell.execute config_command(:global, "--unset user.name")
+            @shell.execute config_command(:global, "--unset user.email")
+            if @shell.execute(config_command(:global, "--list")).chomp.split("\n").select { |e| e =~ /^user\./ }.empty?
+                @shell.execute config_command(:global, "--remove-section user")
             end
         end
     end

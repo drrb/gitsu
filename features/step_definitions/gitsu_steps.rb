@@ -15,9 +15,11 @@ Given /^user "(.*?)" is selected in "(.*?)" scope$/ do |user, scope|
 end
 
 Given /^user list is empty$/ do
-    File.open(user_list_file, "w") do |f|
-        f.write "\n"
-    end
+    write_user_list("\n")
+end
+
+And /^user list contains$/ do |user_list|
+    write_user_list user_list
 end
 
 And /^user list contains user "(.*?)" with email "(.*?)"$/ do |name, email|
@@ -38,6 +40,10 @@ end
 
 When /^I request the current user$/ do
     gitsu.go []
+end
+
+When /^I request the current user in "(.*?)" scope$/ do |scope|
+    gitsu.go ["--#{scope}"]
 end
 
 When /^I clear the user$/ do
@@ -130,6 +136,12 @@ end
 
 def user_list_file
     @user_list_file ||= "/tmp/#{rand}"
+end
+
+def write_user_list(content)
+    File.open(user_list_file, "w") do |f|
+        f.write content
+    end
 end
 
 After do

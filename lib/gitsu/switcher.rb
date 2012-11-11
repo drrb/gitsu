@@ -18,8 +18,8 @@ module GitSu
             end
         end
         
-        def print_current
-            user = @git.selected_user(:global)
+        def print_current(scope)
+            user = @git.selected_user(scope)
             if user.nil?
                 @output.puts "Current user: (none)"
             else

@@ -23,7 +23,6 @@ module GitSu
                     options[:add] = user
                 end
 
-                options[:scope] = :global
                 opts.on('--local', 'Change user in local scope') do
                     options[:scope] = :local
                 end
@@ -56,6 +55,9 @@ module GitSu
                 return
             end
 
+            select_scope = options[:scope] || :global
+            print_scope = options[:scope] || :derived
+
             if options[:clear]
                 #TODO: clear in scope
                 @switcher.clear
@@ -67,12 +69,12 @@ module GitSu
             
             if args.empty?
                 if options[:add]
-                    @switcher.request options[:add], options[:scope]
+                    @switcher.request options[:add], select_scope 
                 else
-                    @switcher.print_current
+                    @switcher.print_current(print_scope)
                 end
             else
-                @switcher.request(args.join(" "), options[:scope])
+                @switcher.request(args.join(" "), select_scope)
             end
         end
     end
