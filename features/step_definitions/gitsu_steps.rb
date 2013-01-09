@@ -90,7 +90,7 @@ class Output
         @messages ||= []
     end
 
-    def puts(message)
+    def puts(message = nil)
         messages << "#{message}"
     end
 end

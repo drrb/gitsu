@@ -8,18 +8,18 @@ Feature: Print the current user
         And user "Johnny Global <jglobal@gitsu.com>" is selected in "global" scope
         And user "Johnny Local <jlocal@gitsu.com>" is selected in "local" scope
         When I request the current user in "<scope>" scope
-        Then I should see "Current user: <user>"
+        Then I should see "<output>"
 
         Scenarios: Selected Users
-            | scope  | user                              |
-            | system | Johnny System <jsystem@gitsu.com> |
-            | global | Johnny Global <jglobal@gitsu.com> |
-            | local  | Johnny Local <jlocal@gitsu.com>   |
+            | scope  | output                                         |
+            | system | System user: Johnny System <jsystem@gitsu.com> |
+            | global | Global user: Johnny Global <jglobal@gitsu.com> |
+            | local  | Local user: Johnny Local <jlocal@gitsu.com>    |
 
     Scenario: User is selected in specified scope
         Given user "John Galt <jg@example.com>" is selected in "global" scope
         When I request the current user in "global" scope
-        Then I should see "Current user: John Galt <jg@example.com>"
+        Then I should see "Global user: John Galt <jg@example.com>"
 
     Scenario: No user is selected
         Given no user is selected in any scope

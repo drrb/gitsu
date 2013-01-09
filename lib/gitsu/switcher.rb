@@ -17,13 +17,20 @@ module GitSu
                 @output.puts "No user found matching '#{user}'"
             end
         end
+
+        def get_user(scope)
+            @git.selected_user(scope) || "(none)"
+        end
         
         def print_current(scope)
-            user = @git.selected_user(scope)
-            if user.nil?
-                @output.puts "Current user: (none)"
+            if scope == :derived
+                @output.puts "Current user: #{get_user(scope)}"
+                @output.puts
+                @output.puts "Local: #{get_user(:local)}"
+                @output.puts "Global: #{get_user(:global)}"
+                @output.puts "System: #{get_user(:system)}"
             else
-                @output.puts "Current user: #{user}"
+                @output.puts "#{scope.capitalize} user: #{get_user(scope)}"
             end
         end
 
