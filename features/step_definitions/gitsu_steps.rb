@@ -26,6 +26,16 @@ And /^user list contains user "(.*?)" with email "(.*?)"$/ do |name, email|
     user_list.add GitSu::User.new(name, email)
 end
 
+def split_args_with_shell(arg_line)
+    `for arg in #{arg_line}; do echo $arg; done`.strip.split("\n")
+end
+
+When /^I type "(.*?)"$/ do |command_line|
+    arg_line = command_line.gsub(/^git su/, "")
+    args = split_args_with_shell(arg_line)
+    gitsu.go args
+end
+
 When /^I request "(.*?)"$/ do |argline|
     gitsu.go argline.split " "
 end

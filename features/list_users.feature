@@ -6,11 +6,11 @@ Feature: List users
     Scenario: list users
         Given user list contains user "John Galt" with email "jgalt@example.com" 
         And user list contains user "Raphe Rackstraw" with email "rrack@github.com" 
-        When I list the users
+        When I type "git su --list"
         Then I should see "John Galt <jgalt@example.com>"
         And I should see "Raphe Rackstraw <rrack@github.com>"
 
     Scenario: no users configured yet 
         Given user list is empty 
-        When I list the users
+        When I type "git su --list"
         Then I shouldn't see anything

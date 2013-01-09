@@ -4,5 +4,5 @@ Feature: Print options
     So that I know how to use it
 
     Scenario: Print options
-        When I request the options
+        When I type "git su --help"
         Then I should see "Usage: git-su"

@@ -16,12 +16,7 @@ Feature: Print the current user
             | global | Global user: Johnny Global <jglobal@gitsu.com> |
             | local  | Local user: Johnny Local <jlocal@gitsu.com>    |
 
-    Scenario: User is selected in specified scope
-        Given user "John Galt <jg@example.com>" is selected in "global" scope
-        When I request the current user in "global" scope
-        Then I should see "Global user: John Galt <jg@example.com>"
-
     Scenario: No user is selected
         Given no user is selected in any scope
-        When I request the current user
+        When I type "git su"
         Then I should see "Current user: (none)"

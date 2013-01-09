@@ -5,6 +5,6 @@ Feature: Clear user
 
     Scenario: Clear user
         Given user "John Galt <jgalt@example.com>" is selected
-        When I clear the user
+        When I type "git su --clear"
         Then no user should be selected
 

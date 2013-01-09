@@ -6,7 +6,7 @@ Feature: Switch to stored user
     Scenario Outline: Switch to stored user
         Given no user is selected
         And user list contains user "Raphe Rackstraw" with email "rackstraw@github.com"
-        When I request "<request>"
+        When I type "git su <request>"
         Then I should see "<output>"
         And user "<selected_user>" should be selected
 
@@ -19,6 +19,6 @@ Feature: Switch to stored user
     Scenario: No match found
         Given no user is selected
         And user list contains user "Raphe Rackstraw" with email "rrackstraw@github.com"
-        When I request "joe"
+        When I type "git su joe"
         Then I should see "No user found matching 'joe'"
         And no user should be selected
