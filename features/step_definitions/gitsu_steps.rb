@@ -36,38 +36,6 @@ When /^I type "(.*?)"$/ do |command_line|
     gitsu.go args
 end
 
-When /^I request "(.*?)"$/ do |argline|
-    gitsu.go argline.split " "
-end
-
-When /^I request "(.*?)" in "(.*?)" scope$/ do |argline, scope|
-    gitsu.go(argline.split(" ") + ["--#{scope}"])
-end
-
-When /^I request the options$/ do
-    gitsu.go ["--help"]
-end
-
-When /^I request the current user$/ do
-    gitsu.go []
-end
-
-When /^I request the current user in "(.*?)" scope$/ do |scope|
-    gitsu.go ["--#{scope}"]
-end
-
-When /^I clear the user$/ do
-    gitsu.go ["--clear"]
-end
-
-When /^I add the user "(.*?)"$/ do |user|
-    gitsu.go ["--add", user]
-end
-
-When /^I list the users$/ do
-    gitsu.go ["--list"]
-end
-
 Then /^I should see "(.*?)"$/ do |expected_output|
     matching_messages = output.messages.select {|e| e.include? expected_output}
     if matching_messages.empty?
