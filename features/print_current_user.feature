@@ -7,7 +7,7 @@ Feature: Print the current user
         Given user "Johnny System <jsystem@gitsu.com>" is selected in "system" scope
         And user "Johnny Global <jglobal@gitsu.com>" is selected in "global" scope
         And user "Johnny Local <jlocal@gitsu.com>" is selected in "local" scope
-        When I request the current user in "<scope>" scope
+        When I type "git su --<scope>"
         Then I should see "<output>"
 
         Scenarios: Selected Users
