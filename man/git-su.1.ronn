@@ -1,0 +1,100 @@
+git-su(1) -- Manage your Git Users
+========================================================
+
+## SYNOPSIS
+
+git su [-l|--list] [--local|--global|--system] [--add USER <EMAIL>] [-c|--clear]
+       [-h|--help] [user]
+
+## DESCRIPTION
+
+Gitsu helps you to manage your projects' Git users.
+
+* quickly see which user Git will use to commit
+* quickly switch between Git users
+* configure a list of Git users to switch between
+
+## OPTIONS
+
+-a --add USER <EMAIL>
+    Add a user to the Gitsu users. You can quickly switch to one of these users by supplying a user argument to git-su.
+
+-c --clear
+    Clear all Git users. If a scope (--local, --global, or --system) is specified, only clear that scope's user.
+
+-h --help
+    Show help
+
+-l --list
+    List the Gitsu users 
+
+--local, --global, --system
+    Specify the scope for switching users, or for --clear
+
+## HOMEPAGE
+
+http://drrb.github.com/gitsu
+
+## EXAMPLES
+
+Show current Git users
+
+`$ git su`
+
+### Adding users
+
+To add a user to Gitsu (the user will be saved in ~/.gitsu)
+
+`$ git su --add 'Raphe Rackstraw <rrack@example.com>'`
+
+You can also add users manually to ~/.gitsu in the following format:
+
+    jporter@example.com: Sir Joseph Porter KCB 
+
+    rrack@example.com: Raphe Rackstraw
+
+### Switching users
+
+Switch to configured users by initials
+
+`$ git su jp`
+
+`Switched to Joseph Porter KCB <jporter@example.com>`
+
+or by part of their name
+
+`$ git su straw`
+
+`Switched to Raphe Rackstraw <rrack@example.com>`
+
+To clear all Git users
+
+`$ git su --clear`
+
+`Clearing all users from Git config`
+
+### Scopes
+
+Gitsu supports Git's configuration scopes: local (current repository), global (current OS user), and system (everyone on the system)
+
+To change the user for a specific scope
+
+`$ git su joe --local`
+
+`Switched local user to Joseph Porter KCB <jporter@example.com>`
+
+
+To clear the user for a specific scope
+
+`$ git su --clear --local`
+
+`Clearing local user`
+
+
+## AUTHOR
+
+drrb at the git hub
+
+## SEE ALSO
+
+git(1)
