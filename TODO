@@ -1,3 +1,9 @@
+Features
+--------
 Clear all scopes' users when no scope specified for clear
 Colorize output when it's configured
 Support multiple users at once
+
+Bugs
+--------
+git su --add still adds the user if the user already exists
