@@ -44,9 +44,14 @@ module GitSu
             end
         end
 
-        def add(user)
-            @user_list.add User.parse(user)
-            @output.puts "User '#{user}' added to users"
+        def add(user_string)
+            user = User.parse user_string
+            if @user_list.list.include? user
+                @output.puts "User '#{user}' already in user list"
+            else
+                @user_list.add user
+                @output.puts "User '#{user}' added to users"
+            end
         end
     end
 end

@@ -18,8 +18,12 @@ Given /^user list is empty$/ do
     write_user_list("\n")
 end
 
-And /^user list contains$/ do |user_list|
+Given /^user list is$/ do |user_list|
     write_user_list user_list
+end
+
+Then /^user list should be$/ do |user_list|
+    read_user_list.should eq user_list
 end
 
 And /^user list contains user "(.*?)" with email "(.*?)"$/ do |name, email|
@@ -126,6 +130,10 @@ def write_user_list(content)
     File.open(user_list_file, "w") do |f|
         f.write content
     end
+end
+
+def read_user_list
+    File.read user_list_file
 end
 
 After do

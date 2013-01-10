@@ -70,10 +70,20 @@ module GitSu
         end
 
         describe '#add' do
-            it "adds the specified user to the user list" do
-                user_list.should_receive(:add).with User.new('John Galt', 'jgalt@example.com')
-                output.should_receive(:puts).with("User 'John Galt <jgalt@example.com>' added to users")
-                switcher.add("John Galt <jgalt@example.com>")
+            context "when the user doesn't already exist in the user list" do
+                it "adds the specified user to the user list" do
+                    user_list.should_receive(:list).and_return []
+                    user_list.should_receive(:add).with User.new('John Galt', 'jgalt@example.com')
+                    output.should_receive(:puts).with("User 'John Galt <jgalt@example.com>' added to users")
+                    switcher.add("John Galt <jgalt@example.com>")
+                end
+            end
+            context "when the user already exists in the user list" do
+                it "Doesn't add the user to the user list" do
+                    user_list.should_receive(:list).and_return [User.new('John Galt', 'jgalt@example.com')]
+                    output.should_receive(:puts).with("User 'John Galt <jgalt@example.com>' already in user list")
+                    switcher.add("John Galt <jgalt@example.com>")
+                end
             end
         end
 
