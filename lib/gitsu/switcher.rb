@@ -35,7 +35,13 @@ module GitSu
         end
 
         def clear(scope)
-            @git.clear_user(scope)
+            if scope == :all
+                @git.clear_user(:local)
+                @git.clear_user(:global)
+                @git.clear_user(:system)
+            else
+                @git.clear_user(scope)
+            end
         end
         
         def list

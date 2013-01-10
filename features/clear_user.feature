@@ -8,3 +8,11 @@ Feature: Clear user
         When I type "git su --clear --local"
         Then no user should be selected in "local" scope
 
+    Scenario: Clear all users
+        Given user "Joe Local <jlocal@example.com>" is selected in "local" scope
+        And user "Joe Global <jglobal@example.com>" is selected in "global" scope
+        And user "Joe System <jsystem@example.com>" is selected in "system" scope
+        When I type "git su --clear"
+        Then no user should be selected in "local" scope
+        And no user should be selected in "global" scope
+        And no user should be selected in "system" scope

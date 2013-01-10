@@ -100,9 +100,19 @@ module GitSu
         end
 
         describe '#clear' do
-            it "clears the current user in the specified scope" do
-                git.should_receive(:clear_user).with(:local)
-                switcher.clear :local
+            context "when a scope is specified" do
+                it "clears the current user in the specified scope" do
+                    git.should_receive(:clear_user).with(:local)
+                    switcher.clear :local
+                end
+            end
+            context "when 'all' scope is specified" do
+                it "clears all Git users" do
+                    git.should_receive(:clear_user).with(:local)
+                    git.should_receive(:clear_user).with(:global)
+                    git.should_receive(:clear_user).with(:system)
+                    switcher.clear :all
+                end
             end
         end
     end
