@@ -1,5 +1,4 @@
 Features
 --------
-Clear all scopes' users when no scope specified for clear
 Colorize output when it's configured
 Support multiple users at once
