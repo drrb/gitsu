@@ -55,18 +55,26 @@ module GitSu
             
             context 'when "clear" option passed' do
                 context 'short option (-c)' do
-                    it 'clears the user' do
-                        switcher.should_receive(:clear)
+                    it 'clears the user global' do
+                        switcher.should_receive(:clear).with(:global)
                         switcher.should_receive(:print_current)
                         gitsu.go ["-c"]
                     end
                 end
 
                 context 'long option (--clear)' do
-                    it 'clears the user' do
-                        switcher.should_receive(:clear)
+                    it 'clears the user global' do
+                        switcher.should_receive(:clear).with(:global)
                         switcher.should_receive(:print_current)
                         gitsu.go ["--clear"]
+                    end
+                end
+
+                context 'scope is specified' do
+                    it 'clears the user in that scope' do
+                        switcher.should_receive(:clear).with(:local)
+                        switcher.should_receive(:print_current)
+                        gitsu.go ["--clear", "--local"]
                     end
                 end
             end

@@ -59,8 +59,7 @@ module GitSu
             print_scope = options[:scope] || :derived
 
             if options[:clear]
-                #TODO: clear in scope
-                @switcher.clear
+                @switcher.clear select_scope
             end
 
             if options[:add]

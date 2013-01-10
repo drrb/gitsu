@@ -42,20 +42,20 @@ module GitSu
 
         describe '#clear_user' do
             context "when there's other user config" do
-                it 'clears the current user' do
-                    shell.should_receive(:execute).with("git config --global --unset user.name").and_return("")
-                    shell.should_receive(:execute).with("git config --global --unset user.email").and_return("")
-                    shell.should_receive(:execute).with("git config --global --list").and_return("ui.color=true\nuser.signingkey = something\nsomething.else")
-                    git.clear_user
+                it 'clears the current user in the specified scope' do
+                    shell.should_receive(:execute).with("git config --local --unset user.name").and_return("")
+                    shell.should_receive(:execute).with("git config --local --unset user.email").and_return("")
+                    shell.should_receive(:execute).with("git config --local --list").and_return("ui.color=true\nuser.signingkey = something\nsomething.else")
+                    git.clear_user(:local)
                 end
             end
             context "when there's no other user config" do
-                it 'removes the user section of the config' do
-                    shell.should_receive(:execute).with("git config --global --unset user.name").and_return("")
-                    shell.should_receive(:execute).with("git config --global --unset user.email").and_return("")
-                    shell.should_receive(:execute).with("git config --global --list").and_return("")
-                    shell.should_receive(:execute).with("git config --global --remove-section user").and_return("")
-                    git.clear_user
+                it 'removes the user section of the config in the specified scope' do
+                    shell.should_receive(:execute).with("git config --system --unset user.name").and_return("")
+                    shell.should_receive(:execute).with("git config --system --unset user.email").and_return("")
+                    shell.should_receive(:execute).with("git config --system --list").and_return("")
+                    shell.should_receive(:execute).with("git config --system --remove-section user").and_return("")
+                    git.clear_user(:system)
                 end
             end
         end

@@ -27,11 +27,11 @@ module GitSu
             end
         end
 
-        def clear_user
-            @shell.execute config_command(:global, "--unset user.name")
-            @shell.execute config_command(:global, "--unset user.email")
-            if @shell.execute(config_command(:global, "--list")).chomp.split("\n").select { |e| e =~ /^user\./ }.empty?
-                @shell.execute config_command(:global, "--remove-section user")
+        def clear_user(scope)
+            @shell.execute config_command(scope, "--unset user.name")
+            @shell.execute config_command(scope, "--unset user.email")
+            if @shell.execute(config_command(scope, "--list")).chomp.split("\n").select { |e| e =~ /^user\./ }.empty?
+                @shell.execute config_command(scope, "--remove-section user")
             end
         end
     end

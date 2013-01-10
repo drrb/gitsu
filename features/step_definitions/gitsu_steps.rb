@@ -3,7 +3,7 @@ Given /^no user is selected$/ do
 end
 
 Given /^no user is selected in any scope$/ do
-    git.clear_user
+    git.clear_users
 end
 
 Given /^user "(.*?)" is selected$/ do |user|
@@ -75,8 +75,10 @@ end
 
 class StubGit 
 
+    attr_accessor :users
+
     def initialize
-        clear_user
+        clear_users
     end
 
     def select_user(user, scope)
@@ -87,8 +89,12 @@ class StubGit
         @users[scope]
     end
 
-    def clear_user
+    def clear_users
         @users = {}
+    end
+
+    def clear_user(scope)
+        @users.delete scope
     end
 end
 

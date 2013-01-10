@@ -34,8 +34,8 @@ module GitSu
             end
         end
 
-        def clear
-            @git.clear_user
+        def clear(scope)
+            @git.clear_user(scope)
         end
         
         def list

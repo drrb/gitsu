@@ -3,8 +3,8 @@ Feature: Clear user
     I want to clear my Git configured user
     So that I can make sure others don't commit code as me
 
-    Scenario: Clear user
-        Given user "John Galt <jgalt@example.com>" is selected
-        When I type "git su --clear"
-        Then no user should be selected
+    Scenario: Clear user in specified scope
+        Given user "John Galt <jgalt@example.com>" is selected in "local" scope
+        When I type "git su --clear --local"
+        Then no user should be selected in "local" scope
 
