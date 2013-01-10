@@ -2,3 +2,4 @@ Features
 --------
 Colorize output when it's configured
 Support multiple users at once
+By default, switch the lowest configured scope (instead of global)
