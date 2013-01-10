@@ -23,8 +23,8 @@ module GitSu
         end
         
         def print_current(scope)
-            if scope == :derived
-                @output.puts "Current user: #{get_user(scope)}"
+            if scope == :all
+                @output.puts "Current user: #{get_user(:derived)}"
                 @output.puts
                 @output.puts "Local: #{get_user(:local)}"
                 @output.puts "Global: #{get_user(:global)}"
