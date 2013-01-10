@@ -5,11 +5,11 @@ module GitSu
         end
 
         def config_command(scope, suffix)
-            if scope == :derived
-                "git config "
-            else
-                "git config --#{scope} "
-            end << suffix
+            command = "git config "
+            unless scope == :derived
+                command << "--#{scope} "
+            end 
+            command << suffix
         end
 
         def select_user(user, scope)
