@@ -31,7 +31,7 @@ module GitSu
             @shell.execute config_command(scope, "--unset user.name")
             @shell.execute config_command(scope, "--unset user.email")
             if @shell.execute(config_command(scope, "--list")).chomp.split("\n").select { |e| e =~ /^user\./ }.empty?
-                @shell.execute config_command(scope, "--remove-section user")
+                @shell.execute config_command(scope, "--remove-section user 2>/dev/null")
             end
         end
     end
