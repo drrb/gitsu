@@ -3,8 +3,7 @@ git-su(1) -- Manage your Git Users
 
 ## SYNOPSIS
 
-git su [-l|--list] [--local|--global|--system] [--add USER <EMAIL>] [-c|--clear]
-       [-h|--help] [user]
+git su [OPTIONS] [user]
 
 ## DESCRIPTION
 
@@ -16,16 +15,16 @@ Gitsu helps you to manage your projects' Git users.
 
 ## OPTIONS
 
--a --add USER <EMAIL>
-    Add a user to the Gitsu users. You can quickly switch to one of these users by supplying a user argument to git-su.
+-a, --add USER
+    Add a user to the Gitsu users. Should be in the format "John Galt <jgalt@example.com>". You can quickly switch to one of these users by supplying a user argument to git-su.
 
--c --clear
+-c, --clear
     Clear all Git users. If a scope (--local, --global, or --system) is specified, only clear that scope's user.
 
--h --help
+-h, --help
     Show help
 
--l --list
+-l, --list
     List the Gitsu users 
 
 --local, --global, --system
@@ -75,20 +74,20 @@ To clear all Git users
 
 ### Scopes
 
-Gitsu supports Git's configuration scopes: local (current repository), global (current OS user), and system (everyone on the system)
+Gitsu supports Git's configuration scopes: local (current repository), global (current OS user), and system (everyone on the system). As in Git, if you don't specify a scope, local scope is assumed.
 
 To change the user for a specific scope
 
-`$ git su joe --local`
+`$ git su joe --system`
 
-`Switched local user to Joseph Porter KCB <jporter@example.com>`
+`Switched system user to Joseph Porter KCB <jporter@example.com>`
 
 
 To clear the user for a specific scope
 
-`$ git su --clear --local`
+`$ git su --clear --global`
 
-`Clearing local user`
+`Clearing global user`
 
 
 ## AUTHOR
@@ -97,4 +96,4 @@ drrb at the git hub
 
 ## SEE ALSO
 
-git(1)
+git(1), git-config(1).
