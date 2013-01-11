@@ -15,7 +15,7 @@ To switch the configured Git user:
 
     $ git su "John Galt <jgalt@tcmc.com>"
 
-    Switched to user John Galt <jgalt@tcmc.com>
+    Switched local user to John Galt <jgalt@tcmc.com>
 
 To make it easier to switch users, tell GitSu about some users.
 
