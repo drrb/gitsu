@@ -2,7 +2,6 @@ Features
 --------
 Colorize output when it's configured
 Support multiple users at once
-By default, act on local scope like Git does
 Make default scope configurable
 
 Bugs
