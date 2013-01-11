@@ -55,7 +55,7 @@ module GitSu
                 return
             end
 
-            select_scope = options[:scope] || :global
+            select_scope = options[:scope] || :local
             print_scope = options[:scope] || :all
             clear_scope = options[:scope] || :all
 
