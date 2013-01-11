@@ -2,4 +2,12 @@ Features
 --------
 Colorize output when it's configured
 Support multiple users at once
-By default, switch the lowest configured scope (instead of global)
+By default, act on local scope like Git does
+Make default scope configurable
+
+Bugs
+-------
+When I type 'git su -c', I see
+    fatal: unable to read config file '/etc/gitconfig': No such file or directory
+    fatal: No such section!
+
