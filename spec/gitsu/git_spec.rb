@@ -50,11 +50,11 @@ module GitSu
                 end
             end
             context "when there's no other user config" do
-                it 'removes the user section of the config in the specified scope' do
+                it 'quietly attempts to remove the user section of the config in the specified scope' do
                     shell.should_receive(:execute).with("git config --system --unset user.name").and_return("")
                     shell.should_receive(:execute).with("git config --system --unset user.email").and_return("")
                     shell.should_receive(:execute).with("git config --system --list").and_return("")
-                    shell.should_receive(:execute).with("git config --system --remove-section user").and_return("")
+                    shell.should_receive(:execute).with("git config --system --remove-section user 2>/dev/null").and_return("")
                     git.clear_user(:system)
                 end
             end
