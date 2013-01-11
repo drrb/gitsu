@@ -1,10 +1,10 @@
 Features
 --------
 Colorize output when it's configured
-Support multiple users at once
 Make default scope configurable
 Support multiple scopes at once
 Remove automatic switching to added users
+Support multiple users at once
 
 Bugs
 -------
