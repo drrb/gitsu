@@ -10,4 +10,4 @@ Bugs
 -------
 When I type 'git su -c', I see
     fatal: unable to read config file '/etc/gitconfig': No such file or directory
-
+Can't seem to switch to user by first name
