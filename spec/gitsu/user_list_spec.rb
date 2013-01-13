@@ -41,16 +41,18 @@ module GitSu
                     user_list.add User.new("John Galt", "jgalt@example.com")
 
                     user_list.find("john").should == User.new("John Galt", "jgalt@example.com")
+                    user_list.find("John").should == User.new("John Galt", "jgalt@example.com")
                 end
                 it "returns the matching user by email snippet" do
                     user_list.add User.new("John Galt", "jgalt@example.com")
 
-                    user_list.find("jg").should == User.new("John Galt", "jgalt@example.com")
+                    user_list.find("example").should == User.new("John Galt", "jgalt@example.com")
                 end
                 it "returns the matching user by initials" do
                     user_list.add User.new("John Galt", "john.galt@example.com")
 
                     user_list.find("jg").should == User.new("John Galt", "john.galt@example.com")
+                    user_list.find("JG").should == User.new("John Galt", "john.galt@example.com")
                 end
             end
 
