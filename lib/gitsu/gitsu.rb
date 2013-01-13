@@ -68,9 +68,7 @@ module GitSu
             end
             
             if args.empty?
-                if options[:add]
-                    @switcher.request options[:add], select_scope 
-                else
+                unless options[:add]
                     @switcher.print_current(print_scope)
                 end
             else

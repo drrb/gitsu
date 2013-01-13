@@ -85,7 +85,6 @@ module GitSu
                 context 'short option (-a)' do
                     it 'adds the specified user' do
                         switcher.should_receive(:add).with("John Galt <jgalt@example.com>")
-                        switcher.should_receive(:request).with("John Galt <jgalt@example.com>", :local)
                         gitsu.go ["-a", "John Galt <jgalt@example.com>"]
                     end
                 end
@@ -93,7 +92,6 @@ module GitSu
                 context 'long option (--add)' do
                     it 'adds the specified user' do
                         switcher.should_receive(:add).with("John Galt <jgalt@example.com>")
-                        switcher.should_receive(:request).with("John Galt <jgalt@example.com>", :local)
                         gitsu.go ["--add", "John Galt <jgalt@example.com>"]
                     end
                 end
