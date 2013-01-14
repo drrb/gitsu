@@ -1,8 +1,8 @@
 Features
 --------
+Support multiple scopes at once
 Colorize output when it's configured
 Make default scope configurable
-Support multiple scopes at once
 Support multiple users at once
 
 Bugs
