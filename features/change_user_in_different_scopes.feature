@@ -15,3 +15,10 @@ Feature: Change user in different scopes
             | local    | global       | system            |
             | global   | local        | system            |
             | system   | local        | global            |
+
+    Scenario: change user in multiple scopes
+        Given no user is selected in any scope
+        When I type "git su 'John Galt <jgalt@example.com>' --local --global"
+        Then user "John Galt <jgalt@example.com>" should be selected in "local" scope
+        And user "John Galt <jgalt@example.com>" should be selected in "global" scope
+        And no user should be selected in "system" scope

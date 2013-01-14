@@ -23,16 +23,17 @@ module GitSu
                     options[:add] = user
                 end
 
+                options[:scope] = []
                 opts.on('--local', 'Change user in local scope') do
-                    options[:scope] = :local
+                    options[:scope] << :local
                 end
 
                 opts.on('--global', 'Change user in global scope') do
-                    options[:scope] = :global
+                    options[:scope] << :global
                 end
 
                 opts.on('--system', 'Change user in system scope') do
-                    options[:scope] = :system
+                    options[:scope] << :system
                 end
 
                 opts.on('-h', '--help', 'Show this message') do
@@ -55,12 +56,15 @@ module GitSu
                 return
             end
 
-            select_scope = options[:scope] || :local
-            print_scope = options[:scope] || :all
-            clear_scope = options[:scope] || :all
+            scopes = options[:scope]
+            select_scopes = scopes.empty? ? [:local] : scopes
+            print_scopes = scopes.empty? ? [:all] : scopes
+            clear_scopes = scopes.empty? ? [:all] : scopes
 
             if options[:clear]
-                @switcher.clear clear_scope
+                clear_scopes.each do |scope|
+                    @switcher.clear scope
+                end
             end
 
             if options[:add]
@@ -68,11 +72,13 @@ module GitSu
             end
             
             if args.empty?
-                unless options[:add]
-                    @switcher.print_current(print_scope)
+                unless options[:add] || options [:clear]
+                    @switcher.print_current(print_scopes.last)
                 end
             else
-                @switcher.request(args.join(" "), select_scope)
+                select_scopes.each do |scope|
+                    @switcher.request(args.join(" "), scope)
+                end
             end
         end
     end

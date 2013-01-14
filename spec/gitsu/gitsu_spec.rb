@@ -29,6 +29,15 @@ module GitSu
                     end
                 end
 
+                context 'when multiple scopes specified' do
+                    it 'switches to the specified user in the specified scopes' do
+                        switcher.should_receive(:request).with('Joe Bloggs', :local)
+                        switcher.should_receive(:request).with('Joe Bloggs', :global)
+                        switcher.should_receive(:request).with('Joe Bloggs', :system)
+                        gitsu.go ['Joe', 'Bloggs', "--local", "--global", "--system"]
+                    end
+                end
+
                 context 'when system scope specified' do
                     it 'switches to the specified user in the system scope' do
                         switcher.should_receive(:request).with('Joe Bloggs', :system)
@@ -58,7 +67,6 @@ module GitSu
                     context 'short option (-c)' do
                         it 'clears all Git users' do
                             switcher.should_receive(:clear).with(:all)
-                            switcher.should_receive(:print_current)
                             gitsu.go ["-c"]
                         end
                     end
@@ -66,7 +74,6 @@ module GitSu
                     context 'long option (--clear)' do
                         it 'clears all Git users' do
                             switcher.should_receive(:clear).with(:all)
-                            switcher.should_receive(:print_current)
                             gitsu.go ["--clear"]
                         end
                     end
@@ -75,8 +82,15 @@ module GitSu
                 context 'scope is specified' do
                     it 'clears the user in that scope' do
                         switcher.should_receive(:clear).with(:local)
-                        switcher.should_receive(:print_current)
                         gitsu.go ["--clear", "--local"]
+                    end
+                end
+
+                context 'mulitple scopes are specified' do
+                    it 'clears the user in those scopes' do
+                        switcher.should_receive(:clear).with(:local)
+                        switcher.should_receive(:clear).with(:system)
+                        gitsu.go ["--clear", "--local", "--system"]
                     end
                 end
             end
