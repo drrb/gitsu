@@ -1,5 +1,17 @@
 require 'optparse'
 
+class Array
+    def list
+        if empty?
+            ""
+        elsif size == 1
+            last.to_s
+        else
+            map{|e| e.to_s}.slice(0, length - 1).join(", ") + " and " + last.to_s
+        end
+    end
+end
+
 module GitSu
     class Gitsu
         def initialize(switcher, output)
@@ -62,6 +74,8 @@ module GitSu
             clear_scopes = scopes.empty? ? [:all] : scopes
 
             if options[:clear]
+                scope_word = clear_scopes == [:all] || select_scopes.size > 1 ? "scopes" : "scope"
+                @output.puts "Clearing Git user in #{clear_scopes.list} #{scope_word}"
                 clear_scopes.each do |scope|
                     @switcher.clear scope
                 end

@@ -1,6 +1,5 @@
 Features
 --------
-Print something when clear is run
 Colorize output when it's configured
 Make default scope configurable
 Support multiple users at once

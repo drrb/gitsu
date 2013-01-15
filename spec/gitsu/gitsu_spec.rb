@@ -66,6 +66,7 @@ module GitSu
                 context "no scope is specified" do
                     context 'short option (-c)' do
                         it 'clears all Git users' do
+                            output.should_receive(:puts).with("Clearing Git user in all scopes")
                             switcher.should_receive(:clear).with(:all)
                             gitsu.go ["-c"]
                         end
@@ -73,6 +74,7 @@ module GitSu
 
                     context 'long option (--clear)' do
                         it 'clears all Git users' do
+                            output.should_receive(:puts).with("Clearing Git user in all scopes")
                             switcher.should_receive(:clear).with(:all)
                             gitsu.go ["--clear"]
                         end
@@ -81,6 +83,7 @@ module GitSu
 
                 context 'scope is specified' do
                     it 'clears the user in that scope' do
+                        output.should_receive(:puts).with("Clearing Git user in local scope")
                         switcher.should_receive(:clear).with(:local)
                         gitsu.go ["--clear", "--local"]
                     end
@@ -88,6 +91,7 @@ module GitSu
 
                 context 'mulitple scopes are specified' do
                     it 'clears the user in those scopes' do
+                        output.should_receive(:puts).with("Clearing Git user in local and system scopes")
                         switcher.should_receive(:clear).with(:local)
                         switcher.should_receive(:clear).with(:system)
                         gitsu.go ["--clear", "--local", "--system"]
