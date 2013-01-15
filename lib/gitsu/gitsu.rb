@@ -69,12 +69,10 @@ module GitSu
             end
 
             scopes = options[:scope]
-            select_scopes = scopes.empty? ? [:local] : scopes
-            print_scopes = scopes.empty? ? [:all] : scopes
-            clear_scopes = scopes.empty? ? [:all] : scopes
 
             if options[:clear]
-                scope_word = clear_scopes == [:all] || select_scopes.size > 1 ? "scopes" : "scope"
+                clear_scopes = scopes.empty? ? [:all] : scopes
+                scope_word = clear_scopes == [:all] || clear_scopes.size > 1 ? "scopes" : "scope"
                 @output.puts "Clearing Git user in #{clear_scopes.list} #{scope_word}"
                 clear_scopes.each do |scope|
                     @switcher.clear scope
@@ -87,9 +85,11 @@ module GitSu
             
             if args.empty?
                 unless options[:add] || options [:clear]
+                    print_scopes = scopes.empty? ? [:all] : scopes
                     @switcher.print_current(print_scopes.last)
                 end
             else
+                select_scopes = scopes.empty? ? [:local] : scopes
                 select_scopes.each do |scope|
                     @switcher.request(args.join(" "), scope)
                 end
