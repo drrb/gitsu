@@ -130,6 +130,22 @@ module GitSu
                     end
                 end
             end
+
+            context 'when "edit" option passed' do
+                context 'short option (-e)' do
+                    it 'edits the Gitsu config file' do
+                        switcher.should_receive(:edit_config)
+                        gitsu.go ["-e"]
+                    end
+                end
+
+                context 'long option (--edit)' do
+                    it 'edits the Gitsu config file' do
+                        switcher.should_receive(:edit_config)
+                        gitsu.go ["--edit"]
+                    end
+                end
+            end
         end
     end
 end

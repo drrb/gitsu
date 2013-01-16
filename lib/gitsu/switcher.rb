@@ -34,6 +34,10 @@ module GitSu
             end
         end
 
+        def edit_config
+            @git.edit_gitsu_config
+        end
+
         def clear(scope)
             if scope == :all
                 @git.clear_user(:local)

@@ -67,6 +67,10 @@ Then /^no user should be selected in "(.*?)" scope$/ do |scope|
     git.selected_user(scope.to_sym).should be nil
 end
 
+Then /^the config file should be open in an editor$/ do
+    git.editing?.should be true
+end
+
 class Output 
     def messages
         @messages ||= []
@@ -83,6 +87,7 @@ class StubGit
 
     def initialize
         clear_users
+        @editing = false
     end
 
     def select_user(user, scope)
@@ -99,6 +104,14 @@ class StubGit
 
     def clear_user(scope)
         @users.delete scope
+    end
+
+    def edit_gitsu_config
+        @editing = true
+    end
+
+    def editing?
+        @editing
     end
 end
 

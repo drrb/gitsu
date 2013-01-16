@@ -40,6 +40,13 @@ module GitSu
             end
         end
 
+        describe '#edit_gitsu_config' do
+            it 'opens the Gitsu config in an editor' do
+                shell.should_receive(:delegate).with("git config --edit --file #{File.expand_path '~/.gitsu'}")
+                git.edit_gitsu_config
+            end
+        end
+
         describe '#clear_user' do
             context "when there's other user config" do
                 it 'clears the current user in the specified scope' do

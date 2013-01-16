@@ -27,6 +27,10 @@ module GitSu
             end
         end
 
+        def edit_gitsu_config
+            @shell.delegate config_command(:derived, "--edit --file #{File.expand_path '~/.gitsu'}")
+        end
+
         def clear_user(scope)
             @shell.execute config_command(scope, "--unset user.name")
             @shell.execute config_command(scope, "--unset user.email")

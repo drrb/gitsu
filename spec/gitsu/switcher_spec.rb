@@ -113,5 +113,12 @@ module GitSu
                 end
             end
         end
+
+        describe '#edit_config' do
+            it "tells Git to open the Gitsu config file in an editor" do
+                git.should_receive(:edit_gitsu_config)
+                switcher.edit_config
+            end
+        end
     end
 end

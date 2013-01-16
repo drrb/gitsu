@@ -1,6 +1,5 @@
 Features
 --------
-Command to open user list in editor (git config --edit --file ~/.gitsu)
 Colorize output when it's configured
 Make default scope configurable
 Support multiple users at once

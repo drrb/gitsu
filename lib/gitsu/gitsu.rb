@@ -35,6 +35,10 @@ module GitSu
                     options[:add] = user
                 end
 
+                opts.on('-e', '--edit', 'Open the Gitsu config file in an editor') do
+                    options[:edit] = true
+                end
+
                 options[:scope] = []
                 opts.on('--local', 'Change user in local scope') do
                     options[:scope] << :local
@@ -65,6 +69,11 @@ module GitSu
 
             if options[:list]
                 @switcher.list
+                return
+            end
+
+            if options[:edit]
+                @switcher.edit_config
                 return
             end
 
