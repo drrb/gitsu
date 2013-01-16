@@ -1,11 +1,11 @@
 Features
 --------
 Colorize output when it's configured
+Make it so that you can't do more than one of clear/add/switch at once
 Make default scope configurable
 Support multiple users at once
 
 Bugs
 -------
-Make it so that you can't do more than one of clear/add/switch at once
 When I type 'git su -c', I see
     fatal: unable to read config file '/etc/gitconfig': No such file or directory
