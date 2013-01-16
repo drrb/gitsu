@@ -38,5 +38,9 @@ module GitSu
                 @shell.execute config_command(scope, "--remove-section user 2>/dev/null")
             end
         end
+
+        def color_output?
+            @shell.delegate config_command(:derived, "--get-colorbool color.ui")
+        end
     end
 end

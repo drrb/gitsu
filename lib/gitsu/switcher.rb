@@ -19,7 +19,12 @@ module GitSu
         end
 
         def get_user(scope)
-            @git.selected_user(scope) || "(none)"
+            user = @git.selected_user(scope) || "(none)"
+            color_output? ? "\e[34m#{user}\e[0m" : user.to_s
+        end
+
+        def color_output?
+            @color_output.nil? ? @color_output = @git.color_output? : @color_output
         end
         
         def print_current(scope)

@@ -1,6 +1,7 @@
 require 'spec_helper'
 
 module GitSu
+
     describe Switcher do
         let(:git) { double('git') }
         let(:user_list) { double('user_list') }
@@ -36,6 +37,7 @@ module GitSu
         describe '#print_current' do
             context "when 'all' scope is specified" do
                 it "prints all users" do
+                    git.should_receive(:color_output?).and_return false
                     git.should_receive(:selected_user).with(:derived).and_return User.new('Johnny Local', 'jlocal@example.com')
                     git.should_receive(:selected_user).with(:local).and_return User.new('Johnny Local', 'jlocal@example.com')
                     git.should_receive(:selected_user).with(:global).and_return User.new('Johnny Global', 'jglobal@example.com')
@@ -51,6 +53,7 @@ module GitSu
             context "when a scope is specified" do
                 context "when there is a user selected" do
                     it "prints the current user" do
+                        git.should_receive(:color_output?).and_return false
                         git.should_receive(:selected_user).with(:global).and_return User.new('John Galt', 'jgalt@example.com')
                         output.should_receive(:puts).with("Global user: John Galt <jgalt@example.com>")
                         switcher.print_current(:global)
@@ -59,10 +62,20 @@ module GitSu
 
                 context "when there is no user selected" do
                     it "prints \"Current user: (none)\"" do
+                        git.should_receive(:color_output?).and_return false
                         git.should_receive(:selected_user).with(:local).and_return nil
                         output.should_receive(:puts).with("Local user: (none)")
                         switcher.print_current(:local)
                     end
+                end
+            end
+
+            context "when Git says to color output" do
+                it "prints users in color" do
+                    git.should_receive(:color_output?).and_return true
+                    git.should_receive(:selected_user).with(:local).and_return User.new('John Galt', 'jgalt@example.com')
+                    output.should_receive(:puts).with("Local user: \e[34mJohn Galt <jgalt@example.com>\e[0m")
+                    switcher.print_current(:local)
                 end
             end
         end

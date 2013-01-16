@@ -47,6 +47,22 @@ module GitSu
             end
         end
 
+        describe '#color_output?' do
+            context 'when Git says to use colorize output' do
+                it 'returns true' do
+                    shell.should_receive(:delegate).with("git config --get-colorbool color.ui").and_return true
+                    git.color_output?.should be true
+                end
+            end
+
+            context 'when git says not to colorize output' do
+                it 'returns true' do
+                    shell.should_receive(:delegate).with("git config --get-colorbool color.ui").and_return false
+                    git.color_output?.should be false
+                end
+            end
+        end
+
         describe '#clear_user' do
             context "when there's other user config" do
                 it 'clears the current user in the specified scope' do

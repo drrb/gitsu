@@ -110,6 +110,10 @@ class StubGit
         @editing = true
     end
 
+    def color_output?
+        false
+    end
+
     def editing?
         @editing
     end
