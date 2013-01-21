@@ -12,9 +12,9 @@ Feature: Print the current user
 
         Scenarios: Selected Users
             | scope  | output                                         |
-            | system | System user: Johnny System <jsystem@gitsu.com> |
-            | global | Global user: Johnny Global <jglobal@gitsu.com> |
-            | local  | Local user: Johnny Local <jlocal@gitsu.com>    |
+            | system | Johnny System <jsystem@gitsu.com> |
+            | global | Johnny Global <jglobal@gitsu.com> |
+            | local  | Johnny Local <jlocal@gitsu.com>    |
 
     Scenario: Print all users
         Given user "Johnny System <jsystem@gitsu.com>" is selected in "system" scope

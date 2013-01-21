@@ -53,18 +53,16 @@ module GitSu
             context "when a scope is specified" do
                 context "when there is a user selected" do
                     it "prints the current user" do
-                        git.should_receive(:color_output?).and_return false
                         git.should_receive(:selected_user).with(:global).and_return User.new('John Galt', 'jgalt@example.com')
-                        output.should_receive(:puts).with("Global user: John Galt <jgalt@example.com>")
+                        output.should_receive(:puts).with("John Galt <jgalt@example.com>")
                         switcher.print_current(:global)
                     end
                 end
 
                 context "when there is no user selected" do
-                    it "prints \"Current user: (none)\"" do
-                        git.should_receive(:color_output?).and_return false
+                    it 'prints ""' do
                         git.should_receive(:selected_user).with(:local).and_return nil
-                        output.should_receive(:puts).with("Local user: (none)")
+                        output.should_receive(:puts).with("")
                         switcher.print_current(:local)
                     end
                 end
@@ -73,9 +71,15 @@ module GitSu
             context "when Git says to color output" do
                 it "prints users in color" do
                     git.should_receive(:color_output?).and_return true
-                    git.should_receive(:selected_user).with(:local).and_return User.new('John Galt', 'jgalt@example.com')
-                    output.should_receive(:puts).with("Local user: \e[34mJohn Galt <jgalt@example.com>\e[0m")
-                    switcher.print_current(:local)
+                    git.should_receive(:selected_user).with(:derived).and_return User.new('Johnny Local', 'jlocal@example.com')
+                    git.should_receive(:selected_user).with(:local).and_return User.new('Johnny Local', 'jlocal@example.com')
+                    git.should_receive(:selected_user).with(:global).and_return User.new('Johnny Global', 'jglobal@example.com')
+                    git.should_receive(:selected_user).with(:system).and_return User.new('Johnny System', 'jsystem@example.com')
+                    output.should_receive(:puts).with("Current user: \e[34mJohnny Local <jlocal@example.com>\e[0m")
+                    output.should_receive(:puts).with("Local: \e[34mJohnny Local <jlocal@example.com>\e[0m")
+                    output.should_receive(:puts).with("Global: \e[34mJohnny Global <jglobal@example.com>\e[0m")
+                    output.should_receive(:puts).with("System: \e[34mJohnny System <jsystem@example.com>\e[0m")
+                    switcher.print_current(:all)
                 end
             end
         end

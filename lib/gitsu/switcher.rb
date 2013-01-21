@@ -35,7 +35,7 @@ module GitSu
                 @output.puts "Global: #{get_user(:global)}"
                 @output.puts "System: #{get_user(:system)}"
             else
-                @output.puts "#{scope.capitalize} user: #{get_user(scope)}"
+                @output.puts @git.selected_user(scope).to_s
             end
         end
 
