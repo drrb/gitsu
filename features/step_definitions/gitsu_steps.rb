@@ -40,6 +40,10 @@ When /^I type "(.*?)"$/ do |command_line|
     gitsu.go args
 end
 
+Then /^I should see$/ do |expected_output|
+    output.messages.join("\n").should eq expected_output
+end
+
 Then /^I should see "(.*?)"$/ do |expected_output|
     matching_messages = output.messages.select {|e| e.include? expected_output}
     if matching_messages.empty?
@@ -95,7 +99,11 @@ class StubGit
     end
 
     def selected_user(scope)
-        @users[scope]
+        if scope == :derived
+            @users[:local] || @users[:global] || @users[:system]
+        else
+            @users[scope]
+        end
     end
 
     def clear_users
