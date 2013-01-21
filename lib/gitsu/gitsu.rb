@@ -23,7 +23,7 @@ module GitSu
             optparse = OptionParser.new do |opts|
                 opts.banner = "Usage: git-su [options] user"
 
-                opts.on('-l', '--list', 'List the configured users') do
+                opts.on('-t', '--list', 'List the configured users') do
                     options[:list] = true
                 end
 
@@ -40,15 +40,15 @@ module GitSu
                 end
 
                 options[:scope] = []
-                opts.on('--local', 'Change user in local scope') do
+                opts.on('-l', '--local', 'Change user in local scope') do
                     options[:scope] << :local
                 end
 
-                opts.on('--global', 'Change user in global scope') do
+                opts.on('-g', '--global', 'Change user in global scope') do
                     options[:scope] << :global
                 end
 
-                opts.on('--system', 'Change user in system scope') do
+                opts.on('-s', '--system', 'Change user in system scope') do
                     options[:scope] << :system
                 end
 
