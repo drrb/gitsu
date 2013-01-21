@@ -21,14 +21,17 @@ Gitsu helps you to manage your projects' Git users.
 -c, --clear
     Clear all Git users. If a scope (--local, --global, or --system) is specified, only clear that scope's user.
 
+-e, --edit
+    Open the Gitsu config in an editor. This is the same editor that Git is configured to use for config files.
+
 -h, --help
-    Show help
+    Show help.
 
--l, --list
-    List the Gitsu users 
+-l, --local, -g, --global, -s, --system 
+    Specify the scope for switching users, or for --clear.
 
---local, --global, --system
-    Specify the scope for switching users, or for --clear
+-t, --list
+    List the Gitsu users.
 
 ## HOMEPAGE
 
