@@ -3,7 +3,7 @@ Feature: Switch to stored user
     I want to quickly switch to my user
     So that I can commit code
 
-    Scenario Outline: Switch to stored user
+    Scenario Outline: One match found
         Given no user is selected
         And user list is
         """
@@ -27,3 +27,23 @@ Feature: Switch to stored user
         When I type "git su joe"
         Then I should see "No user found matching 'joe'"
         And no user should be selected
+
+    Scenario Outline: Multiple matches found
+        Given no user is selected
+        And user list is
+        """
+        jdean@github.com: James Dean
+        jack@github.com: Jacky Smith
+        jim@github.com: Jack Smythe
+        amos@github.com: Amos Arphaxad
+        molly@github.com: Molly Meldrum
+        """
+        When I type "git su <request>"
+        Then user "<selected_user>" should be selected in "local" scope
+
+        Scenarios: Existing user match
+            | request   | selected_user                           | reason                   |
+            | jack      | Jack Smythe <jim@github.com>            | exact first name match   |
+            | am        | Amos Arphaxad <amos@github.com>         | first name snippet       |
+            | me        | Molly Meldrum <molly@github.com>        | other name snippet       |
+

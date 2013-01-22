@@ -54,6 +54,26 @@ module GitSu
                     user_list.find("jg").should == User.new("John Galt", "john.galt@example.com")
                     user_list.find("JG").should == User.new("John Galt", "john.galt@example.com")
                 end
+                it "favours those higher in the list" do
+                    user_list.add User.new("James Before", "jb@example.com")
+                    user_list.add User.new("James After", "ja@example.com")
+
+                    user_list.find("james").should == User.new("James Before", "jb@example.com")
+                end
+                it "favours prefix over innards" do
+                    user_list.add User.new("Matthew Jackson", "mj@example.com")
+                    user_list.add User.new("Thomas Hickleton", "tom@example.com")
+                    user_list.add User.new("John Smith", "js@example.com")
+
+                    user_list.find("th").should eq User.new("Thomas Hickleton", "tom@example.com")
+                    user_list.find("s").should eq User.new("John Smith", "js@example.com")
+                end
+                it "favours full firstname match over partial one" do
+                    user_list.add User.new("Matthew Jackson", "mj@example.com")
+                    user_list.add User.new("Mat Jackson", "zz@example.com")
+
+                    user_list.find("mat").should eq User.new("Mat Jackson", "zz@example.com")
+                end
             end
 
             context "when no matching user exists" do

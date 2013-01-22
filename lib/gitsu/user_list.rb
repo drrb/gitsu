@@ -14,18 +14,21 @@ module GitSu
 
         def find(search_term)
             users = @user_file.read
-            matching_users = users.select do |user|
-                ("#{user.name} #{user.email}").downcase.include? search_term.downcase
+            matching_users = []
+            matching_users += users.select do |user|
+                user.name =~ /\b#{search_term}\b/i
+            end
+            matching_users += users.select do |user|
+                user.name =~ /\b#{search_term}/i
             end
             matching_users += users.select do |user|
                 user.name.split(" ").map { |word| word.chars.first }.join.downcase.include? search_term.downcase
             end
-
-            if matching_users.empty?
-                nil
-            else
-                matching_users.find {true}
+            matching_users += users.select do |user|
+                ("#{user.name} #{user.email}").downcase.include? search_term.downcase
             end
+
+            matching_users.first
         end
     end
 end
