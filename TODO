@@ -1,6 +1,5 @@
 Features
 --------
-Make selection from file clever
 Make default scope configurable
 Support multiple users at once
 
@@ -14,3 +13,4 @@ When I try to switch to a user whose name contains an apostrophe, I see
     Switched local user to John O'Grady
 
     And user doesn't change, even though output says it does
+    - The email changes though. It looks like the error is from the shell call to Git to change the name
