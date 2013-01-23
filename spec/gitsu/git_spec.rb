@@ -11,6 +11,11 @@ module GitSu
                 shell.should_receive(:execute).with("git config --global user.email 'jgalt@example.com'")
                 git.select_user User.new("John Galt", "jgalt@example.com"), :global
             end
+            it 'escapes apostrophes' do
+                shell.should_receive(:execute).with("git config --global user.name 'John O'\\''Grady'")
+                shell.should_receive(:execute).with("git config --global user.email 'jo@example.com'")
+                git.select_user User.new("John O'Grady", "jo@example.com"), :global
+            end
         end
 
         describe '#selected_user' do

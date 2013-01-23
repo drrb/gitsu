@@ -7,10 +7,3 @@ Bugs
 -------
 When I type 'git su -c', I see
     fatal: unable to read config file '/etc/gitconfig': No such file or directory
-When I try to switch to a user whose name contains an apostrophe, I see
-    sh: -c: line 0: unexpected EOF while looking for matching `''
-    sh: -c: line 1: syntax error: unexpected end of file
-    Switched local user to John O'Grady
-
-    And user doesn't change, even though output says it does
-    - The email changes though. It looks like the error is from the shell call to Git to change the name

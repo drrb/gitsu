@@ -13,7 +13,9 @@ module GitSu
         end
 
         def select_user(user, scope)
-            @shell.execute config_command(scope, "user.name '#{user.name}'")
+            # replace "'" with "'\''" so that the shell call copes
+            escaped_user_name = user.name.gsub(/'/, "'\\\\\''")
+            @shell.execute config_command(scope, "user.name '#{escaped_user_name}'")
             @shell.execute config_command(scope, "user.email '#{user.email}'")
         end
 
