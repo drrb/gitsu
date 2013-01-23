@@ -74,11 +74,11 @@ module GitSu
                     git.should_receive(:selected_user).with(:derived).and_return User.new('Johnny Local', 'jlocal@example.com')
                     git.should_receive(:selected_user).with(:local).and_return User.new('Johnny Local', 'jlocal@example.com')
                     git.should_receive(:selected_user).with(:global).and_return User.new('Johnny Global', 'jglobal@example.com')
-                    git.should_receive(:selected_user).with(:system).and_return User.new('Johnny System', 'jsystem@example.com')
-                    output.should_receive(:puts).with("Current user: \e[34mJohnny Local <jlocal@example.com>\e[0m")
-                    output.should_receive(:puts).with("Local: \e[34mJohnny Local <jlocal@example.com>\e[0m")
-                    output.should_receive(:puts).with("Global: \e[34mJohnny Global <jglobal@example.com>\e[0m")
-                    output.should_receive(:puts).with("System: \e[34mJohnny System <jsystem@example.com>\e[0m")
+                    git.should_receive(:selected_user).with(:system).and_return nil
+                    output.should_receive(:puts).with("Current user: \e[34mJohnny Local\e[0m \e[35m<jlocal@example.com>\e[0m")
+                    output.should_receive(:puts).with("Local: \e[34mJohnny Local\e[0m \e[35m<jlocal@example.com>\e[0m")
+                    output.should_receive(:puts).with("Global: \e[34mJohnny Global\e[0m \e[35m<jglobal@example.com>\e[0m")
+                    output.should_receive(:puts).with("System: \e[34m(none)\e[0m")
                     switcher.print_current(:all)
                 end
             end
@@ -105,11 +105,13 @@ module GitSu
         describe '#list' do
             it "lists the configured users" do
                 users = []
-                users << "User One"
-                users << "User Two"
+                users << User.new("User One", "1@example.com")
+                users << User.new("User Two", "2@example.com")
+
+                git.should_receive(:color_output?).and_return false
                 user_list.should_receive(:list).and_return(users)
-                output.should_receive(:puts).with("User One")
-                output.should_receive(:puts).with("User Two")
+                output.should_receive(:puts).with("User One <1@example.com>")
+                output.should_receive(:puts).with("User Two <2@example.com>")
                 switcher.list
             end
         end

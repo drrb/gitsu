@@ -87,5 +87,13 @@ module GitSu
                 end
             end
         end
+
+        describe '#get_color' do
+            it 'gets an ANSI escape code from Git for the specified color' do
+                shell.should_receive(:execute).with("git config --get-color 'diff.whitespace' 'on blue'").and_return("xxx")
+                color = git.get_color("on blue", "diff.whitespace")
+                color.should == "xxx"
+            end
+        end
     end
 end

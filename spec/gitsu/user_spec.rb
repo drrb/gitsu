@@ -15,5 +15,19 @@ module GitSu
                 end
             end
         end
+
+        describe "#to_s" do
+            it "returns a string representation of the user" do
+                user = User.new("John Galt", "jg@example.com")
+                user.to_s.should == "John Galt <jg@example.com>"
+            end
+        end
+
+        describe "#to_ansi_s" do
+            it "returns a colored string representation of the user" do
+                user = User.new("John Galt", "jg@example.com")
+                user.to_ansi_s("\e[34m", "\e[35m").should == "\e[34mJohn Galt\e[0m \e[35m<jg@example.com>\e[0m"
+            end
+        end
     end
 end

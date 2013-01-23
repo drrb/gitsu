@@ -27,12 +27,12 @@ module GitSu
             to_s.hash
         end
 
-        def to_ansi_s
-            "\e[34m#{to_s}\e[0m"
+        def to_ansi_s(name_color = "\e[34m", email_color = "\e[34m", reset_color = "\e[0m")
+            "#{name_color}#{@name}#{reset_color} #{email_color}<#{@email}>#{reset_color}"
         end
 
         def to_s
-            "#{@name} <#{@email}>"
+            to_ansi_s("", "", "")
         end
     end
 end

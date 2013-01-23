@@ -1,7 +1,6 @@
 Features
 --------
-Color user list (different colors for names, emails)
-Improve color for printing user (as above)
+Make colors configurable because people like that stuff
 Make default scope configurable for shared machines
 Support multiple users at once for pairing
 

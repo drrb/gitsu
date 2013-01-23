@@ -24,7 +24,18 @@ module GitSu
         end
 
         def maybe_color(user)
-            color_output? ? user.to_ansi_s : user.to_s
+            user_color = "\e[34m"
+            email_color = "\e[35m"
+            reset_color = "\e[0m"
+            if color_output?
+                if user.instance_of? String
+                    user_color + user + reset_color
+                else
+                    user.to_ansi_s(user_color, email_color)
+                end
+            else
+                user.to_s
+            end
         end
 
         def color_output?
@@ -59,8 +70,7 @@ module GitSu
         
         def list
             @user_list.list.each do |user|
-                #TODO puts maybe_color user
-                @output.puts user
+                @output.puts maybe_color user
             end
         end
 

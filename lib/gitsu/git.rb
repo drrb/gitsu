@@ -12,8 +12,12 @@ module GitSu
             command << suffix
         end
 
+        def get_color(default, binding = "")
+            @shell.execute config_command(:derived, "--get-color '#{binding}' '#{default}'")
+        end
+
         def select_user(user, scope)
-            # replace "'" with "'\''" so that the shell call copes
+            # replace <'> with <'\''>. E.g. O'Grady -> O'\''Grady
             escaped_user_name = user.name.gsub(/'/, "'\\\\\''")
             @shell.execute config_command(scope, "user.name '#{escaped_user_name}'")
             @shell.execute config_command(scope, "user.email '#{user.email}'")
