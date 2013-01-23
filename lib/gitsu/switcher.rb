@@ -20,7 +20,11 @@ module GitSu
 
         def get_user(scope)
             user = @git.selected_user(scope) || "(none)"
-            color_output? ? "\e[34m#{user}\e[0m" : user.to_s
+            maybe_color user
+        end
+
+        def maybe_color(user)
+            color_output? ? user.to_ansi_s : user.to_s
         end
 
         def color_output?
@@ -55,6 +59,7 @@ module GitSu
         
         def list
             @user_list.list.each do |user|
+                #TODO puts maybe_color user
                 @output.puts user
             end
         end

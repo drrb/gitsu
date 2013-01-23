@@ -27,6 +27,10 @@ module GitSu
             to_s.hash
         end
 
+        def to_ansi_s
+            "\e[34m#{to_s}\e[0m"
+        end
+
         def to_s
             "#{@name} <#{@email}>"
         end
