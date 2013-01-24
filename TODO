@@ -10,3 +10,8 @@ Bugs
 -------
 When I type 'git su -c', I see
     fatal: unable to read config file '/etc/gitconfig': No such file or directory
+
+Tests
+------
+What happens when I try to edit or clear the system user if the system config is missing?
+What happens when I try to edit or clear the system user if the system config is readonly?
