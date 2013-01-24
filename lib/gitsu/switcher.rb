@@ -65,15 +65,18 @@ module GitSu
             @color_output.nil? ? @color_output = @git.color_output? : @color_output
         end
         
-        def print_current(scope)
-            if scope == :all
+        def print_current(*scopes)
+            if scopes.include? :all
                 @output.puts "Current user: #{get_user(:derived)}"
                 @output.puts
                 @output.puts "Local: #{get_user(:local)}"
                 @output.puts "Global: #{get_user(:global)}"
                 @output.puts "System: #{get_user(:system)}"
             else
-                @output.puts get_user(scope, true)
+                scopes.each do |scope|
+                    user = get_user(scope, true)
+                    @output.puts user unless user.empty?
+                end
             end
         end
 

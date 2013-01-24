@@ -79,7 +79,7 @@ module GitSu
             if args.empty?
                 unless options[:add] || options [:clear]
                     print_scopes = scopes.empty? ? [:all] : scopes
-                    @switcher.print_current(print_scopes.last)
+                    @switcher.print_current *print_scopes
                 end
             else
                 select_scopes = scopes.empty? ? [:local] : scopes

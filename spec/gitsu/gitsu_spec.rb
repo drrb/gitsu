@@ -84,6 +84,13 @@ module GitSu
                         gitsu.go ["--system"]
                     end
                 end
+
+                context 'when multiple scopes specified' do
+                    it 'prints the current user in the specified scopes' do
+                        switcher.should_receive(:print_current).with(:local, :system)
+                        gitsu.go ["--local", "--system"]
+                    end
+                end
             end
             
             context 'when "clear" option passed' do

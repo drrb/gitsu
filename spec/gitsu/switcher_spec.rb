@@ -61,10 +61,32 @@ module GitSu
                 end
 
                 context "when there is no user selected" do
-                    it 'prints ""' do
+                    it 'does not print anything' do
                         git.should_receive(:selected_user).with(:local).and_return nil
-                        output.should_receive(:puts).with("")
                         switcher.print_current(:local)
+                    end
+                end
+            end
+
+            context "when multiple scopes are specified" do
+                context "when there is a user selected in all scopes" do
+                    it "prints the current user in those scopes" do
+                        git.should_receive(:color_output?).and_return false
+                        git.should_receive(:selected_user).with(:local).and_return User.new('John Local', 'jl@example.com')
+                        git.should_receive(:selected_user).with(:global).and_return User.new('John Global', 'jg@example.com')
+                        output.should_receive(:puts).with("John Local <jl@example.com>")
+                        output.should_receive(:puts).with("John Global <jg@example.com>")
+                        switcher.print_current(:local, :global)
+                    end
+                end
+
+                context "when there is no user selected in one scope" do
+                    it 'prints only users for scopes that have users' do
+                        git.should_receive(:color_output?).and_return false
+                        git.should_receive(:selected_user).with(:local).and_return nil
+                        git.should_receive(:selected_user).with(:global).and_return User.new('John Global', 'jg@example.com')
+                        output.should_receive(:puts).with("John Global <jg@example.com>")
+                        switcher.print_current(:local, :global)
                     end
                 end
             end
