@@ -11,7 +11,9 @@ module GitSu
         describe '#request' do
             context "when request is a fully-qualified user string (e.g. 'John Galt <jgalt@example.com>'" do
                 it "switches to user" do
+                    git.should_receive(:color_output?).and_return false
                     git.should_receive(:select_user).with(User.new('John Galt', 'jgalt@example.com'), :global)
+                    output.should_receive(:puts).with("Switched global user to John Galt <jgalt@example.com>")
                     switcher.request('John Galt <jgalt@example.com>', :global)
                 end
             end
@@ -19,16 +21,34 @@ module GitSu
             context "when no matching user found" do
                 it "does not switch user" do
                     user_list.should_receive(:find).with('asdfasdf').and_return nil
+                    output.should_receive(:puts).with("No user found matching 'asdfasdf'")
                     switcher.request('asdfasdf', :global)
                 end
             end
 
             context "when user is in user list" do
                 it "switches to requested user" do
+                    git.should_receive(:color_output?).and_return false
                     user = User.new('John Galt', 'jgalt@example.com')
 
                     user_list.should_receive(:find).with("john").and_return user 
                     git.should_receive(:select_user).with user, :global
+                    output.should_receive(:puts).with("Switched global user to John Galt <jgalt@example.com>")
+                    switcher.request "john", :global
+                end
+            end
+
+            context "when Git says to color output" do
+                it "displays the switching message in color" do
+                    git.should_receive(:color_output?).and_return true
+                    user = User.new('John Galt', 'jgalt@example.com')
+
+                    user_list.should_receive(:find).with("john").and_return user 
+                    git.should_receive(:select_user).with user, :global
+                    git.should_receive(:get_color).with("blue").and_return("__blue__")
+                    git.should_receive(:get_color).with("green").and_return("__green__")
+                    git.should_receive(:get_color).with("reset").and_return("__reset__")
+                    output.should_receive(:puts).with("Switched global user to __blue__John Galt__reset__ __green__<jgalt@example.com>__reset__")
                     switcher.request "john", :global
                 end
             end

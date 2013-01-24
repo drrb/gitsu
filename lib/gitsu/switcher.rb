@@ -24,7 +24,7 @@ module GitSu
             end
             if matching_user
                 @git.select_user(matching_user, scope)
-                @output.puts "Switched #{scope} user to #{matching_user}"
+                @output.puts "Switched #{scope} user to #{maybe_color matching_user}"
             else
                 @output.puts "No user found matching '#{user}'"
             end
