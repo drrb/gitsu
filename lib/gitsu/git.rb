@@ -12,8 +12,8 @@ module GitSu
             command << suffix
         end
 
-        def get_color(default, binding = "")
-            @shell.execute config_command(:derived, "--get-color '#{binding}' '#{default}'")
+        def get_color(color_name)
+            @shell.execute config_command(:derived, "--get-color '' '#{color_name}'")
         end
 
         def select_user(user, scope)

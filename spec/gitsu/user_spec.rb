@@ -26,7 +26,7 @@ module GitSu
         describe "#to_ansi_s" do
             it "returns a colored string representation of the user" do
                 user = User.new("John Galt", "jg@example.com")
-                user.to_ansi_s("\e[34m", "\e[35m").should == "\e[34mJohn Galt\e[0m \e[35m<jg@example.com>\e[0m"
+                user.to_ansi_s("\e[34m", "\e[35m", "\e[0m").should == "\e[34mJohn Galt\e[0m \e[35m<jg@example.com>\e[0m"
             end
         end
     end

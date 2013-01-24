@@ -24,18 +24,24 @@ module GitSu
         end
 
         def maybe_color(user)
-            user_color = "\e[34m"
-            email_color = "\e[35m"
-            reset_color = "\e[0m"
             if color_output?
+                user_color = get_color "blue"
+                email_color = get_color "green"
+                reset_color = get_color "reset"
                 if user.instance_of? String
                     user_color + user + reset_color
                 else
-                    user.to_ansi_s(user_color, email_color)
+                    user.to_ansi_s(user_color, email_color, reset_color)
                 end
             else
                 user.to_s
             end
+        end
+
+        def get_color(color_name)
+            @colors ||= {}
+            #TODO: what if it's an invalid color?
+            @colors[color_name] ||= @git.get_color color_name
         end
 
         def color_output?

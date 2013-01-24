@@ -27,7 +27,7 @@ module GitSu
             to_s.hash
         end
 
-        def to_ansi_s(name_color = "\e[34m", email_color = "\e[34m", reset_color = "\e[0m")
+        def to_ansi_s(name_color, email_color, reset_color)
             "#{name_color}#{@name}#{reset_color} #{email_color}<#{@email}>#{reset_color}"
         end
 

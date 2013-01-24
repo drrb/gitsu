@@ -71,6 +71,9 @@ module GitSu
             context "when Git says to color output" do
                 it "prints users in color" do
                     git.should_receive(:color_output?).and_return true
+                    git.should_receive(:get_color).with("blue").and_return("\e[34m")
+                    git.should_receive(:get_color).with("green").and_return("\e[35m")
+                    git.should_receive(:get_color).with("reset").and_return("\e[0m")
                     git.should_receive(:selected_user).with(:derived).and_return User.new('Johnny Local', 'jlocal@example.com')
                     git.should_receive(:selected_user).with(:local).and_return User.new('Johnny Local', 'jlocal@example.com')
                     git.should_receive(:selected_user).with(:global).and_return User.new('Johnny Global', 'jglobal@example.com')

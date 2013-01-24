@@ -1,6 +1,6 @@
 Features
 --------
-Get ANSI codes from Git
+Print user in color for single scopes
 Make colors configurable because people like that stuff
 Make default scope configurable for shared machines
 Support multiple users at once for pairing
