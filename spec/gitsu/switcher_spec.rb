@@ -53,6 +53,7 @@ module GitSu
             context "when a scope is specified" do
                 context "when there is a user selected" do
                     it "prints the current user" do
+                        git.should_receive(:color_output?).and_return false
                         git.should_receive(:selected_user).with(:global).and_return User.new('John Galt', 'jgalt@example.com')
                         output.should_receive(:puts).with("John Galt <jgalt@example.com>")
                         switcher.print_current(:global)
@@ -69,20 +70,33 @@ module GitSu
             end
 
             context "when Git says to color output" do
-                it "prints users in color" do
-                    git.should_receive(:color_output?).and_return true
-                    git.should_receive(:get_color).with("blue").and_return("\e[34m")
-                    git.should_receive(:get_color).with("green").and_return("\e[35m")
-                    git.should_receive(:get_color).with("reset").and_return("\e[0m")
-                    git.should_receive(:selected_user).with(:derived).and_return User.new('Johnny Local', 'jlocal@example.com')
-                    git.should_receive(:selected_user).with(:local).and_return User.new('Johnny Local', 'jlocal@example.com')
-                    git.should_receive(:selected_user).with(:global).and_return User.new('Johnny Global', 'jglobal@example.com')
-                    git.should_receive(:selected_user).with(:system).and_return nil
-                    output.should_receive(:puts).with("Current user: \e[34mJohnny Local\e[0m \e[35m<jlocal@example.com>\e[0m")
-                    output.should_receive(:puts).with("Local: \e[34mJohnny Local\e[0m \e[35m<jlocal@example.com>\e[0m")
-                    output.should_receive(:puts).with("Global: \e[34mJohnny Global\e[0m \e[35m<jglobal@example.com>\e[0m")
-                    output.should_receive(:puts).with("System: \e[34m(none)\e[0m")
-                    switcher.print_current(:all)
+                context "when no scope specified" do
+                    it "prints all users in color" do
+                        git.should_receive(:color_output?).and_return true
+                        git.should_receive(:get_color).with("blue").and_return("\e[34m")
+                        git.should_receive(:get_color).with("green").and_return("\e[35m")
+                        git.should_receive(:get_color).with("reset").and_return("\e[0m")
+                        git.should_receive(:selected_user).with(:derived).and_return User.new('Johnny Local', 'jlocal@example.com')
+                        git.should_receive(:selected_user).with(:local).and_return User.new('Johnny Local', 'jlocal@example.com')
+                        git.should_receive(:selected_user).with(:global).and_return User.new('Johnny Global', 'jglobal@example.com')
+                        git.should_receive(:selected_user).with(:system).and_return nil
+                        output.should_receive(:puts).with("Current user: \e[34mJohnny Local\e[0m \e[35m<jlocal@example.com>\e[0m")
+                        output.should_receive(:puts).with("Local: \e[34mJohnny Local\e[0m \e[35m<jlocal@example.com>\e[0m")
+                        output.should_receive(:puts).with("Global: \e[34mJohnny Global\e[0m \e[35m<jglobal@example.com>\e[0m")
+                        output.should_receive(:puts).with("System: \e[34m(none)\e[0m")
+                        switcher.print_current(:all)
+                    end
+                end
+                context "when no scope specified" do
+                    it "prints the selected user in color" do
+                        git.should_receive(:color_output?).and_return true
+                        git.should_receive(:get_color).with("blue").and_return("\e[34m")
+                        git.should_receive(:get_color).with("green").and_return("\e[35m")
+                        git.should_receive(:get_color).with("reset").and_return("\e[0m")
+                        git.should_receive(:selected_user).with(:global).and_return User.new('John Galt', 'jgalt@example.com')
+                        output.should_receive(:puts).with("\e[34mJohn Galt\e[0m \e[35m<jgalt@example.com>\e[0m")
+                        switcher.print_current(:global)
+                    end
                 end
             end
         end

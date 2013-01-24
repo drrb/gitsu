@@ -18,9 +18,14 @@ module GitSu
             end
         end
 
-        def get_user(scope)
-            user = @git.selected_user(scope) || "(none)"
-            maybe_color user
+        def get_user(scope, suppress_none = false)
+            selected_user = @git.selected_user(scope)
+            if selected_user.nil? && suppress_none
+                ""
+            else
+                user = selected_user.nil? ? "(none)" : selected_user
+                maybe_color user
+            end
         end
 
         def maybe_color(user)
@@ -56,7 +61,7 @@ module GitSu
                 @output.puts "Global: #{get_user(:global)}"
                 @output.puts "System: #{get_user(:system)}"
             else
-                @output.puts @git.selected_user(scope).to_s
+                @output.puts get_user(scope, true)
             end
         end
 
