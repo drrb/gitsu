@@ -1,3 +1,15 @@
+class Array
+    def list
+        if empty?
+            ""
+        elsif size == 1
+            last.to_s
+        else
+            map{|e| e.to_s}.slice(0, length - 1).join(", ") + " and " + last.to_s
+        end
+    end
+end
+
 module GitSu
     class Switcher
         def initialize(git, user_list, output)
@@ -69,16 +81,20 @@ module GitSu
             @git.edit_gitsu_config
         end
 
-        def clear(scope)
-            if scope == :all
+        def clear(*scopes)
+            scope_word = scopes.include?(:all) || scopes.size > 1 ? "scopes" : "scope"
+            @output.puts "Clearing Git user in #{scopes.list} #{scope_word}"
+            if scopes.include? :all
                 @git.clear_user(:local)
                 @git.clear_user(:global)
                 @git.clear_user(:system)
             else
-                @git.clear_user(scope)
+                scopes.each do |scope|
+                    @git.clear_user(scope)
+                end
             end
         end
-        
+
         def list
             @user_list.list.each do |user|
                 @output.puts maybe_color user

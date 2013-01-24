@@ -140,8 +140,17 @@ module GitSu
                     switcher.clear :local
                 end
             end
+            context "when multiple scopes are specified" do
+                it "clears Git users in the specified scopes" do
+                    output.should_receive(:puts).with("Clearing Git user in local and global scopes")
+                    git.should_receive(:clear_user).with(:local)
+                    git.should_receive(:clear_user).with(:global)
+                    switcher.clear :local,:global
+                end
+            end
             context "when 'all' scope is specified" do
                 it "clears all Git users" do
+                    output.should_receive(:puts).with("Clearing Git user in all scopes")
                     git.should_receive(:clear_user).with(:local)
                     git.should_receive(:clear_user).with(:global)
                     git.should_receive(:clear_user).with(:system)
