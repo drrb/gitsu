@@ -28,7 +28,7 @@ Gitsu helps you to manage your projects' Git users.
     Show help.
 
 -l, --local, -g, --global, -s, --system 
-    Specify the scope for switching users, or for --clear.
+    Specify the scope for printing, switching, or clearing selected users.
 
 -t, --list
     List the Gitsu users.
@@ -42,6 +42,10 @@ http://drrb.github.com/gitsu
 Show current Git users
 
 `$ git su`
+
+Show the current Git users in specified scopes
+
+`$ git su --local --global`
 
 ### Adding users
 
