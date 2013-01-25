@@ -88,14 +88,18 @@ module GitSu
             scope_word = scopes.include?(:all) || scopes.size > 1 ? "scopes" : "scope"
             @output.puts "Clearing Git user in #{scopes.list} #{scope_word}"
             if scopes.include? :all
-                @git.clear_user(:local)
-                @git.clear_user(:global)
-                @git.clear_user(:system)
+                clear_user(:local)
+                clear_user(:global)
+                clear_user(:system)
             else
                 scopes.each do |scope|
-                    @git.clear_user(scope)
+                    clear_user(scope)
                 end
             end
+        end
+
+        def clear_user(scope)
+            @git.clear_user(scope) unless @git.selected_user(scope).nil?
         end
 
         def list

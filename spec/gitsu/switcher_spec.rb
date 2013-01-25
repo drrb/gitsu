@@ -178,6 +178,7 @@ module GitSu
         describe '#clear' do
             context "when a scope is specified" do
                 it "clears the current user in the specified scope" do
+                    git.should_receive(:selected_user).with(:local).and_return("some user")
                     git.should_receive(:clear_user).with(:local)
                     switcher.clear :local
                 end
@@ -185,7 +186,9 @@ module GitSu
             context "when multiple scopes are specified" do
                 it "clears Git users in the specified scopes" do
                     output.should_receive(:puts).with("Clearing Git user in local and global scopes")
+                    git.should_receive(:selected_user).with(:local).and_return("some user")
                     git.should_receive(:clear_user).with(:local)
+                    git.should_receive(:selected_user).with(:global).and_return("some user")
                     git.should_receive(:clear_user).with(:global)
                     switcher.clear :local,:global
                 end
@@ -193,10 +196,20 @@ module GitSu
             context "when 'all' scope is specified" do
                 it "clears all Git users" do
                     output.should_receive(:puts).with("Clearing Git user in all scopes")
+                    git.should_receive(:selected_user).with(:local).and_return("some user")
                     git.should_receive(:clear_user).with(:local)
+                    git.should_receive(:selected_user).with(:global).and_return("some user")
                     git.should_receive(:clear_user).with(:global)
+                    git.should_receive(:selected_user).with(:system).and_return("some user")
                     git.should_receive(:clear_user).with(:system)
                     switcher.clear :all
+                end
+            end
+            context "when no user is selected" do
+                it "doesn't attempt to clear the user" do
+                    output.should_receive(:puts).with("Clearing Git user in local scope")
+                    git.should_receive(:selected_user).with(:local).and_return nil
+                    switcher.clear :local
                 end
             end
         end
