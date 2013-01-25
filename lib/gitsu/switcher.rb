@@ -11,9 +11,29 @@ class Array
 end
 
 module GitSu
+    class CachingGit
+        def initialize(git)
+            @git = git
+        end
+
+        def get_color(color_name)
+            @colors ||= {}
+            #TODO: what if it's an invalid color?
+            @colors[color_name] ||= @git.get_color color_name
+        end
+
+        def color_output?
+            @color_output.nil? ? @color_output = @git.color_output? : @color_output
+        end
+
+        def method_missing(name, *args, &block)
+            @git.send(name, *args, &block) 
+        end
+    end
+
     class Switcher
         def initialize(git, user_list, output)
-            @git, @user_list, @output = git, user_list, output
+            @git, @user_list, @output = CachingGit.new(git), user_list, output
         end
 
         def request(user, scope)
@@ -29,52 +49,17 @@ module GitSu
                 @output.puts "No user found matching '#{user}'"
             end
         end
-
-        def get_user(scope, suppress_none = false)
-            selected_user = @git.selected_user(scope)
-            if selected_user.nil? && suppress_none
-                ""
-            else
-                user = selected_user.nil? ? "(none)" : selected_user
-                maybe_color user
-            end
-        end
-
-        def maybe_color(user)
-            if color_output?
-                user_color = get_color "blue"
-                email_color = get_color "green"
-                reset_color = get_color "reset"
-                if user.instance_of? String
-                    user_color + user + reset_color
-                else
-                    user.to_ansi_s(user_color, email_color, reset_color)
-                end
-            else
-                user.to_s
-            end
-        end
-
-        def get_color(color_name)
-            @colors ||= {}
-            #TODO: what if it's an invalid color?
-            @colors[color_name] ||= @git.get_color color_name
-        end
-
-        def color_output?
-            @color_output.nil? ? @color_output = @git.color_output? : @color_output
-        end
         
         def print_current(*scopes)
             if scopes.include? :all
-                @output.puts "Current user: #{get_user(:derived)}"
+                @output.puts "Current user: #{render_user(:derived)}"
                 @output.puts
-                @output.puts "Local: #{get_user(:local)}"
-                @output.puts "Global: #{get_user(:global)}"
-                @output.puts "System: #{get_user(:system)}"
+                @output.puts "Local: #{render_user(:local)}"
+                @output.puts "Global: #{render_user(:global)}"
+                @output.puts "System: #{render_user(:system)}"
             else
                 scopes.each do |scope|
-                    user = get_user(scope, true)
+                    user = render_user(scope, true)
                     @output.puts user unless user.empty?
                 end
             end
@@ -99,6 +84,7 @@ module GitSu
         end
 
         def clear_user(scope)
+            # Git complains if you try to clear the user when the config file is missing
             @git.clear_user(scope) unless @git.selected_user(scope).nil?
         end
 
@@ -115,6 +101,31 @@ module GitSu
             else
                 @user_list.add user
                 @output.puts "User '#{user}' added to users"
+            end
+        end
+
+        def render_user(scope, suppress_none = false)
+            selected_user = @git.selected_user(scope)
+            if selected_user.nil? && suppress_none
+                ""
+            else
+                user = selected_user.nil? ? "(none)" : selected_user
+                maybe_color user
+            end
+        end
+
+        def maybe_color(user)
+            if @git.color_output?
+                user_color = @git.get_color "blue"
+                email_color = @git.get_color "green"
+                reset_color = @git.get_color "reset"
+                if user.instance_of? String
+                    user_color + user + reset_color
+                else
+                    user.to_ansi_s(user_color, email_color, reset_color)
+                end
+            else
+                user.to_s
             end
         end
     end
