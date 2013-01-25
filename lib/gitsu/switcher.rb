@@ -26,6 +26,11 @@ module GitSu
             @color_output.nil? ? @color_output = @git.color_output? : @color_output
         end
 
+        def clear_user(scope)
+            # Git complains if you try to clear the user when the config file is missing
+            @git.clear_user(scope) unless @git.selected_user(scope).nil?
+        end
+
         def method_missing(name, *args, &block)
             @git.send(name, *args, &block) 
         end
@@ -73,19 +78,14 @@ module GitSu
             scope_word = scopes.include?(:all) || scopes.size > 1 ? "scopes" : "scope"
             @output.puts "Clearing Git user in #{scopes.list} #{scope_word}"
             if scopes.include? :all
-                clear_user(:local)
-                clear_user(:global)
-                clear_user(:system)
+                @git.clear_user(:local)
+                @git.clear_user(:global)
+                @git.clear_user(:system)
             else
                 scopes.each do |scope|
-                    clear_user(scope)
+                    @git.clear_user(scope)
                 end
             end
-        end
-
-        def clear_user(scope)
-            # Git complains if you try to clear the user when the config file is missing
-            @git.clear_user(scope) unless @git.selected_user(scope).nil?
         end
 
         def list
