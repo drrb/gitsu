@@ -154,10 +154,16 @@ module GitSu
                 end
             end
             context "when the user already exists in the user list" do
-                it "Doesn't add the user to the user list" do
+                it "doesn't add the user to the user list" do
                     user_list.should_receive(:list).and_return [User.new('John Galt', 'jgalt@example.com')]
                     output.should_receive(:puts).with("User 'John Galt <jgalt@example.com>' already in user list")
                     switcher.add("John Galt <jgalt@example.com>")
+                end
+            end
+            context "when the input is not in expected format" do
+                it "prints an error" do
+                    output.should_receive(:puts).with("Couldn't parse 'xxx' as user (expected user in format: 'John Smith <jsmith@example.com>')")
+                    switcher.add("xxx")
                 end
             end
         end

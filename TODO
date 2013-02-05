@@ -9,8 +9,6 @@ Support multiple users at once for pairing
 
 Bugs
 -------
-When I type 'git su -a asfd', I see:
-    undefined method `name' for false:FalseClass
 
 Tests
 -------

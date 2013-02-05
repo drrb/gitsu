@@ -19,3 +19,8 @@ Feature: Add user
             """
             jgalt@example.com: John Galt
             """
+
+    Scenario: Try to add invalid user
+        Given no user is selected
+        When I type "git su --add xxx"
+        Then I should see "Couldn't parse 'xxx' as user (expected user in format: 'John Smith <jsmith@example.com>')"

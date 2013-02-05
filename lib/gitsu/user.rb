@@ -8,6 +8,9 @@ module GitSu
             "#{name_color}(none)#{reset_color}"
         end
 
+        class ParseError < RuntimeError
+        end
+
         attr_accessor :name, :email
 
         def User.parse(string)
@@ -17,7 +20,7 @@ module GitSu
                 email = string[/<.*>/].delete "[<>]" 
                 User.new(name, email)
             else
-                false
+                raise ParseError, "Couldn't parse '#{string}' as user (expected user in format: 'John Smith <jsmith@example.com>')"
             end
         end
 

@@ -46,7 +46,12 @@ module GitSu
         end
 
         def request(user, scope)
-            matching_user = User.parse(user) || @user_list.find(user)
+            begin
+                matching_user = User.parse(user)
+            rescue User::ParseError => parse_error
+                matching_user = @user_list.find(user)
+            end
+
             if matching_user.none?
                 @output.puts "No user found matching '#{user}'"
             else
@@ -94,7 +99,12 @@ module GitSu
         end
 
         def add(user_string)
-            user = User.parse user_string
+            begin
+                user = User.parse(user_string)
+            rescue User::ParseError => parse_error
+                @output.puts parse_error.message
+                return
+            end
             if @user_list.list.include? user
                 @output.puts "User '#{user}' already in user list"
             else
