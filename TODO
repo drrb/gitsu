@@ -1,5 +1,6 @@
 Features
 --------
+Make C-C exit cleanly
 Make 'git su' print only the current derived user when stdout isn't a tty
 Make 'git su --local' print more obvious output when stdout _is_ a tty
 Make colors configurable because people like that stuff
