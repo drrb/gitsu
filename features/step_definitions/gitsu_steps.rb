@@ -68,7 +68,7 @@ Then /^no user should be selected$/ do
 end
 
 Then /^no user should be selected in "(.*?)" scope$/ do |scope|
-    git.selected_user(scope.to_sym).should be nil
+    git.selected_user(scope.to_sym).should be GitSu::User::NONE
 end
 
 Then /^the config file should be open in an editor$/ do
@@ -100,9 +100,9 @@ class StubGit
 
     def selected_user(scope)
         if scope == :derived
-            @users[:local] || @users[:global] || @users[:system]
+            @users[:local] || @users[:global] || @users[:system] || GitSu::User::NONE
         else
-            @users[scope]
+            @users[scope] || GitSu::User::NONE
         end
     end
 

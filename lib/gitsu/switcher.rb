@@ -8,10 +8,14 @@ class Array
             map{|e| e.to_s}.slice(0, length - 1).join(", ") + " and " + last.to_s
         end
     end
+
+    def pluralize(word)
+        size > 1 ? word + "s" : word
+    end
 end
 
 module GitSu
-    class CachingGit
+    class CachingGitProxy
         def initialize(git)
             @git = git
         end
@@ -28,7 +32,7 @@ module GitSu
 
         def clear_user(scope)
             # Git complains if you try to clear the user when the config file is missing
-            @git.clear_user(scope) unless @git.selected_user(scope).nil?
+            @git.clear_user(scope) unless @git.selected_user(scope).none?
         end
 
         def method_missing(name, *args, &block)
@@ -38,20 +42,16 @@ module GitSu
 
     class Switcher
         def initialize(git, user_list, output)
-            @git, @user_list, @output = CachingGit.new(git), user_list, output
+            @git, @user_list, @output = CachingGitProxy.new(git), user_list, output
         end
 
         def request(user, scope)
-            if user =~ /[^<]+ <.+@.+>/
-                matching_user = User.parse(user)
+            matching_user = User.parse(user) || @user_list.find(user)
+            if matching_user.none?
+                @output.puts "No user found matching '#{user}'"
             else
-                matching_user = @user_list.find user
-            end
-            if matching_user
                 @git.select_user(matching_user, scope)
                 @output.puts "Switched #{scope} user to #{maybe_color matching_user}"
-            else
-                @output.puts "No user found matching '#{user}'"
             end
         end
         
@@ -75,16 +75,15 @@ module GitSu
         end
 
         def clear(*scopes)
-            scope_word = scopes.include?(:all) || scopes.size > 1 ? "scopes" : "scope"
-            @output.puts "Clearing Git user in #{scopes.list} #{scope_word}"
+            scope_list = scopes.list
+
             if scopes.include? :all
-                @git.clear_user(:local)
-                @git.clear_user(:global)
-                @git.clear_user(:system)
-            else
-                scopes.each do |scope|
-                    @git.clear_user(scope)
-                end
+                scopes = [:local, :global, :system]
+            end
+
+            @output.puts "Clearing Git #{scopes.pluralize('user')} in #{scope_list} #{scopes.pluralize('scope')}"
+            scopes.each do |scope|
+                @git.clear_user(scope)
             end
         end
 
@@ -106,11 +105,10 @@ module GitSu
 
         def render_user(scope, suppress_none = false)
             selected_user = @git.selected_user(scope)
-            if selected_user.nil? && suppress_none
+            if selected_user.none? && suppress_none
                 ""
             else
-                user = selected_user.nil? ? "(none)" : selected_user
-                maybe_color user
+                maybe_color selected_user
             end
         end
 
@@ -119,11 +117,7 @@ module GitSu
                 user_color = @git.get_color "blue"
                 email_color = @git.get_color "green"
                 reset_color = @git.get_color "reset"
-                if user.instance_of? String
-                    user_color + user + reset_color
-                else
-                    user.to_ansi_s(user_color, email_color, reset_color)
-                end
+                user.to_ansi_s(user_color, email_color, reset_color)
             else
                 user.to_s
             end

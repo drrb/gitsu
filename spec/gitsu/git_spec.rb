@@ -29,9 +29,9 @@ module GitSu
                 end
 
                 context 'when no user is selected' do
-                    it 'returns nil' do
+                    it 'returns the null user' do
                         shell.should_receive(:execute).with("git config --global user.name").and_return("")
-                        git.selected_user(:global).should be nil
+                        git.selected_user(:global).should be User::NONE
                     end
                 end
             end

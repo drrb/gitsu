@@ -28,7 +28,7 @@ module GitSu
                 ("#{user.name} #{user.email}").downcase.include? search_term.downcase
             end
 
-            matching_users.first
+            matching_users.first || User::NONE
         end
     end
 end

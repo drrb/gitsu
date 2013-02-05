@@ -77,8 +77,8 @@ module GitSu
             end
 
             context "when no matching user exists" do
-                it "returns nil" do
-                    user_list.find("john").should be nil
+                it "returns no user" do
+                    user_list.find("john").should be User::NONE
                 end
             end
         end

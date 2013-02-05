@@ -10,8 +10,8 @@ module GitSu
             end
 
             context "when passed an invalid string" do
-                it "throws an exception" do
-                    expect { User.parse('xxx') }.to raise_error Exception
+                it "returns false" do
+                    User.parse('xxx').should be false
                 end
             end
         end

@@ -13,7 +13,7 @@ Feature: Clear user
         Given user "John Galt <jgalt@example.com>" is selected in "local" scope
         And user "John Galt <jgalt@example.com>" is selected in "global" scope
         When I type "git su --clear --local --global"
-        Then I should see "Clearing Git user in local and global scopes"
+        Then I should see "Clearing Git users in local and global scopes"
         And no user should be selected in "local" scope
         And no user should be selected in "global" scope
 
@@ -22,7 +22,7 @@ Feature: Clear user
         And user "Joe Global <jglobal@example.com>" is selected in "global" scope
         And user "Joe System <jsystem@example.com>" is selected in "system" scope
         When I type "git su --clear"
-        Then I should see "Clearing Git user in all scopes"
+        Then I should see "Clearing Git users in all scopes"
         And no user should be selected in "local" scope
         And no user should be selected in "global" scope
         And no user should be selected in "system" scope

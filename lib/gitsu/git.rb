@@ -26,7 +26,7 @@ module GitSu
         def selected_user(scope)
             name = @shell.execute config_command(scope, "user.name")
             if name.empty?
-                nil
+                User::NONE
             else
                 email = @shell.execute config_command(scope, "user.email")
                 User.new(name, email)
