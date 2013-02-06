@@ -7,8 +7,8 @@ module GitSu
     shell = Shell.new
     git = Git.new(shell)
     user_list = UserList.new(user_list_file)
-    switcher = Switcher.new(git, user_list, STDERR)
-    git_su = Gitsu.new(switcher, STDERR)
+    switcher = Switcher.new(git, user_list, STDOUT)
+    git_su = Gitsu.new(switcher, STDOUT)
     begin
         git_su.go ARGV
     rescue Interrupt => interrupt
