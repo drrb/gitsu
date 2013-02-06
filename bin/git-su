@@ -2,17 +2,18 @@
 $LOAD_PATH.unshift File.expand_path('../../lib', __FILE__)
 require 'gitsu'
 
-user_list_file = File.expand_path("~/.gitsu")
-
-shell = GitSu::Shell.new
-git = GitSu::Git.new(shell)
-user_list = GitSu::UserList.new(user_list_file)
-switcher = GitSu::Switcher.new(git, user_list, STDERR)
-git_su = GitSu::Gitsu.new(switcher, STDERR)
-begin
-    git_su.go ARGV
-rescue Interrupt => interrupt
-    STDERR.puts "Interrupted"
-rescue StandardError => error
-    STDERR.puts error
+module GitSu
+    user_list_file = File.expand_path("~/.gitsu")
+    shell = Shell.new
+    git = Git.new(shell)
+    user_list = UserList.new(user_list_file)
+    switcher = Switcher.new(git, user_list, STDERR)
+    git_su = Gitsu.new(switcher, STDERR)
+    begin
+        git_su.go ARGV
+    rescue Interrupt => interrupt
+        STDERR.puts "Interrupted"
+    rescue StandardError => error
+        STDERR.puts error
+    end
 end
