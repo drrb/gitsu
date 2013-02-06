@@ -1,6 +1,5 @@
 Features
 --------
-Make C-C exit cleanly
 Make 'git whoami' print current derived user
 Make script-targetted output print to stdout (e.g. 'git su --local', not e.g. 'git su --clear')
 Make colors configurable because people like that stuff

@@ -11,6 +11,8 @@ switcher = GitSu::Switcher.new(git, user_list, STDERR)
 git_su = GitSu::Gitsu.new(switcher, STDERR)
 begin
     git_su.go ARGV
+rescue Interrupt => interrupt
+    STDERR.puts "Interrupted"
 rescue StandardError => error
     STDERR.puts error
 end
