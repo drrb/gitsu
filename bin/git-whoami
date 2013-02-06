@@ -4,9 +4,9 @@ lib_path = File.expand_path('../../lib', __FILE__)
 $LOAD_PATH.unshift lib_path unless $LOAD_PATH.include? lib_path
 require 'gitsu'
 
-git_su = GitSu::Factory.git_su(STDOUT)
+switcher = GitSu::Factory.switcher(STDOUT)
 begin
-    git_su.go ARGV
+    switcher.print_current :derived
 rescue Interrupt => interrupt
     STDERR.puts "Interrupted"
 rescue StandardError => error

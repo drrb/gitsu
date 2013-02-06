@@ -1,3 +1,4 @@
+require 'gitsu/factory'
 require 'gitsu/git'
 require 'gitsu/gitsu'
 require 'gitsu/shell'
