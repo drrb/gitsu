@@ -1,6 +1,7 @@
 require 'gitsu/factory'
 require 'gitsu/git'
 require 'gitsu/gitsu'
+require 'gitsu/runner'
 require 'gitsu/shell'
 require 'gitsu/switcher'
 require 'gitsu/user_file'
