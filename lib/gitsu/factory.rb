@@ -7,7 +7,7 @@ module GitSu
         def switcher
             user_list_file = File.expand_path("~/.gitsu")
             shell = Shell.new
-            git = Git.new(shell)
+            git = CachingGit.new(shell)
             user_list = UserList.new(user_list_file)
             Switcher.new(git, user_list, @output)
         end

@@ -1,9 +1,10 @@
 require 'optparse'
 
 module GitSu
-        DEFAULT_CLEAR_SCOPES = [:all]
-        DEFAULT_PRINT_SCOPES = [:all]
-        DEFAULT_SELECT_SCOPES = [:local]
+    DEFAULT_CLEAR_SCOPES = [:all]
+    DEFAULT_PRINT_SCOPES = [:all]
+    DEFAULT_SELECT_SCOPES = [:local]
+
     class Gitsu
 
         def initialize(switcher, output)

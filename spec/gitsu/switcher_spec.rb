@@ -12,8 +12,9 @@ module GitSu
         describe '#request' do
             context "when request is a fully-qualified user string (e.g. 'John Galt <jgalt@example.com>'" do
                 it "switches to user" do
-                    git.should_receive(:color_output?).and_return false
-                    git.should_receive(:select_user).with(User.new('John Galt', 'jgalt@example.com'), :global)
+                    user = User.new('John Galt', 'jgalt@example.com')
+                    git.should_receive(:select_user).with(user, :global)
+                    git.should_receive(:render).with(user).and_return(user.to_s)
                     output.should_receive(:puts).with("Switched global user to John Galt <jgalt@example.com>")
                     switcher.request('John Galt <jgalt@example.com>', :global)
                 end
@@ -29,27 +30,12 @@ module GitSu
 
             context "when user is in user list" do
                 it "switches to requested user" do
-                    git.should_receive(:color_output?).and_return false
                     user = User.new('John Galt', 'jgalt@example.com')
 
                     user_list.should_receive(:find).with("john").and_return user 
                     git.should_receive(:select_user).with user, :global
+                    git.should_receive(:render).with(user).and_return user.to_s
                     output.should_receive(:puts).with("Switched global user to John Galt <jgalt@example.com>")
-                    switcher.request "john", :global
-                end
-            end
-
-            context "when Git says to color output" do
-                it "displays the switching message in color" do
-                    git.should_receive(:color_output?).and_return true
-                    user = User.new('John Galt', 'jgalt@example.com')
-
-                    user_list.should_receive(:find).with("john").and_return user 
-                    git.should_receive(:select_user).with user, :global
-                    git.should_receive(:get_color).with("blue").and_return("__blue__")
-                    git.should_receive(:get_color).with("green").and_return("__green__")
-                    git.should_receive(:get_color).with("reset").and_return("__reset__")
-                    output.should_receive(:puts).with("Switched global user to __blue__John Galt__reset__ __green__<jgalt@example.com>__reset__")
                     switcher.request "john", :global
                 end
             end
@@ -58,11 +44,19 @@ module GitSu
         describe '#print_current' do
             context "when 'all' scope is specified" do
                 it "prints all users" do
-                    git.should_receive(:color_output?).and_return false
-                    git.should_receive(:selected_user).with(:derived).and_return User.new('Johnny Local', 'jlocal@example.com')
-                    git.should_receive(:selected_user).with(:local).and_return User.new('Johnny Local', 'jlocal@example.com')
-                    git.should_receive(:selected_user).with(:global).and_return User.new('Johnny Global', 'jglobal@example.com')
-                    git.should_receive(:selected_user).with(:system).and_return User.new('Johnny System', 'jsystem@example.com')
+                    local_user = User.new('Johnny Local', 'jlocal@example.com')
+                    global_user = User.new('Johnny Global', 'jglobal@example.com')
+                    system_user = User.new('Johnny System', 'jsystem@example.com')
+                    derived_user = local_user
+
+                    git.should_receive(:selected_user).with(:derived).and_return derived_user
+                    git.should_receive(:render).with(derived_user).and_return derived_user.to_s
+                    git.should_receive(:selected_user).with(:local).and_return local_user
+                    git.should_receive(:render).with(local_user).and_return local_user.to_s
+                    git.should_receive(:selected_user).with(:global).and_return global_user
+                    git.should_receive(:render).with(global_user).and_return global_user.to_s
+                    git.should_receive(:selected_user).with(:system).and_return system_user
+                    git.should_receive(:render).with(system_user).and_return system_user.to_s
                     output.should_receive(:puts).with("Current user: Johnny Local <jlocal@example.com>")
                     output.should_receive(:puts).with("Local: Johnny Local <jlocal@example.com>")
                     output.should_receive(:puts).with("Global: Johnny Global <jglobal@example.com>")
@@ -74,8 +68,9 @@ module GitSu
             context "when a scope is specified" do
                 context "when there is a user selected" do
                     it "prints the current user" do
-                        git.should_receive(:color_output?).and_return false
-                        git.should_receive(:selected_user).with(:global).and_return User.new('John Galt', 'jgalt@example.com')
+                        current_user = User.new('John Galt', 'jgalt@example.com')
+                        git.should_receive(:selected_user).with(:global).exactly(2).times.and_return current_user
+                        git.should_receive(:render).with(current_user).and_return current_user.to_s
                         output.should_receive(:puts).with("John Galt <jgalt@example.com>")
                         switcher.print_current(:global)
                     end
@@ -92,9 +87,12 @@ module GitSu
             context "when multiple scopes are specified" do
                 context "when there is a user selected in all scopes" do
                     it "prints the current user in those scopes" do
-                        git.should_receive(:color_output?).and_return false
-                        git.should_receive(:selected_user).with(:local).and_return User.new('John Local', 'jl@example.com')
-                        git.should_receive(:selected_user).with(:global).and_return User.new('John Global', 'jg@example.com')
+                        local_user = User.new('John Local', 'jl@example.com')
+                        global_user = User.new('John Global', 'jg@example.com')
+                        git.should_receive(:selected_user).with(:local).exactly(2).times.and_return local_user
+                        git.should_receive(:render).with(local_user).and_return local_user.to_s
+                        git.should_receive(:selected_user).with(:global).exactly(2).times.and_return global_user
+                        git.should_receive(:render).with(global_user).and_return global_user.to_s
                         output.should_receive(:puts).with("John Local <jl@example.com>")
                         output.should_receive(:puts).with("John Global <jg@example.com>")
                         switcher.print_current(:local, :global)
@@ -103,42 +101,12 @@ module GitSu
 
                 context "when there is no user selected in one scope" do
                     it 'prints only users for scopes that have users' do
-                        git.should_receive(:color_output?).and_return false
+                        global_user = User.new('John Global', 'jg@example.com')
                         git.should_receive(:selected_user).with(:local).and_return User::NONE
-                        git.should_receive(:selected_user).with(:global).and_return User.new('John Global', 'jg@example.com')
+                        git.should_receive(:selected_user).with(:global).exactly(2).times.and_return global_user
+                        git.should_receive(:render).with(global_user).and_return(global_user.to_s)
                         output.should_receive(:puts).with("John Global <jg@example.com>")
                         switcher.print_current(:local, :global)
-                    end
-                end
-            end
-
-            context "when Git says to color output" do
-                context "when no scope specified" do
-                    it "prints all users in color" do
-                        git.should_receive(:color_output?).and_return true
-                        git.should_receive(:get_color).with("blue").and_return("\e[34m")
-                        git.should_receive(:get_color).with("green").and_return("\e[35m")
-                        git.should_receive(:get_color).with("reset").and_return("\e[0m")
-                        git.should_receive(:selected_user).with(:derived).and_return User.new('Johnny Local', 'jlocal@example.com')
-                        git.should_receive(:selected_user).with(:local).and_return User.new('Johnny Local', 'jlocal@example.com')
-                        git.should_receive(:selected_user).with(:global).and_return User.new('Johnny Global', 'jglobal@example.com')
-                        git.should_receive(:selected_user).with(:system).and_return User::NONE
-                        output.should_receive(:puts).with("Current user: \e[34mJohnny Local\e[0m \e[35m<jlocal@example.com>\e[0m")
-                        output.should_receive(:puts).with("Local: \e[34mJohnny Local\e[0m \e[35m<jlocal@example.com>\e[0m")
-                        output.should_receive(:puts).with("Global: \e[34mJohnny Global\e[0m \e[35m<jglobal@example.com>\e[0m")
-                        output.should_receive(:puts).with("System: \e[34m(none)\e[0m")
-                        switcher.print_current(:all)
-                    end
-                end
-                context "when no scope specified" do
-                    it "prints the selected user in color" do
-                        git.should_receive(:color_output?).and_return true
-                        git.should_receive(:get_color).with("blue").and_return("\e[34m")
-                        git.should_receive(:get_color).with("green").and_return("\e[35m")
-                        git.should_receive(:get_color).with("reset").and_return("\e[0m")
-                        git.should_receive(:selected_user).with(:global).and_return User.new('John Galt', 'jgalt@example.com')
-                        output.should_receive(:puts).with("\e[34mJohn Galt\e[0m \e[35m<jgalt@example.com>\e[0m")
-                        switcher.print_current(:global)
                     end
                 end
             end
@@ -174,9 +142,10 @@ module GitSu
                 users << User.new("User One", "1@example.com")
                 users << User.new("User Two", "2@example.com")
 
-                git.should_receive(:color_output?).and_return false
                 user_list.should_receive(:list).and_return(users)
+                git.should_receive(:render).with(users.first).and_return(users.first.to_s)
                 output.should_receive(:puts).with("User One <1@example.com>")
+                git.should_receive(:render).with(users.last).and_return(users.last.to_s)
                 output.should_receive(:puts).with("User Two <2@example.com>")
                 switcher.list
             end
@@ -185,7 +154,6 @@ module GitSu
         describe '#clear' do
             context "when a scope is specified" do
                 it "clears the current user in the specified scope" do
-                    git.should_receive(:selected_user).with(:local).and_return(a_user)
                     git.should_receive(:clear_user).with(:local)
                     switcher.clear :local
                 end
@@ -193,9 +161,7 @@ module GitSu
             context "when multiple scopes are specified" do
                 it "clears Git users in the specified scopes" do
                     output.should_receive(:puts).with("Clearing Git users in local and global scopes")
-                    git.should_receive(:selected_user).with(:local).and_return(a_user)
                     git.should_receive(:clear_user).with(:local)
-                    git.should_receive(:selected_user).with(:global).and_return(a_user)
                     git.should_receive(:clear_user).with(:global)
                     switcher.clear :local,:global
                 end
@@ -203,20 +169,10 @@ module GitSu
             context "when 'all' scope is specified" do
                 it "clears all Git users" do
                     output.should_receive(:puts).with("Clearing Git users in all scopes")
-                    git.should_receive(:selected_user).with(:local).and_return(a_user)
                     git.should_receive(:clear_user).with(:local)
-                    git.should_receive(:selected_user).with(:global).and_return(a_user)
                     git.should_receive(:clear_user).with(:global)
-                    git.should_receive(:selected_user).with(:system).and_return(a_user)
                     git.should_receive(:clear_user).with(:system)
                     switcher.clear :all
-                end
-            end
-            context "when no user is selected" do
-                it "doesn't attempt to clear the user" do
-                    output.should_receive(:puts).with("Clearing Git user in local scope")
-                    git.should_receive(:selected_user).with(:local).and_return User::NONE
-                    switcher.clear :local
                 end
             end
         end

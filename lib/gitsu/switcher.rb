@@ -15,34 +15,10 @@ class Array
 end
 
 module GitSu
-    class CachingGitProxy
-        def initialize(git)
-            @git = git
-        end
-
-        def get_color(color_name)
-            @colors ||= {}
-            #TODO: what if it's an invalid color?
-            @colors[color_name] ||= @git.get_color color_name
-        end
-
-        def color_output?
-            @color_output.nil? ? @color_output = @git.color_output? : @color_output
-        end
-
-        def clear_user(scope)
-            # Git complains if you try to clear the user when the config file is missing
-            @git.clear_user(scope) unless @git.selected_user(scope).none?
-        end
-
-        def method_missing(name, *args, &block)
-            @git.send(name, *args, &block) 
-        end
-    end
 
     class Switcher
         def initialize(git, user_list, output)
-            @git, @user_list, @output = CachingGitProxy.new(git), user_list, output
+            @git, @user_list, @output = git, user_list, output
         end
 
         def request(user, scope)
@@ -56,7 +32,7 @@ module GitSu
                 @output.puts "No user found matching '#{user}'"
             else
                 @git.select_user(matching_user, scope)
-                @output.puts "Switched #{scope} user to #{maybe_color matching_user}"
+                @output.puts "Switched #{scope} user to #{@git.render matching_user}"
             end
         end
         
@@ -69,8 +45,9 @@ module GitSu
                 @output.puts "System: #{render_user(:system)}"
             else
                 scopes.each do |scope|
-                    user = render_user(scope, true)
-                    @output.puts user unless user.empty?
+                    unless @git.selected_user(scope).none?
+                        @output.puts render_user(scope)
+                    end
                 end
             end
         end
@@ -94,7 +71,7 @@ module GitSu
 
         def list
             @user_list.list.each do |user|
-                @output.puts maybe_color user
+                @output.puts @git.render(user)
             end
         end
 
@@ -113,24 +90,8 @@ module GitSu
             end
         end
 
-        def render_user(scope, suppress_none = false)
-            selected_user = @git.selected_user(scope)
-            if selected_user.none? && suppress_none
-                ""
-            else
-                maybe_color selected_user
-            end
-        end
-
-        def maybe_color(user)
-            if @git.color_output?
-                user_color = @git.get_color "blue"
-                email_color = @git.get_color "green"
-                reset_color = @git.get_color "reset"
-                user.to_ansi_s(user_color, email_color, reset_color)
-            else
-                user.to_s
-            end
+        def render_user(scope)
+            @git.render @git.selected_user(scope)
         end
     end
 end

@@ -122,6 +122,10 @@ class StubGit
         false
     end
 
+    def render(user)
+        user.to_s
+    end
+
     def editing?
         @editing
     end

@@ -48,5 +48,39 @@ module GitSu
         def color_output?
             @shell.delegate config_command(:derived, "--get-colorbool color.ui")
         end
+
+        def render(user)
+            if color_output?
+                user_color = get_color "blue"
+                email_color = get_color "green"
+                reset_color = get_color "reset"
+                user.to_ansi_s(user_color, email_color, reset_color)
+            else
+                user.to_s
+            end
+        end
+    end
+
+    class CachingGit < Git
+
+        def get_color(color_name)
+            @colors ||= {}
+            #TODO: what if it's an invalid color?
+            @colors[color_name] ||= super
+        end
+
+        def color_output?
+            @color_output.nil? ? @color_output = super : @color_output
+        end
+
+        def clear_user(scope)
+            # Git complains if you try to clear the user when the config file is missing
+            super unless selected_user(scope).none?
+        end
+
+        def selected_user(scope)
+            @selected_users ||= {}
+            @selected_users[scope] ||= super
+        end
     end
 end
