@@ -49,14 +49,10 @@ module GitSu
                     system_user = User.new('Johnny System', 'jsystem@example.com')
                     derived_user = local_user
 
-                    git.should_receive(:selected_user).with(:derived).and_return derived_user
-                    git.should_receive(:render).with(derived_user).and_return derived_user.to_s
-                    git.should_receive(:selected_user).with(:local).and_return local_user
-                    git.should_receive(:render).with(local_user).and_return local_user.to_s
-                    git.should_receive(:selected_user).with(:global).and_return global_user
-                    git.should_receive(:render).with(global_user).and_return global_user.to_s
-                    git.should_receive(:selected_user).with(:system).and_return system_user
-                    git.should_receive(:render).with(system_user).and_return system_user.to_s
+                    git.should_receive(:render_user).with(:derived).and_return derived_user.to_s
+                    git.should_receive(:render_user).with(:local).and_return local_user.to_s
+                    git.should_receive(:render_user).with(:global).and_return global_user.to_s
+                    git.should_receive(:render_user).with(:system).and_return system_user.to_s
                     output.should_receive(:puts).with("Current user: Johnny Local <jlocal@example.com>")
                     output.should_receive(:puts).with("Local: Johnny Local <jlocal@example.com>")
                     output.should_receive(:puts).with("Global: Johnny Global <jglobal@example.com>")
@@ -69,8 +65,8 @@ module GitSu
                 context "when there is a user selected" do
                     it "prints the current user" do
                         current_user = User.new('John Galt', 'jgalt@example.com')
-                        git.should_receive(:selected_user).with(:global).exactly(2).times.and_return current_user
-                        git.should_receive(:render).with(current_user).and_return current_user.to_s
+                        git.should_receive(:selected_user).with(:global).and_return current_user
+                        git.should_receive(:render_user).with(:global).and_return current_user.to_s
                         output.should_receive(:puts).with("John Galt <jgalt@example.com>")
                         switcher.print_current(:global)
                     end
@@ -89,10 +85,10 @@ module GitSu
                     it "prints the current user in those scopes" do
                         local_user = User.new('John Local', 'jl@example.com')
                         global_user = User.new('John Global', 'jg@example.com')
-                        git.should_receive(:selected_user).with(:local).exactly(2).times.and_return local_user
-                        git.should_receive(:render).with(local_user).and_return local_user.to_s
-                        git.should_receive(:selected_user).with(:global).exactly(2).times.and_return global_user
-                        git.should_receive(:render).with(global_user).and_return global_user.to_s
+                        git.should_receive(:selected_user).with(:local).and_return local_user
+                        git.should_receive(:render_user).with(:local).and_return local_user.to_s
+                        git.should_receive(:selected_user).with(:global).and_return global_user
+                        git.should_receive(:render_user).with(:global).and_return global_user.to_s
                         output.should_receive(:puts).with("John Local <jl@example.com>")
                         output.should_receive(:puts).with("John Global <jg@example.com>")
                         switcher.print_current(:local, :global)
@@ -103,8 +99,8 @@ module GitSu
                     it 'prints only users for scopes that have users' do
                         global_user = User.new('John Global', 'jg@example.com')
                         git.should_receive(:selected_user).with(:local).and_return User::NONE
-                        git.should_receive(:selected_user).with(:global).exactly(2).times.and_return global_user
-                        git.should_receive(:render).with(global_user).and_return(global_user.to_s)
+                        git.should_receive(:selected_user).with(:global).and_return global_user
+                        git.should_receive(:render_user).with(:global).and_return global_user.to_s
                         output.should_receive(:puts).with("John Global <jg@example.com>")
                         switcher.print_current(:local, :global)
                     end

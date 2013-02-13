@@ -126,6 +126,10 @@ class StubGit
         user.to_s
     end
 
+    def render_user(scope)
+        render selected_user(scope)
+    end
+
     def editing?
         @editing
     end

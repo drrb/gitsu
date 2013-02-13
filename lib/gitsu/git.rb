@@ -59,6 +59,11 @@ module GitSu
                 user.to_s
             end
         end
+
+        def render_user(scope)
+            render selected_user(scope)
+        end
+        
     end
 
     class CachingGit < Git

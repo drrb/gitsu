@@ -38,15 +38,15 @@ module GitSu
         
         def print_current(*scopes)
             if scopes.include? :all
-                @output.puts "Current user: #{render_user(:derived)}"
+                @output.puts "Current user: #{@git.render_user(:derived)}"
                 @output.puts
-                @output.puts "Local: #{render_user(:local)}"
-                @output.puts "Global: #{render_user(:global)}"
-                @output.puts "System: #{render_user(:system)}"
+                @output.puts "Local: #{@git.render_user(:local)}"
+                @output.puts "Global: #{@git.render_user(:global)}"
+                @output.puts "System: #{@git.render_user(:system)}"
             else
                 scopes.each do |scope|
                     unless @git.selected_user(scope).none?
-                        @output.puts render_user(scope)
+                        @output.puts @git.render_user(scope)
                     end
                 end
             end
@@ -88,10 +88,6 @@ module GitSu
                 @user_list.add user
                 @output.puts "User '#{user}' added to users"
             end
-        end
-
-        def render_user(scope)
-            @git.render @git.selected_user(scope)
         end
     end
 end

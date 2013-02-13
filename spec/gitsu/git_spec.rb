@@ -148,5 +148,17 @@ module GitSu
                 end
             end
         end
+        
+        describe "#render_user" do
+            it "is equivalent to calling #render(#selected_user(scope))" do
+                shell.should_receive(:execute).with("git config --local user.name").and_return("John Smith")
+                shell.should_receive(:execute).with("git config --local user.email").and_return("js@example.com")
+                shell.should_receive(:delegate).with("git config --get-colorbool color.ui").and_return true
+                shell.should_receive(:execute).with("git config --get-color '' 'blue'").and_return("*")
+                shell.should_receive(:execute).with("git config --get-color '' 'green'").and_return("?")
+                shell.should_receive(:execute).with("git config --get-color '' 'reset'").and_return("!")
+                git.render_user(:local).should == "*John Smith! ?<js@example.com>!"
+            end
+        end
     end
 end
