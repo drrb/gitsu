@@ -10,7 +10,7 @@ module GitSu
             context 'when query string provided' do
                 context 'when no scope specified' do
                     it 'switches to the specified user in the default scope' do
-                        switcher.should_receive(:request).with('Joe Bloggs', :local)
+                        switcher.should_receive(:request).with('Joe Bloggs', :default)
                         gitsu.go ['Joe', 'Bloggs']
                     end
                 end

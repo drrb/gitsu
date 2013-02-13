@@ -39,8 +39,21 @@ module GitSu
                     switcher.request "john", :global
                 end
             end
+
+            context "when 'default' scope is specified" do
+                it "switches user in configured default scope" do
+                    user = User.new('John Galt', 'jgalt@example.com')
+
+                    user_list.should_receive(:find).with("john").and_return user 
+                    git.should_receive(:default_scope).and_return(:global)
+                    git.should_receive(:select_user).with user, :global
+                    git.should_receive(:render).with(user).and_return user.to_s
+                    output.should_receive(:puts).with("Switched global user to John Galt <jgalt@example.com>")
+                    switcher.request "john", :default
+                end
+            end
         end
-        
+
         describe '#print_current' do
             context "when 'all' scope is specified" do
                 it "prints all users" do

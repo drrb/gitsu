@@ -14,6 +14,10 @@ Given /^user "(.*?)" is selected in "(.*?)" scope$/ do |user, scope|
     git.select_user(GitSu::User.parse(user), scope.to_sym)
 end
 
+Given /^the Git configuration has "(.*?)" set to "(.*?)"$/ do |key, value|
+    git.config[key] = value
+end
+
 Given /^user list is empty$/ do
     write_user_list("\n")
 end
@@ -108,6 +112,14 @@ class StubGit
 
     def clear_users
         @users = {}
+    end
+
+    def config
+        @config ||= {}
+    end
+
+    def default_scope
+        config["git-su.defaultScope"] || :local
     end
 
     def clear_user(scope)

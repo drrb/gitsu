@@ -3,7 +3,6 @@ require 'optparse'
 module GitSu
     DEFAULT_CLEAR_SCOPES = [:all]
     DEFAULT_PRINT_SCOPES = [:all]
-    DEFAULT_SELECT_SCOPES = [:local]
 
     class Gitsu
 
@@ -87,7 +86,7 @@ module GitSu
                     @switcher.print_current *print_scopes
                 end
             else
-                select_scopes = scopes.empty? ? DEFAULT_SELECT_SCOPES : scopes
+                select_scopes = scopes.empty? ? [:default] : scopes
                 select_scopes.each do |scope|
                     @switcher.request(args.join(" "), scope)
                 end

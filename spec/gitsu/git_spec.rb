@@ -160,5 +160,26 @@ module GitSu
                 git.render_user(:local).should == "*John Smith! ?<js@example.com>!"
             end
         end
+
+        describe "#default_scope" do
+            context "when a default scope is configured" do
+                it "returns the configured default scope" do
+                    shell.should_receive(:execute).with("git config git-su.defaultScope").and_return("global")
+                    git.default_scope.should == :global
+                end
+            end
+            context "when no default scope is configured" do
+                it "returns the conventional default scope (local)" do
+                    shell.should_receive(:execute).with("git config git-su.defaultScope").and_return("")
+                    git.default_scope.should == :local
+                end
+            end
+            context "when an invalid default scope is configured" do
+                it "dies noisily" do
+                    shell.should_receive(:execute).with("git config git-su.defaultScope").and_return("xxxxxx")
+                    expect {git.default_scope}.to raise_error(Git::InvalidConfigError)
+                end
+            end
+        end
     end
 end

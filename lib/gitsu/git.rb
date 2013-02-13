@@ -1,5 +1,8 @@
 module GitSu
     class Git
+        class InvalidConfigError < RuntimeError
+        end
+
         def initialize(shell)
             @shell = shell
         end
@@ -47,6 +50,17 @@ module GitSu
 
         def color_output?
             @shell.delegate config_command(:derived, "--get-colorbool color.ui")
+        end
+
+        def default_scope
+            scope_string = @shell.execute config_command(:derived, "git-su.defaultScope")             
+            if scope_string.empty?
+                :local
+            elsif scope_string =~ /^(local|global|system)$/
+                scope_string.to_sym
+            else
+                raise InvalidConfigError, "Invalid configuration value found for git-su.defaultScope: '#{scope_string}'. Expected one of 'local', 'global', or 'system'."
+            end
         end
 
         def render(user)
