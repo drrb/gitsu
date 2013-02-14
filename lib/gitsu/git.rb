@@ -15,23 +15,43 @@ module GitSu
             command << suffix
         end
 
+        def get_config(scope, key)
+            @shell.execute config_command(scope, key)
+        end
+
+        def set_config(scope, key, value)
+            # replace <'> with <'\''>. E.g. O'Grady -> O'\''Grady
+            escaped_value = value.gsub(/'/, "'\\\\\''")
+            @shell.execute config_command(scope, "#{key} '#{escaped_value}'")
+        end
+
+        def unset_config(scope, key)
+            @shell.execute config_command(scope, "--unset #{key}")
+        end
+
+        def list_config(scope)
+            @shell.execute(config_command(scope, "--list")).chomp.split("\n")
+        end
+
+        def remove_config_section(scope, section)
+            @shell.execute config_command(scope, "--remove-section #{section} 2>/dev/null")
+        end
+
         def get_color(color_name)
             @shell.execute config_command(:derived, "--get-color '' '#{color_name}'")
         end
 
         def select_user(user, scope)
-            # replace <'> with <'\''>. E.g. O'Grady -> O'\''Grady
-            escaped_user_name = user.name.gsub(/'/, "'\\\\\''")
-            @shell.execute config_command(scope, "user.name '#{escaped_user_name}'")
-            @shell.execute config_command(scope, "user.email '#{user.email}'")
+            set_config(scope, "user.name", user.name)
+            set_config(scope, "user.email", user.email)
         end
 
         def selected_user(scope)
-            name = @shell.execute config_command(scope, "user.name")
+            name = get_config(scope, "user.name")
             if name.empty?
                 User::NONE
             else
-                email = @shell.execute config_command(scope, "user.email")
+                email = get_config(scope, "user.email")
                 User.new(name, email)
             end
         end
@@ -41,10 +61,10 @@ module GitSu
         end
 
         def clear_user(scope)
-            @shell.execute config_command(scope, "--unset user.name")
-            @shell.execute config_command(scope, "--unset user.email")
-            if @shell.execute(config_command(scope, "--list")).chomp.split("\n").select { |e| e =~ /^user\./ }.empty?
-                @shell.execute config_command(scope, "--remove-section user 2>/dev/null")
+            unset_config(scope, "user.name")
+            unset_config(scope, "user.email")
+            if list_config(scope).select { |e| e =~ /^user\./ }.empty?
+                remove_config_section(scope, "user")
             end
         end
 
@@ -53,7 +73,7 @@ module GitSu
         end
 
         def default_scope
-            scope_string = @shell.execute config_command(:derived, "git-su.defaultScope")             
+            scope_string = get_config(:derived, "git-su.defaultScope")             
             if scope_string.empty?
                 :local
             elsif scope_string =~ /^(local|global|system)$/

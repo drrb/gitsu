@@ -15,7 +15,7 @@ Given /^user "(.*?)" is selected in "(.*?)" scope$/ do |user, scope|
 end
 
 Given /^the Git configuration has "(.*?)" set to "(.*?)"$/ do |key, value|
-    git.config[key] = value
+    git.set_config(:global, key, value)
 end
 
 Given /^user list is empty$/ do
@@ -89,7 +89,7 @@ class Output
     end
 end
 
-class StubGit 
+class StubGit < GitSu::Git
 
     attr_accessor :users
 
@@ -98,32 +98,39 @@ class StubGit
         @editing = false
     end
 
-    def select_user(user, scope)
-        @users[scope] = user
-    end
-
-    def selected_user(scope)
+    def get_config(scope, key)
         if scope == :derived
-            @users[:local] || @users[:global] || @users[:system] || GitSu::User::NONE
+            config(:local)[key] || config(:global)[key] || config(:system)[key] || ""
         else
-            @users[scope] || GitSu::User::NONE
+            config(scope)[key] || ""
         end
     end
 
+    def set_config(scope, key, value)
+        config(scope)[key] = value
+    end
+
+    def unset_config(scope, key)
+        config(scope).delete key
+    end
+
+    def list_config(scope)
+        config(scope).map {|k,v| "#{k}=#{v}"}
+    end
+
+    def remove_config_section(scope, section)
+        config(scope).reject! {|k,v| k =~ /^#{section}\./ }
+    end
+
     def clear_users
-        @users = {}
+        [:local, :global, :system].each do |scope|
+            clear_user(scope)
+        end
     end
 
-    def config
+    def config(scope)
         @config ||= {}
-    end
-
-    def default_scope
-        config["git-su.defaultScope"] || :local
-    end
-
-    def clear_user(scope)
-        @users.delete scope
+        @config[scope] ||= {}
     end
 
     def edit_gitsu_config
