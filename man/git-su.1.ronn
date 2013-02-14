@@ -33,19 +33,33 @@ Gitsu helps you to manage your projects' Git users.
 -t, --list
     List the Gitsu users.
 
+## CONFIGURATION
+
+Gitsu supports the following configuration options, specified either in Git config files, or by executing `git config`:
+
+git-su.defaultSelectScope
+    One of "local", "global", or "system" (without quotes). Specifies the default scope that the user is switched in when `git su` is run.
+
+color.ui
+    Gitsu respects the value of color.ui in the same way Git does. That is, output is colored only if color.ui is set to true, and stdout is a tty.
+
 ## HOMEPAGE
 
 http://drrb.github.com/gitsu
 
 ## EXAMPLES
 
-Show current Git users
+Show current Git users in all scopes
 
 `$ git su`
 
 Show the current Git users in specified scopes
 
 `$ git su --local --global`
+
+Show the current Git user that Git would use to commit
+
+`$ git whoami`
 
 ### Adding users
 

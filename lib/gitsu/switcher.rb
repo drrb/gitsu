@@ -31,7 +31,7 @@ module GitSu
             if matching_user.none?
                 @output.puts "No user found matching '#{user}'"
             else
-                scope = scope == :default ? @git.default_scope : scope
+                scope = scope == :default ? @git.default_select_scope : scope
                 @git.select_user(matching_user, scope)
                 @output.puts "Switched #{scope} user to #{@git.render matching_user}"
             end

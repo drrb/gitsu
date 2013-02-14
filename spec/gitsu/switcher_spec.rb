@@ -45,7 +45,7 @@ module GitSu
                     user = User.new('John Galt', 'jgalt@example.com')
 
                     user_list.should_receive(:find).with("john").and_return user 
-                    git.should_receive(:default_scope).and_return(:global)
+                    git.should_receive(:default_select_scope).and_return(:global)
                     git.should_receive(:select_user).with user, :global
                     git.should_receive(:render).with(user).and_return user.to_s
                     output.should_receive(:puts).with("Switched global user to John Galt <jgalt@example.com>")

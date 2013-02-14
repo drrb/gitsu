@@ -72,14 +72,14 @@ module GitSu
             @shell.delegate config_command(:derived, "--get-colorbool color.ui")
         end
 
-        def default_scope
-            scope_string = get_config(:derived, "git-su.defaultScope")             
+        def default_select_scope
+            scope_string = get_config(:derived, "git-su.defaultSelectScope")
             if scope_string.empty?
                 :local
             elsif scope_string =~ /^(local|global|system)$/
                 scope_string.to_sym
             else
-                raise InvalidConfigError, "Invalid configuration value found for git-su.defaultScope: '#{scope_string}'. Expected one of 'local', 'global', or 'system'."
+                raise InvalidConfigError, "Invalid configuration value found for git-su.defaultSelectScope: '#{scope_string}'. Expected one of 'local', 'global', or 'system'."
             end
         end
 
