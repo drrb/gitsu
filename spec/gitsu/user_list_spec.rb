@@ -6,6 +6,7 @@ module GitSu
 
         let(:user_file) { "/tmp/#{rand}" }
         let(:user_list) { UserList.new(user_file) }
+        after { File.delete user_file }
 
         describe "#add" do
             it "adds a user to the list" do
