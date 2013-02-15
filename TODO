@@ -5,6 +5,7 @@ Support multiple users at once for pairing
 
 Bugs
 -------
+Users listed earlier in user file aren't favoured in Ruby 1.8
 
 Tests
 -------
