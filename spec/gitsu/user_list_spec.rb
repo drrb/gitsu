@@ -55,12 +55,6 @@ module GitSu
                     user_list.find("jg").should == User.new("John Galt", "john.galt@example.com")
                     user_list.find("JG").should == User.new("John Galt", "john.galt@example.com")
                 end
-                it "favours those higher in the list" do
-                    user_list.add User.new("James Before", "jb@example.com")
-                    user_list.add User.new("James After", "ja@example.com")
-
-                    user_list.find("james").should == User.new("James Before", "jb@example.com")
-                end
                 it "favours prefix over innards" do
                     user_list.add User.new("Matthew Jackson", "mj@example.com")
                     user_list.add User.new("Thomas Hickleton", "tom@example.com")
