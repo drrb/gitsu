@@ -5,7 +5,7 @@ class Array
         elsif size == 1
             last.to_s
         else
-            map{|e| e.to_s}.slice(0, length - 1).join(", ") + " and " + last.to_s
+            "#{self[0..-2].map{|e| e.to_s}.join(", ")} and #{last.to_s}"
         end
     end
 

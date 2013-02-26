@@ -15,20 +15,32 @@ module GitSu
         def find(search_term)
             users = @user_file.read
             matching_users = []
-            matching_users += users.select do |user|
-                user.name =~ /\b#{search_term}\b/i
+            match_strategies.each do |strategy|
+                matching_users += users.select { |user| strategy.call(search_term, user) }
             end
-            matching_users += users.select do |user|
-                user.name =~ /\b#{search_term}/i
-            end
-            matching_users += users.select do |user|
-                user.name.split(" ").map { |word| word.chars.first }.join.downcase.include? search_term.downcase
-            end
-            matching_users += users.select do |user|
-                ("#{user.name} #{user.email}").downcase.include? search_term.downcase
-            end
-
             matching_users.first || User::NONE
+        end
+
+        def match_strategies
+            [
+            # Whole word of name
+            lambda { |search_term, user| user.name =~ /\b#{search_term}\b/i },
+
+            # Beginning of word in name
+            lambda { |search_term, user| user.name =~ /\b#{search_term}/i },
+
+            # Initials
+            lambda do |search_term, user|
+                initials = user.name.downcase.split(" ").map { |word| word.chars.first }.join
+                initials.include? search_term.downcase
+            end,
+
+            # Segment anywhere in name or email
+            lambda do |search_term, user|
+                name_and_email = "#{user.name} #{user.email}".downcase
+                name_and_email.include? search_term.downcase
+            end
+            ]
         end
     end
 end
