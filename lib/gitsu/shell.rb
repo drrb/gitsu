@@ -1,10 +1,15 @@
 module GitSu
     class Shell
-        def execute(command)
-            `#{command}`.strip
+        def capture(command)
+            output = `#{command}`.strip
+            if block_given?
+                yield(output, $?)
+            else
+                output
+            end
         end
 
-        def delegate(command)
+        def execute(command)
             system command
         end
     end

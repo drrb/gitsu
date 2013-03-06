@@ -3,6 +3,9 @@ module GitSu
         class InvalidConfigError < RuntimeError
         end
 
+        class ConfigSettingError < RuntimeError
+        end
+
         def initialize(shell)
             @shell = shell
         end
@@ -15,34 +18,42 @@ module GitSu
             command << suffix
         end
 
+        def execute_config_command(scope, command)
+            @shell.execute config_command(scope, command)
+        end
+
+        def capture_config_command(scope, command)
+            @shell.capture config_command(scope, command)
+        end
+
         def get_config(scope, key)
-            @shell.execute config_command(scope, key)
+            capture_config_command(scope, key)
         end
 
         def set_config(scope, key, value)
             # replace <'> with <'\''>. E.g. O'Grady -> O'\''Grady
             escaped_value = value.gsub(/'/, "'\\\\\''")
-            @shell.execute config_command(scope, "#{key} '#{escaped_value}'")
+            execute_config_command(scope, "#{key} '#{escaped_value}'")
         end
 
         def unset_config(scope, key)
-            @shell.execute config_command(scope, "--unset #{key}")
+            capture_config_command(scope, "--unset #{key}")
         end
 
         def list_config(scope)
-            @shell.execute(config_command(scope, "--list")).chomp.split("\n")
+            capture_config_command(scope, "--list").chomp.split("\n")
         end
 
         def remove_config_section(scope, section)
-            @shell.execute config_command(scope, "--remove-section #{section} 2>/dev/null")
+            capture_config_command(scope, "--remove-section #{section} 2>/dev/null")
         end
 
         def get_color(color_name)
-            @shell.execute config_command(:derived, "--get-color '' '#{color_name}'")
+            capture_config_command(:derived, "--get-color '' '#{color_name}'")
         end
 
         def select_user(user, scope)
-            set_config(scope, "user.name", user.name)
+            set_config(scope, "user.name", user.name) or raise ConfigSettingError, "Couldn't update user config in '#{scope}' scope"
             set_config(scope, "user.email", user.email)
         end
 
@@ -57,7 +68,7 @@ module GitSu
         end
 
         def edit_gitsu_config
-            @shell.delegate config_command(:derived, "--edit --file #{File.expand_path '~/.gitsu'}")
+            execute_config_command(:derived, "--edit --file #{File.expand_path '~/.gitsu'}")
         end
 
         def clear_user(scope)
@@ -69,7 +80,7 @@ module GitSu
         end
 
         def color_output?
-            @shell.delegate config_command(:derived, "--get-colorbool color.ui")
+            execute_config_command(:derived, "--get-colorbool color.ui")
         end
 
         def default_select_scope
