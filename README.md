@@ -1,5 +1,7 @@
 # GitSu
 
+[![Build Status](https://travis-ci.org/drrb/gitsu.png)](https://travis-ci.org/drrb/gitsu)
+
 GitSu helps to manage your Git users, by making it easy to switch
 between users. 
 
