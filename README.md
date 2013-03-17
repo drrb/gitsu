@@ -1,8 +1,8 @@
-# GitSu
+# Gitsu
 
 [![Build Status](https://travis-ci.org/drrb/gitsu.png)](https://travis-ci.org/drrb/gitsu)
 
-GitSu helps to manage your Git users, by making it easy to switch
+Gitsu helps to manage your Git users, by making it easy to switch
 between users. 
 
 ## Installation
@@ -11,7 +11,7 @@ between users.
 
 ## Usage
 
-GitSu is intended to be used from the command line, through Git.
+Gitsu is intended to be used from the command line, through Git.
 
 To switch the configured Git user:
 
@@ -19,7 +19,7 @@ To switch the configured Git user:
 
     Switched local user to John Galt <jgalt@tcmc.com>
 
-To make it easier to switch users, tell GitSu about some users.
+To make it easier to switch users, tell Gitsu about some users.
 
     $ git su --add "John Galt <jgalt@tcmc.com>"
     $ git su --add "Raphe Rackstraw <rack@hp.royalnavy.mod.uk>"
