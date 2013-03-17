@@ -9,8 +9,8 @@ Gem::Specification.new do |gem|
   gem.authors       = ["drrb"]
   gem.email         = ["drrb@github.com"]
   gem.description   = %q{Manage your Git users}
-  gem.summary       = %q{Manage your Git users}
-  gem.homepage      = ""
+  gem.summary       = %q{Gitsu allows you to quickly configure and switch between Git users}
+  gem.homepage      = "http://drrb.github.com/gitsu"
 
   gem.files         = `git ls-files`.split($/)
   gem.executables   = gem.files.grep(%r{^bin/}).map{ |f| File.basename(f) }
