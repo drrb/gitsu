@@ -9,7 +9,10 @@ Gem::Specification.new do |gem|
   gem.authors       = ["drrb"]
   gem.email         = ["drrb@github.com"]
   gem.description   = %q{Manage your Git users}
-  gem.summary       = %q{Gitsu allows you to quickly configure and switch between Git users}
+  gem.summary       = <<-EOF
+    Gitsu allows you to quickly configure and switch between Git users, for
+    different projects and contexts
+  EOF
   gem.homepage      = "http://drrb.github.com/gitsu"
 
   gem.files         = `git ls-files`.split($/)
