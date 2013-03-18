@@ -1,6 +1,7 @@
 # Gitsu
 
 [![Build Status](https://travis-ci.org/drrb/gitsu.png)](https://travis-ci.org/drrb/gitsu)
+[![Coverage Status](https://coveralls.io/repos/drrb/gitsu/badge.png?branch=master)](https://coveralls.io/r/drrb/gitsu)
 
 Gitsu helps to manage your Git users, by making it easy to switch
 between users. 
