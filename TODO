@@ -3,8 +3,12 @@ Features
 Make colors configurable because people like that stuff
 Support multiple users at once for pairing
 
+Tasks
+--------
+Check for changes and failing tests during release
+
 Bugs
--------
+--------
 
 Tests
--------
+--------
