@@ -108,11 +108,13 @@ module GitSu
         def render_user(scope)
             render selected_user(scope)
         end
-        
+
+        def commit(file, message)
+            @shell.execute("git commit #{file} --message='#{message}'")
+        end
     end
 
     class CachingGit < Git
-
         def get_color(color_name)
             @colors ||= {}
             #TODO: what if it's an invalid color?

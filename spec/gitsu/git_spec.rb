@@ -185,5 +185,12 @@ module GitSu
                 end
             end
         end
+
+        describe "#commit" do
+            it "commits a file to the repository with the specified message" do
+                shell.should_receive(:execute).with("git commit file.dat --message='Committing changes'")
+                git.commit("file.dat", "Committing changes")
+            end
+        end
     end
 end
