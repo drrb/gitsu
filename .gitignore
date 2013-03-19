@@ -19,3 +19,4 @@ test/version_tmp
 tmp
 man/git-su.1
 man/git-su.1.html
+.DS_Store
