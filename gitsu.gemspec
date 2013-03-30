@@ -8,6 +8,7 @@ Gem::Specification.new do |gem|
   gem.version       = GitSu::VERSION
   gem.authors       = ["drrb"]
   gem.email         = ["drrb@github.com"]
+  gem.license       = "GPL-3"
   gem.description   = %q{Manage your Git users}
   gem.summary       = <<-EOF
     Gitsu allows you to quickly configure and switch between Git users, for
