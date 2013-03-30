@@ -4,10 +4,10 @@ lib_path = File.expand_path('../../lib', __FILE__)
 $LOAD_PATH.unshift lib_path unless $LOAD_PATH.include? lib_path
 require 'gitsu'
 
-factory = GitSu::Factory.new(STDOUT)
-git_su = factory.git_su
+factory = GitSu::Factory.new(STDOUT, "~/.gitsu")
+gitsu = factory.gitsu
 runner = factory.runner
 
 runner.run do
-    git_su.go ARGV
+    gitsu.go ARGV
 end

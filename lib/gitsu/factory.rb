@@ -1,19 +1,24 @@
 module GitSu
     class Factory
-        def initialize(output)
-            @output = output
+        attr_accessor :git
+        def initialize(output, user_list_file)
+            @output, @user_list_file = output, File.expand_path(user_list_file)
+        end
+
+        def git
+            @git ||= CachingGit.new(Shell.new)
+        end
+
+        def user_list
+            @user_list ||= UserList.new(@user_list_file)
         end
 
         def switcher
-            user_list_file = File.expand_path("~/.gitsu")
-            shell = Shell.new
-            git = CachingGit.new(shell)
-            user_list = UserList.new(user_list_file)
-            Switcher.new(git, user_list, @output)
+            @switcher ||= Switcher.new(git, user_list, @output)
         end
 
-        def git_su
-            Gitsu.new(switcher, @output)
+        def gitsu
+            @gitsu ||= Gitsu.new(switcher, @output)
         end
 
         def runner

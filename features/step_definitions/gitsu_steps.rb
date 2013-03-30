@@ -159,19 +159,23 @@ def output
 end
 
 def git
-    @git ||= StubGit.new 
+    factory.git
 end
 
 def gitsu
-    @gitsu ||= GitSu::Gitsu.new(switcher, output)
-end
-
-def switcher
-    @switcher ||= GitSu::Switcher.new(git, user_list, output)
+    factory.gitsu
 end
 
 def user_list
-    @user_list ||= GitSu::UserList.new(user_list_file)
+    factory.user_list
+end
+
+def factory
+    if @factory.nil?
+        @factory = GitSu::Factory.new(output, user_list_file)
+        @factory.git = StubGit.new
+    end
+    @factory
 end
 
 def user_list_file
