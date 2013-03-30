@@ -1,4 +1,3 @@
-require 'coveralls'
-Coveralls.wear!
+require 'simplecov'
 
 require 'gitsu'

@@ -4,11 +4,13 @@ require 'gitsu'
 require 'bundler/gem_tasks'
 require 'rspec/core/rake_task'
 require 'cucumber/rake/task'
+require 'coveralls/rake/task'
 
+Coveralls::RakeTask.new
 Cucumber::Rake::Task.new(:features)
 RSpec::Core::RakeTask.new(:spec)
 
-task :default => [:spec, :features]
+task :default => [:spec, :features, 'coveralls:push']
 
 task :push_release => [:spec, :features] do
     git = GitSu::Git.new(GitSu::Shell.new)
