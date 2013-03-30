@@ -1,5 +1,5 @@
 module GitSu
-    VERSION = "0.0.3"
+    VERSION = "1.0.0"
 
     class Version
         class ParseError < StandardError
