@@ -55,7 +55,6 @@ Switch to configured users by initials
 
 {% highlight console %}
 $ git su jp
-
 Switched to Joseph Porter KCB <jporter@example.com>
 {% endhighlight %}
 
@@ -63,7 +62,6 @@ or by part of their name
 
 {% highlight console %}
 $ git su straw
-
 Switched to Raphe Rackstraw <rrack@example.com>
 {% endhighlight %}
 
@@ -71,7 +69,6 @@ To clear all Git users
 
 {% highlight console %}
 $ git su --clear
-
 Clearing all users from Git config
 {% endhighlight %}
 
@@ -85,7 +82,6 @@ To change the user for a specific scope
 
 {% highlight console %}
 $ git su joe --system
-
 Switched system user to Joseph Porter KCB <jporter@example.com>
 {% endhighlight %}
 
@@ -93,6 +89,5 @@ To clear the user for a specific scope
 
 {% highlight console %}
 $ git su --clear --global
-
 Clearing Git user in global scope
 {% endhighlight %}
