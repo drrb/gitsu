@@ -6,6 +6,7 @@ Support multiple users at once for pairing
 Tasks
 --------
 Check for changes (and abort if you find them) during release
+Use a prerelease version (e.g. "1.2.3.pre") for Gem working version
 
 Bugs
 --------
