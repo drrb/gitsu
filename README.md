@@ -17,21 +17,25 @@ Gitsu is intended to be used from the command line, through Git.
 
 To switch the configured Git user:
 
-    $ git su "John Galt <jgalt@tcmc.com>"
+    $ git su "John Galt <jgalt@example.com>"
 
-    Switched local user to John Galt <jgalt@tcmc.com>
+    Switched local user to John Galt <jgalt@example.com>
 
 To make it easier to switch users, tell Gitsu about some users.
 
-    $ git su --add "John Galt <jgalt@tcmc.com>"
-    $ git su --add "Raphe Rackstraw <rack@hp.royalnavy.mod.uk>"
+    $ git su --add "John Galt <jgalt@example.com>"
+    $ git su --add "Raphe Rackstraw <rrack@example.com>"
     $ git su jg
 
-    Switched to user John Galt <jgalt@tcmc.com>
+    Switched to user John Galt <jgalt@example.com>
 
     $ git su raphe
 
-    Switched to user Raphe Rackstraw <rack@hp.royalnavy.mod.uk>
+    Switched to user Raphe Rackstraw <rrack@example.com>
+
+## Documentation
+
+For more information, see [the documentation](http://drrb.github.com/gitsu)
 
 ## Contributing
 
