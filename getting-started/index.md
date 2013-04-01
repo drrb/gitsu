@@ -1,5 +1,6 @@
 ---
 layout: minimal
+title: Getting Started
 ---
 
 ## Installation

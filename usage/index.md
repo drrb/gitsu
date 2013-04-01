@@ -1,5 +1,6 @@
 ---
 layout: minimal
+title: Usage
 ---
 ## Usage Examples
 
