@@ -4,7 +4,7 @@ lib_path = File.expand_path('../../lib', __FILE__)
 $LOAD_PATH.unshift lib_path unless $LOAD_PATH.include? lib_path
 require 'gitsu'
 
-factory = GitSu::Factory.new(STDOUT)
+factory = GitSu::Factory.new(STDOUT, "~/.gitsu")
 switcher = factory.switcher
 runner = factory.runner
 
