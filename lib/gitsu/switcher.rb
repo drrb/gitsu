@@ -21,20 +21,37 @@ module GitSu
             @git, @user_list, @output = git, user_list, output
         end
 
-        def request(user, scope)
-            begin
-                matching_user = User.parse(user)
-            rescue User::ParseError => parse_error
-                matching_user = @user_list.find(user)
+        def request(*users, scope)
+            if users.size == 1
+                search = users.last
+                found_user = find(search)
+                if found_user.none?
+                    @output.puts "No user found matching '#{search}'"
+                    return
+                end
+            else
+                found_users = users.map { |user| find user }
+                found_user = combine found_users
             end
 
-            if matching_user.none?
-                @output.puts "No user found matching '#{user}'"
-            else
-                scope = scope == :default ? @git.default_select_scope : scope
-                @git.select_user(matching_user, scope)
-                @output.puts "Switched #{scope} user to #{@git.render matching_user}"
+            scope = scope == :default ? @git.default_select_scope : scope
+            @git.select_user(found_user, scope)
+            @output.puts "Switched #{scope} user to #{@git.render found_user}"
+        end
+
+        def find(user)
+            begin
+                User.parse(user)
+            rescue User::ParseError => parse_error
+                @user_list.find(user)
             end
+        end
+
+        def combine(users)
+            names = users.map { |user| user.name }
+            email_prefixes = users.map { |user| user.email.sub /@.*/, '' }
+            email_domain = users.first.email.sub /^.*@/, ''
+            found_user = User.new(names.list, email_prefixes.join('+') + '+dev@' + email_domain)
         end
         
         def print_current(*scopes)

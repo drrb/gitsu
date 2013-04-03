@@ -20,6 +20,16 @@ module GitSu
                 end
             end
 
+            context "when request is two fully-qualified user strings" do
+                it "switches to the combined user" do
+                    combined_user = User.new('John Galt and Joseph Porter', 'jgalt+jporter+dev@example.com')
+                    git.should_receive(:select_user).with(combined_user, :global)
+                    git.should_receive(:render).with(combined_user).and_return(combined_user.to_s)
+                    output.should_receive(:puts).with("Switched global user to John Galt and Joseph Porter <jgalt+jporter+dev@example.com>")
+                    switcher.request('John Galt <jgalt@example.com>', 'Joseph Porter <jporter@example.com>', :global)
+                end
+            end
+
             context "when no matching user found" do
                 it "does not switch user" do
                     user_list.should_receive(:find).with('asdfasdf').and_return User::NONE
