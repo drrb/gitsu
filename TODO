@@ -1,6 +1,9 @@
 Features
 --------
-Support multiple users at once for pairing
+Make group email domain configurable
+Make group email prefix configurable
+Enable pairs to be specified in the config as arrays
+Enable interactive/noninteractive mode for multi/ambiguous user selection
 Enable interactive disambiguation of user selection
 Enable interactive adding of users
 Make colors configurable because people like that stuff
@@ -12,6 +15,8 @@ Use a prerelease version (e.g. "1.2.3.pre") for Gem working version
 
 Bugs
 --------
+The same user can be selected multiple times (e.g. drrb+drrb+dev@example.com)
+Switching errors if one user can't be found
 
 Tests
 --------
