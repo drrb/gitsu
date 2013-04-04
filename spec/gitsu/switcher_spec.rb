@@ -31,12 +31,19 @@ module GitSu
             end
 
             context "when request is for multiple users" do
-                it "combines users in alphabetical order" do
+                it "combines users in alphabetical order by email" do
                     combined_user = User.new('Johnny A, Johnny B and Johnny C', 'a+b+c+dev@example.com')
                     git.should_receive(:select_user).with(combined_user, :global)
                     git.should_receive(:render).with(combined_user).and_return(combined_user.to_s)
                     output.should_receive(:puts).with("Switched global user to Johnny A, Johnny B and Johnny C <a+b+c+dev@example.com>")
                     switcher.request('Johnny C <c@example.com>', 'Johnny B <b@example.com>', 'Johnny A <a@example.com>', :global)
+                end
+                it "removes duplicates from users" do
+                    combined_user = User.new('Johnny A and Johnny B', 'a+b+dev@example.com')
+                    git.should_receive(:select_user).with(combined_user, :global)
+                    git.should_receive(:render).with(combined_user).and_return(combined_user.to_s)
+                    output.should_receive(:puts).with("Switched global user to Johnny A and Johnny B <a+b+dev@example.com>")
+                    switcher.request('Johnny A <a@example.com>', 'Johnny B <b@example.com>', 'Johnny A <a@example.com>', :global)
                 end
             end
 

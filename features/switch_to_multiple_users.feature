@@ -13,12 +13,13 @@ Feature: Switch to multiple users
         Given no user is selected
         Given user list is
         """
-        rackstraw@example.com: Raphe Rackstraw
-        porter@example.com: Joseph Porter
+        a@example.com: Johnny Z
+        c@example.com: Johnny X
+        b@example.com: Johnny Y
         """
-        When I type "git su port rack"
-        Then I should see "Switched local user to Joseph Porter and Raphe Rackstraw <porter+rackstraw+dev@example.com>"
-        And user "Joseph Porter and Raphe Rackstraw <porter+rackstraw+dev@example.com>" should be selected in "local" scope
+        When I type "git su jy jx jz"
+        Then I should see "Switched local user to Johnny Z, Johnny Y and Johnny X <a+b+c+dev@example.com>"
+        And user "Johnny Z, Johnny Y and Johnny X <a+b+c+dev@example.com>" should be selected in "local" scope
 
     Scenario: User not found
         Given user list is
@@ -29,14 +30,13 @@ Feature: Switch to multiple users
         Then I should see "No user found matching 'frances'"
         And no user should be selected in "local" scope
 
-    Scenario: Conglomerate users in alphabetical order by email
+    Scenario: Switch to stored users
         Given no user is selected
         Given user list is
         """
-        a@example.com: Johnny Z
-        c@example.com: Johnny X
-        b@example.com: Johnny Y
+        a@example.com: Johnny A
+        b@example.com: Johnny B
         """
-        When I type "git su jy jx jz"
-        Then I should see "Switched local user to Johnny Z, Johnny Y and Johnny X <a+b+c+dev@example.com>"
-        And user "Johnny Z, Johnny Y and Johnny X <a+b+c+dev@example.com>" should be selected in "local" scope
+        When I type "git su ja jb ja"
+        Then I should see "Switched local user to Johnny A and Johnny B <a+b+dev@example.com>"
+        And user "Johnny A and Johnny B <a+b+dev@example.com>" should be selected in "local" scope
