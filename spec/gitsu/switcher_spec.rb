@@ -38,6 +38,15 @@ module GitSu
                 end
             end
 
+            context "when at least one user of many aren't found" do
+                it "does not switch user" do
+                    user_list.should_receive(:find).with('john').and_return User.new("John Galt", "jg@example.com")
+                    user_list.should_receive(:find).with('xx').and_return User::NONE
+                    output.should_receive(:puts).with("No user found matching 'xx'")
+                    switcher.request('john', 'xx', :global)
+                end
+            end
+
             context "when user is in user list" do
                 it "switches to requested user" do
                     user = User.new('John Galt', 'jgalt@example.com')

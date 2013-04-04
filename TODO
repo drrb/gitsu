@@ -16,7 +16,6 @@ Use a prerelease version (e.g. "1.2.3.pre") for Gem working version
 Bugs
 --------
 The same user can be selected multiple times (e.g. drrb+drrb+dev@example.com)
-Switching errors if one user can't be found
 
 Tests
 --------

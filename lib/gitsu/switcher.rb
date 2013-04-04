@@ -22,18 +22,17 @@ module GitSu
         end
 
         def request(*users, scope)
-            if users.size == 1
-                search = users.last
-                found_user = find(search)
+            found_users = []
+            users.each do |user|
+                found_user = find user
                 if found_user.none?
-                    @output.puts "No user found matching '#{search}'"
+                    @output.puts "No user found matching '#{user}'"
                     return
+                else
+                    found_users << found_user
                 end
-            else
-                found_users = users.map { |user| find user }
-                found_user = combine found_users
             end
-
+            found_user = combine found_users
             scope = scope == :default ? @git.default_select_scope : scope
             @git.select_user(found_user, scope)
             @output.puts "Switched #{scope} user to #{@git.render found_user}"
@@ -51,7 +50,12 @@ module GitSu
             names = users.map { |user| user.name }
             email_prefixes = users.map { |user| user.email.sub /@.*/, '' }
             email_domain = users.first.email.sub /^.*@/, ''
-            found_user = User.new(names.list, email_prefixes.join('+') + '+dev@' + email_domain)
+            if users.size == 1
+                email = users.first.email
+            else
+                email = email_prefixes.join('+') + '+dev@' + email_domain
+            end
+            found_user = User.new(names.list, email)
         end
         
         def print_current(*scopes)
