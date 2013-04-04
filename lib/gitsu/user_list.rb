@@ -31,14 +31,13 @@ module GitSu
 
             # Initials
             lambda do |search_term, user|
-                initials = user.name.downcase.split(" ").map { |word| word.chars.first }.join
-                initials.include? search_term.downcase
+                initials = user.name.split(" ").map { |word| word.chars.first }.join
+                initials =~ /#{search_term}/i
             end,
 
             # Segment anywhere in name or email
             lambda do |search_term, user|
-                name_and_email = "#{user.name} #{user.email}".downcase
-                name_and_email.include? search_term.downcase
+                "#{user.name} #{user.email}" =~ /#{search_term}/i
             end
             ]
         end
