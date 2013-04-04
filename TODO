@@ -2,10 +2,9 @@ Features
 --------
 Make group email domain configurable
 Make group email prefix configurable
-Enable pairs to be specified in the config as arrays
 Enable interactive/noninteractive mode for multi/ambiguous user selection
-Enable interactive disambiguation of user selection
 Enable interactive adding of users
+Enable pairs to be specified in the config as arrays
 Make colors configurable because people like that stuff
 
 Tasks

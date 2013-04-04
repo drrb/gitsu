@@ -28,6 +28,13 @@ module GitSu
                     output.should_receive(:puts).with("Switched global user to John Galt and Joseph Porter <jgalt+jporter+dev@example.com>")
                     switcher.request('John Galt <jgalt@example.com>', 'Joseph Porter <jporter@example.com>', :global)
                 end
+                it "combines users in alphabetical order" do
+                    combined_user = User.new('Johnny A, Johnny B and Johnny C', 'a+b+c+dev@example.com')
+                    git.should_receive(:select_user).with(combined_user, :global)
+                    git.should_receive(:render).with(combined_user).and_return(combined_user.to_s)
+                    output.should_receive(:puts).with("Switched global user to Johnny A, Johnny B and Johnny C <a+b+c+dev@example.com>")
+                    switcher.request('Johnny C <c@example.com>', 'Johnny B <b@example.com>', 'Johnny A <a@example.com>', :global)
+                end
             end
 
             context "when no matching user found" do

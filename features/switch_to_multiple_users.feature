@@ -16,9 +16,9 @@ Feature: Switch to multiple users
         rackstraw@example.com: Raphe Rackstraw
         porter@example.com: Joseph Porter
         """
-        When I type "git su rack port"
-        Then I should see "Switched local user to Raphe Rackstraw and Joseph Porter <rackstraw+porter+dev@example.com>"
-        And user "Raphe Rackstraw and Joseph Porter <rackstraw+porter+dev@example.com>" should be selected in "local" scope
+        When I type "git su port rack"
+        Then I should see "Switched local user to Joseph Porter and Raphe Rackstraw <porter+rackstraw+dev@example.com>"
+        And user "Joseph Porter and Raphe Rackstraw <porter+rackstraw+dev@example.com>" should be selected in "local" scope
 
     Scenario: User not found
         Given user list is
@@ -28,3 +28,15 @@ Feature: Switch to multiple users
         When I type "git su frances joseph"
         Then I should see "No user found matching 'frances'"
         And no user should be selected in "local" scope
+
+    Scenario: Conglomerate users in alphabetical order by email
+        Given no user is selected
+        Given user list is
+        """
+        a@example.com: Johnny Z
+        c@example.com: Johnny X
+        b@example.com: Johnny Y
+        """
+        When I type "git su jy jx jz"
+        Then I should see "Switched local user to Johnny Z, Johnny Y and Johnny X <a+b+c+dev@example.com>"
+        And user "Johnny Z, Johnny Y and Johnny X <a+b+c+dev@example.com>" should be selected in "local" scope

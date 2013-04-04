@@ -47,6 +47,7 @@ module GitSu
         end
 
         def combine(users)
+            users = users.sort_by {|user| user.email}
             names = users.map { |user| user.name }
             email_prefixes = users.map { |user| user.email.sub /@.*/, '' }
             email_domain = users.first.email.sub /^.*@/, ''
