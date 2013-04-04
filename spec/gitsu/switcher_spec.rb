@@ -20,7 +20,7 @@ module GitSu
                 end
             end
 
-            context "when request is two fully-qualified user strings" do
+            context "when request is multiple fully-qualified user strings" do
                 it "switches to the combined user" do
                     combined_user = User.new('John Galt and Joseph Porter', 'jgalt+jporter+dev@example.com')
                     git.should_receive(:select_user).with(combined_user, :global)
@@ -28,6 +28,9 @@ module GitSu
                     output.should_receive(:puts).with("Switched global user to John Galt and Joseph Porter <jgalt+jporter+dev@example.com>")
                     switcher.request('John Galt <jgalt@example.com>', 'Joseph Porter <jporter@example.com>', :global)
                 end
+            end
+
+            context "when request is for multiple users" do
                 it "combines users in alphabetical order" do
                     combined_user = User.new('Johnny A, Johnny B and Johnny C', 'a+b+c+dev@example.com')
                     git.should_receive(:select_user).with(combined_user, :global)
