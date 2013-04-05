@@ -15,48 +15,21 @@ class Array
 end
 
 module GitSu
-
     class Switcher
         def initialize(git, user_list, output)
             @git, @user_list, @output = git, user_list, output
         end
 
-        def request(*users, scope)
-            found_users = []
-            users.each do |user|
-                found_user = find user
-                if found_user.none?
-                    @output.puts "No user found matching '#{user}'"
-                    return
-                else
-                    found_users << found_user
-                end
-            end
-            found_user = combine found_users
-            scope = scope == :default ? @git.default_select_scope : scope
-            @git.select_user(found_user, scope)
-            @output.puts "Switched #{scope} user to #{@git.render found_user}"
-        end
-
-        def find(user)
+        def request(*user_strings, scope)
             begin
-                User.parse(user)
-            rescue User::ParseError => parse_error
-                @user_list.find(user)
+                found_users = find_all user_strings
+                found_user = combine_all found_users
+                scope = scope == :default ? @git.default_select_scope : scope
+                @git.select_user(found_user, scope)
+                @output.puts "Switched #{scope} user to #{@git.render found_user}"
+            rescue RuntimeError => error
+                @output.puts error.message
             end
-        end
-
-        def combine(users)
-            users = users.uniq.sort_by {|user| user.email}
-            names = users.map { |user| user.name }
-            email_prefixes = users.map { |user| user.email.sub /@.*/, '' }
-            email_domain = users.first.email.sub /^.*@/, ''
-            if users.size == 1
-                email = users.first.email
-            else
-                email = email_prefixes.join('+') + '+dev@' + email_domain
-            end
-            found_user = User.new(names.list, email)
         end
         
         def print_current(*scopes)
@@ -110,6 +83,32 @@ module GitSu
             else
                 @user_list.add user
                 @output.puts "User '#{user}' added to users"
+            end
+        end
+
+        private
+        def find_all(user_strings)
+            user_strings.map do |user_string|
+                found_user = find user_string
+                if found_user.none?
+                    raise "No user found matching '#{user_string}'"
+                else
+                    found_user
+                end
+            end
+        end
+
+        def find(user_string)
+            begin
+                User.parse(user_string)
+            rescue User::ParseError => parse_error
+                @user_list.find(user_string)
+            end
+        end
+
+        def combine_all(users)
+            users.inject(User::NONE) do |combined_user, user|
+                combined_user.combine user
             end
         end
     end

@@ -10,22 +10,6 @@ module GitSu
             @shell = shell
         end
 
-        def config_command(scope, suffix)
-            command = "git config "
-            unless scope == :derived
-                command << "--#{scope} "
-            end 
-            command << suffix
-        end
-
-        def execute_config_command(scope, command)
-            @shell.execute config_command(scope, command)
-        end
-
-        def capture_config_command(scope, command)
-            @shell.capture config_command(scope, command)
-        end
-
         def get_config(scope, key)
             capture_config_command(scope, key)
         end
@@ -111,6 +95,23 @@ module GitSu
 
         def commit(file, message)
             @shell.execute("git commit #{file} --message='#{message}'")
+        end
+
+        private
+        def config_command(scope, suffix)
+            command = "git config "
+            unless scope == :derived
+                command << "--#{scope} "
+            end 
+            command << suffix
+        end
+
+        def execute_config_command(scope, command)
+            @shell.execute config_command(scope, command)
+        end
+
+        def capture_config_command(scope, command)
+            @shell.capture config_command(scope, command)
         end
     end
 

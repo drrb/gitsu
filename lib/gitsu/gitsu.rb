@@ -51,6 +51,7 @@ module GitSu
             run(options, args)
         end
 
+        private
         def run(options, args)
             if options[:help]
                 return

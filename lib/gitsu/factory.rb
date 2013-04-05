@@ -1,6 +1,5 @@
 module GitSu
     class Factory
-        attr_accessor :git
         def initialize(output, user_list_file)
             @output, @user_list_file = output, File.expand_path(user_list_file)
         end

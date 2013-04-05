@@ -21,6 +21,7 @@ module GitSu
             matching_users.first || User::NONE
         end
 
+        private
         def match_strategies
             [
             # Whole word of name

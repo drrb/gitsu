@@ -34,10 +34,6 @@ And /^user list contains user "(.*?)" with email "(.*?)"$/ do |name, email|
     user_list.add GitSu::User.new(name, email)
 end
 
-def split_args_with_shell(arg_line)
-    `for arg in #{arg_line}; do echo $arg; done`.strip.split("\n")
-end
-
 When /^I type "(.*?)"$/ do |command_line|
     arg_line = command_line.gsub(/^git su/, "")
     args = split_args_with_shell(arg_line)
@@ -79,6 +75,10 @@ Then /^the config file should be open in an editor$/ do
     git.editing?.should be true
 end
 
+def split_args_with_shell(arg_line)
+    `for arg in #{arg_line}; do echo $arg; done`.strip.split("\n")
+end
+
 class Output 
     def messages
         @messages ||= []
@@ -89,8 +89,13 @@ class Output
     end
 end
 
-class StubGit < GitSu::Git
+class StubFactory < GitSu::Factory
+    def git
+        @git ||= StubGit.new
+    end
+end
 
+class StubGit < GitSu::Git
     attr_accessor :users
 
     def initialize
@@ -171,11 +176,7 @@ def user_list
 end
 
 def factory
-    if @factory.nil?
-        @factory = GitSu::Factory.new(output, user_list_file)
-        @factory.git = StubGit.new
-    end
-    @factory
+    @factory ||= StubFactory.new(output, user_list_file)
 end
 
 def user_list_file

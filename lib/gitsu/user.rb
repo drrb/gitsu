@@ -1,17 +1,22 @@
 module GitSu
     class User
-        NONE = User.new
+        class ParseError < RuntimeError
+        end
+
+        attr_accessor :names, :emails
+        protected :names, :emails
+
+        def initialize(name, email)
+            @names, @emails = [name], [email]
+        end
+
+        NONE = User.new(nil, nil)
         def NONE.to_s
             "(none)"
         end
         def NONE.to_ansi_s(name_color, email_color, reset_color)
-            "#{name_color}(none)#{reset_color}"
+            name_color + to_s + reset_color
         end
-
-        class ParseError < RuntimeError
-        end
-
-        attr_accessor :name, :email
 
         def User.parse(string)
             fully_qualified_user_regex = /^[^<]+<[^>]+>$/ 
@@ -24,8 +29,37 @@ module GitSu
             end
         end
 
-        def initialize(name, email)
-            @name, @email = name, email
+        def combine(other)
+            if none?
+                other
+            elsif other.none?
+                self
+            else
+                clone.combine! other
+            end
+        end
+
+        def clone
+            deep_clone = super
+            deep_clone.names = names.clone
+            deep_clone.emails = emails.clone
+            deep_clone
+        end
+
+        def name
+            names = emails_and_names.map {|email,name| name}
+            names.list
+        end
+
+        def email
+            emails = emails_and_names.map {|email,name| email}
+            if emails.size == 1
+                emails.first
+            else
+                email_prefixes = emails.map { |email| email.sub /@.*/, '' }
+                email_domain = emails.first.sub /^.*@/, ''
+                email_prefixes.join('+') + '+dev@' + email_domain
+            end
         end
 
         def none?
@@ -37,7 +71,7 @@ module GitSu
         end
 
         def eql?(other)
-            @name == other.name && @email == other.email
+            name == other.name && email == other.email
         end
 
         def hash
@@ -45,11 +79,25 @@ module GitSu
         end
 
         def to_ansi_s(name_color, email_color, reset_color)
-            "#{name_color}#{@name}#{reset_color} #{email_color}<#{@email}>#{reset_color}"
+            "#{name_color}#{name}#{reset_color} #{email_color}<#{email}>#{reset_color}"
         end
 
         def to_s
             to_ansi_s("", "", "")
+        end
+
+        protected
+        def combine!(other)
+            @names += other.names
+            @emails += other.emails
+            self
+        end
+
+        private
+        # Array of emails and names, unique and ordered
+        def emails_and_names
+            combined = @emails.zip @names
+            Hash[combined].sort 
         end
     end
 end
