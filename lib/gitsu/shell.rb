@@ -4,9 +4,8 @@ module GitSu
             output = `#{command}`.strip
             if block_given?
                 yield(output, $?)
-            else
-                output
             end
+            output
         end
 
         def execute(command)
