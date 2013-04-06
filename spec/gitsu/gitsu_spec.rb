@@ -10,14 +10,14 @@ module GitSu
             context 'when query string provided' do
                 context 'when no scope specified' do
                     it 'switches to the specified user in the default scope' do
-                        switcher.should_receive(:request).with('Joe Bloggs', :default)
+                        switcher.should_receive(:request).with(:default, 'Joe Bloggs')
                         gitsu.go ['Joe Bloggs']
                     end
                 end
 
                 context 'when multiple users specified' do
                     it 'switches to all users' do
-                        switcher.should_receive(:request).with('Jimmy Baggs', 'Joe Bloggs', :default)
+                        switcher.should_receive(:request).with(:default, 'Jimmy Baggs', 'Joe Bloggs')
                         gitsu.go ['Jimmy Baggs', 'Joe Bloggs']
                     end
                 end
@@ -25,13 +25,13 @@ module GitSu
                 context 'when local scope specified' do
                     context 'as short option (-l)' do
                         it 'switches to the specified user in the default scope' do
-                            switcher.should_receive(:request).with('Joe Bloggs', :local)
+                            switcher.should_receive(:request).with(:local, 'Joe Bloggs')
                             gitsu.go ['Joe Bloggs', "-l"]
                         end
                     end
                     context 'as long option (--local)' do
                         it 'switches to the specified user in the default scope' do
-                            switcher.should_receive(:request).with('Joe Bloggs', :local)
+                            switcher.should_receive(:request).with(:local, 'Joe Bloggs')
                             gitsu.go ['Joe Bloggs', "--local"]
                         end
                     end
@@ -40,13 +40,13 @@ module GitSu
                 context 'when global scope specified' do
                     context 'as short option (-g)' do
                         it 'switches to the specified user in the global scope' do
-                            switcher.should_receive(:request).with('Joe Bloggs', :global)
+                            switcher.should_receive(:request).with(:global, 'Joe Bloggs')
                             gitsu.go ['Joe Bloggs', "-g"]
                         end
                     end
                     context 'as long option (--global)' do
                         it 'switches to the specified user in the global scope' do
-                            switcher.should_receive(:request).with('Joe Bloggs', :global)
+                            switcher.should_receive(:request).with(:global, 'Joe Bloggs')
                             gitsu.go ['Joe Bloggs', "--global"]
                         end
                     end
@@ -55,13 +55,13 @@ module GitSu
                 context 'when system scope specified' do
                     context 'as short option (-s)' do
                         it 'switches to the specified user in the system scope' do
-                            switcher.should_receive(:request).with('Joe Bloggs', :system)
+                            switcher.should_receive(:request).with(:system, 'Joe Bloggs')
                             gitsu.go ['Joe Bloggs', "-s"]
                         end
                     end
                     context 'as long option (--system)' do
                         it 'switches to the specified user in the system scope' do
-                            switcher.should_receive(:request).with('Joe Bloggs', :system)
+                            switcher.should_receive(:request).with(:system, 'Joe Bloggs')
                             gitsu.go ['Joe Bloggs', "--system"]
                         end
                     end
@@ -69,9 +69,9 @@ module GitSu
 
                 context 'when multiple scopes specified' do
                     it 'switches to the specified user in the specified scopes' do
-                        switcher.should_receive(:request).with('Joe Bloggs', :local)
-                        switcher.should_receive(:request).with('Joe Bloggs', :global)
-                        switcher.should_receive(:request).with('Joe Bloggs', :system)
+                        switcher.should_receive(:request).with(:local, 'Joe Bloggs')
+                        switcher.should_receive(:request).with(:global, 'Joe Bloggs')
+                        switcher.should_receive(:request).with(:system, 'Joe Bloggs')
                         gitsu.go ['Joe Bloggs', "--local", "--global", "--system"]
                     end
                 end

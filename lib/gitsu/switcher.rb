@@ -20,7 +20,7 @@ module GitSu
             @git, @user_list, @output = git, user_list, output
         end
 
-        def request(*user_strings, scope)
+        def request(scope, *user_strings)
             begin
                 found_users = find_all user_strings
                 found_user = combine_all found_users

@@ -16,7 +16,7 @@ module GitSu
                     git.should_receive(:select_user).with(user, :global)
                     git.should_receive(:render).with(user).and_return(user.to_s)
                     output.should_receive(:puts).with("Switched global user to John Galt <jgalt@example.com>")
-                    switcher.request('John Galt <jgalt@example.com>', :global)
+                    switcher.request(:global, 'John Galt <jgalt@example.com>')
                 end
             end
 
@@ -26,7 +26,7 @@ module GitSu
                     git.should_receive(:select_user).with(combined_user, :global)
                     git.should_receive(:render).with(combined_user).and_return(combined_user.to_s)
                     output.should_receive(:puts).with("Switched global user to Johnny A, Johnny B and Johnny C <a+b+c+dev@example.com>")
-                    switcher.request('Johnny C <c@example.com>', 'Johnny B <b@example.com>', 'Johnny A <a@example.com>', :global)
+                    switcher.request(:global, 'Johnny C <c@example.com>', 'Johnny B <b@example.com>', 'Johnny A <a@example.com>')
                 end
             end
 
@@ -34,7 +34,7 @@ module GitSu
                 it "does not switch user" do
                     user_list.should_receive(:find).with('asdfasdf').and_return User::NONE
                     output.should_receive(:puts).with("No user found matching 'asdfasdf'")
-                    switcher.request('asdfasdf', :global)
+                    switcher.request(:global, 'asdfasdf')
                 end
             end
 
@@ -43,7 +43,7 @@ module GitSu
                     user_list.should_receive(:find).with('john').and_return User.new("John Galt", "jg@example.com")
                     user_list.should_receive(:find).with('xx').and_return User::NONE
                     output.should_receive(:puts).with("No user found matching 'xx'")
-                    switcher.request('john', 'xx', :global)
+                    switcher.request(:global, 'john', 'xx')
                 end
             end
 
@@ -55,7 +55,7 @@ module GitSu
                     git.should_receive(:select_user).with user, :global
                     git.should_receive(:render).with(user).and_return user.to_s
                     output.should_receive(:puts).with("Switched global user to John Galt <jgalt@example.com>")
-                    switcher.request "john", :global
+                    switcher.request :global, "john" 
                 end
             end
 
@@ -68,7 +68,7 @@ module GitSu
                     git.should_receive(:select_user).with user, :global
                     git.should_receive(:render).with(user).and_return user.to_s
                     output.should_receive(:puts).with("Switched global user to John Galt <jgalt@example.com>")
-                    switcher.request "john", :default
+                    switcher.request :default, "john"
                 end
             end
         end

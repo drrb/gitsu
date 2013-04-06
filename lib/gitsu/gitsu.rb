@@ -86,7 +86,7 @@ module GitSu
             else
                 select_scopes = scopes.empty? ? [:default] : scopes
                 select_scopes.each do |scope|
-                    @switcher.request(*args, scope)
+                    @switcher.request(scope, *args)
                 end
             end
         end
