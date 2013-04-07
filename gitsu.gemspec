@@ -23,6 +23,7 @@ Gem::Specification.new do |gem|
 
   # Dependencies
   gem.add_development_dependency('coveralls', '>= 0.6.3')
+  gem.add_development_dependency('json') # Coveralls needs it
   gem.add_development_dependency('rake')
   gem.add_development_dependency('rspec')
   gem.add_development_dependency('cucumber')
