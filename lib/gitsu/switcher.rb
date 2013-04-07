@@ -10,9 +10,7 @@ module GitSu
             begin
                 found_users = find_all user_strings
                 found_user = combine_all found_users
-                scope = scope == :default ? @git.default_select_scope : scope
-                @git.select_user(found_user, scope)
-                @output.puts "Switched #{scope} user to #{@git.render found_user}"
+                select_user found_user, scope
             rescue RuntimeError => error
                 @output.puts error.message
             end
@@ -73,6 +71,12 @@ module GitSu
         end
 
         private
+        def combine_all(users)
+            users.inject(User::NONE) do |combined_user, user|
+                combined_user.combine user
+            end
+        end
+
         def find_all(user_strings)
             user_strings.map do |user_string|
                 found_user = find user_string
@@ -92,10 +96,10 @@ module GitSu
             end
         end
 
-        def combine_all(users)
-            users.inject(User::NONE) do |combined_user, user|
-                combined_user.combine user
-            end
+        def select_user(user, scope)
+            scope = scope == :default ? @git.default_select_scope : scope
+            @git.select_user(user, scope)
+            @output.puts "Switched #{scope} user to #{@git.render user}"
         end
     end
 end
