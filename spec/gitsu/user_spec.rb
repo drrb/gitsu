@@ -28,6 +28,13 @@ module GitSu
                 user = User.new("John Galt", "jg@example.com")
                 user.to_ansi_s("\e[34m", "\e[35m", "\e[0m").should == "\e[34mJohn Galt\e[0m \e[35m<jg@example.com>\e[0m"
             end
+
+            context "when called on the null user" do
+                it "returns a colored string representation of the null user" do
+                    user = User::NONE
+                    user.to_ansi_s("\e[34m", "\e[35m", "\e[0m").should == "\e[34m(none)\e[0m"
+                end
+            end
         end
 
         describe "#combine" do
