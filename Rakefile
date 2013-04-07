@@ -21,8 +21,6 @@ task :push_release => [:spec, :features] do
 
     update_version(version)
     git.commit("lib/gitsu/version.rb", "Preparing for release #{version}")
-    # TODO: check if this works as a symbol, otherwise just use string
-    #Rake::Task["release"].invoke
     Rake::Task[:release].invoke
     update_version(next_version)
     git.commit("lib/gitsu/version.rb", "Preparing for next development iteration")
