@@ -1,3 +1,5 @@
+require 'gitsu/array'
+
 module GitSu
     class User
         class ParseError < RuntimeError
