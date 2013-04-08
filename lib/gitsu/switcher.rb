@@ -97,7 +97,9 @@ module GitSu
         end
 
         def select_user(user, scope)
-            scope = scope == :default ? @config_repository.default_select_scope : scope
+            if scope == :default
+                scope = @config_repository.default_select_scope
+            end
             @git.select_user(user, scope)
             @output.puts "Switched #{scope} user to #{@git.render user}"
         end
