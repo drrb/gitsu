@@ -2,8 +2,8 @@ require 'gitsu/array'
 
 module GitSu
     class Switcher
-        def initialize(git, user_list, output)
-            @git, @user_list, @output = git, user_list, output
+        def initialize(config_repository, git, user_list, output)
+            @config_repository, @git, @user_list, @output = config_repository, git, user_list, output
         end
 
         def request(scope, *user_strings)
@@ -97,7 +97,7 @@ module GitSu
         end
 
         def select_user(user, scope)
-            scope = scope == :default ? @git.default_select_scope : scope
+            scope = scope == :default ? @config_repository.default_select_scope : scope
             @git.select_user(user, scope)
             @output.puts "Switched #{scope} user to #{@git.render user}"
         end

@@ -8,12 +8,16 @@ module GitSu
             @git ||= CachingGit.new(Shell.new)
         end
 
+        def config_repository
+            @config_repository ||= ConfigRepository.new(git)
+        end
+
         def user_list
             @user_list ||= UserList.new(@user_list_file)
         end
 
         def switcher
-            @switcher ||= Switcher.new(git, user_list, @output)
+            @switcher ||= Switcher.new(config_repository, git, user_list, @output)
         end
 
         def gitsu

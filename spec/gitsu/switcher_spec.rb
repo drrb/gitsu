@@ -3,11 +3,11 @@ require 'spec_helper'
 module GitSu
 
     describe Switcher do
+        let(:config_repository) { double('config_repository') }
         let(:git) { double('git') }
         let(:user_list) { double('user_list') }
         let(:output) { double('output').as_null_object }
-        let(:switcher) { Switcher.new(git, user_list, output) }
-        let(:a_user) { User.new("Johnny Bravo", "jbravo@example.com") }
+        let(:switcher) { Switcher.new(config_repository, git, user_list, output) }
 
         describe '#request' do
             context "when request is a fully-qualified user string (e.g. 'John Galt <jgalt@example.com>'" do
@@ -64,7 +64,7 @@ module GitSu
                     user = User.new('John Galt', 'jgalt@example.com')
 
                     user_list.should_receive(:find).with("john").and_return user 
-                    git.should_receive(:default_select_scope).and_return(:global)
+                    config_repository.should_receive(:default_select_scope).and_return(:global)
                     git.should_receive(:select_user).with user, :global
                     git.should_receive(:render).with(user).and_return user.to_s
                     output.should_receive(:puts).with("Switched global user to John Galt <jgalt@example.com>")

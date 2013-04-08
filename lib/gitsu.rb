@@ -1,4 +1,5 @@
 require 'gitsu/factory'
+require 'gitsu/config_repository'
 require 'gitsu/git'
 require 'gitsu/gitsu'
 require 'gitsu/runner'
