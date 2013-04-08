@@ -165,6 +165,21 @@ module GitSu
             end
         end
 
+        describe "#group_email_address" do
+            context "when a group email address is configured" do
+                it "returns the configured group email address" do
+                    shell.should_receive(:capture).with("git config git-su.groupEmailAddress").and_return("pairs@example.org")
+                    git.group_email_address.should == "pairs@example.org"
+                end
+            end
+            context "when no group email address is configured" do
+                it "returns the placeholder group email address" do
+                    shell.should_receive(:capture).with("git config git-su.groupEmailAddress").and_return("")
+                    git.group_email_address.should == "dev@example.com"
+                end
+            end
+        end
+
         describe "#default_select_scope" do
             context "when a default selecton scope is configured" do
                 it "returns the configured default scope" do

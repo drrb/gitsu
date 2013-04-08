@@ -67,6 +67,15 @@ module GitSu
             execute_config_command(:derived, "--get-colorbool color.ui")
         end
 
+        def group_email_address
+            scope_string = get_config(:derived, "git-su.groupEmailAddress")
+            if scope_string.empty?
+                "dev@example.com"
+            else
+                scope_string
+            end
+        end
+
         def default_select_scope
             scope_string = get_config(:derived, "git-su.defaultSelectScope")
             if scope_string.empty?
