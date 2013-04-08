@@ -3,7 +3,11 @@ Feature: Configure default scope
     I want to configure the default scope
     So that I can change the user for all projects at once
 
-    Scenario: Default to global scope
+    Scenario: No default scope specified
+        When I type "git su 'John Galt <jgalt@example.com>'"
+        Then I should see "Switched local user to John Galt <jgalt@example.com>"
+
+    Scenario: Default scope specified
         Given the Git configuration has "git-su.defaultSelectScope" set to "global"
         When I type "git su 'John Galt <jgalt@example.com>'"
         Then I should see "Switched global user to John Galt <jgalt@example.com>"
