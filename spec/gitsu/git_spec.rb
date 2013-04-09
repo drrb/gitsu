@@ -185,5 +185,12 @@ module GitSu
                 git.commit("file.dat", "Committing changes")
             end
         end
+
+        describe "#list_files" do
+            it "calls 'git ls-files' with the specified flags" do
+                shell.should_receive(:capture).with("git ls-files --modified --cached").and_return "file1\nfile2\n"
+                git.list_files(:modified, :cached).should == [ "file1", "file2" ]
+            end
+        end
     end
 end

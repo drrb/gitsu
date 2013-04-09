@@ -14,6 +14,11 @@ task :default => [:spec, :features, 'coveralls:push']
 
 task :push_release => [:spec, :features] do
     git = GitSu::Git.new(GitSu::Shell.new)
+
+    unless git.list_files(:modified).empty?
+        abort("Changes in working directory: not releasing")
+    end
+
     version = GitSu::Version.prompt($stdin, $stdout, "Enter the version to release", GitSu::Version.current)
     next_version = GitSu::Version.prompt($stdin, $stdout, "Enter the next development version", version.next_minor)
 

@@ -83,6 +83,11 @@ module GitSu
             @shell.execute("git commit #{file} --message='#{message}'")
         end
 
+        def list_files(*options)
+            flags = options.map {|o| "--#{o}"}.join " "
+            @shell.capture("git ls-files #{flags}").split "\n"
+        end
+
         private
         def config_command(scope, suffix)
             command = "git config "
