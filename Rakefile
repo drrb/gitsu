@@ -12,7 +12,11 @@ RSpec::Core::RakeTask.new(:spec)
 
 task :default => [:spec, :features, 'coveralls:push']
 
-task :push_release => [:spec, :features] do
+task :verify do
+    system "rvm all do rake"
+end
+
+task :push_release => :verify do
     git = GitSu::Git.new(GitSu::Shell.new)
 
     unless git.list_files(:modified).empty?
