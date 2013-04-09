@@ -31,13 +31,13 @@ module GitSu
             end
         end
 
-        def combine(other)
+        def combine(other, group_email)
             if none?
                 other
             elsif other.none?
                 self
             else
-                clone.combine! other
+                clone.combine! other, group_email
             end
         end
 
@@ -60,7 +60,7 @@ module GitSu
             else
                 email_prefixes = emails.map { |email| email.sub /@.*/, '' }
                 email_domain = emails.first.sub /^.*@/, ''
-                email_prefixes.join('+') + '+dev@' + email_domain
+                email_prefixes.join('+') + '+' + @group_email
             end
         end
 
@@ -89,9 +89,10 @@ module GitSu
         end
 
         protected
-        def combine!(other)
+        def combine!(other, group_email)
             @names += other.names
             @emails += other.emails
+            @group_email = group_email
             self
         end
 

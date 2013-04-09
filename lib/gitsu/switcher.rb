@@ -72,8 +72,9 @@ module GitSu
 
         private
         def combine_all(users)
+            group_email = @config_repository.group_email_address
             users.inject(User::NONE) do |combined_user, user|
-                combined_user.combine user
+                combined_user.combine user, group_email
             end
         end
 

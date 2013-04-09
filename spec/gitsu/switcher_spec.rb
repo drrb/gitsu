@@ -13,6 +13,7 @@ module GitSu
             context "when request is a fully-qualified user string (e.g. 'John Galt <jgalt@example.com>'" do
                 it "switches to user" do
                     user = User.new('John Galt', 'jgalt@example.com')
+                    config_repository.should_receive(:group_email_address).and_return("dev@example.com")
                     git.should_receive(:select_user).with(user, :global)
                     git.should_receive(:render).with(user).and_return(user.to_s)
                     output.should_receive(:puts).with("Switched global user to John Galt <jgalt@example.com>")
@@ -23,6 +24,7 @@ module GitSu
             context "when request is for multiple users" do
                 it "combines users" do
                     combined_user = User.new('Johnny A, Johnny B and Johnny C', 'a+b+c+dev@example.com')
+                    config_repository.should_receive(:group_email_address).and_return("dev@example.com")
                     git.should_receive(:select_user).with(combined_user, :global)
                     git.should_receive(:render).with(combined_user).and_return(combined_user.to_s)
                     output.should_receive(:puts).with("Switched global user to Johnny A, Johnny B and Johnny C <a+b+c+dev@example.com>")
@@ -52,6 +54,7 @@ module GitSu
                     user = User.new('John Galt', 'jgalt@example.com')
 
                     user_list.should_receive(:find).with("john").and_return user 
+                    config_repository.should_receive(:group_email_address).and_return("dev@example.com")
                     git.should_receive(:select_user).with user, :global
                     git.should_receive(:render).with(user).and_return user.to_s
                     output.should_receive(:puts).with("Switched global user to John Galt <jgalt@example.com>")
@@ -64,6 +67,7 @@ module GitSu
                     user = User.new('John Galt', 'jgalt@example.com')
 
                     user_list.should_receive(:find).with("john").and_return user 
+                    config_repository.should_receive(:group_email_address).and_return("dev@example.com")
                     config_repository.should_receive(:default_select_scope).and_return(:global)
                     git.should_receive(:select_user).with user, :global
                     git.should_receive(:render).with(user).and_return user.to_s

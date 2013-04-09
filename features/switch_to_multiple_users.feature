@@ -31,7 +31,6 @@ Feature: Switch to multiple users
         And no user should be selected in "local" scope
 
     Scenario: Switch to stored users
-        Given no user is selected
         Given user list is
         """
         a@example.com: Johnny A
@@ -40,3 +39,11 @@ Feature: Switch to multiple users
         When I type "git su ja jb ja"
         Then I should see "Switched local user to Johnny A and Johnny B <a+b+dev@example.com>"
         And user "Johnny A and Johnny B <a+b+dev@example.com>" should be selected in "local" scope
+
+    Scenario: No group email configured
+        Given the Git configuration has "git-su.groupEmailAddress" set to ""
+
+    Scenario: Group email configured
+        Given the Git configuration has "git-su.groupEmailAddress" set to "pairs@example.org"
+        When I type "git su 'John Galt <jg@example.com>' 'Joseph Porter <jp@example.com>'"
+        And user "John Galt and Joseph Porter <jg+jp+pairs@example.org>" should be selected in "local" scope
