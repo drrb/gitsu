@@ -50,7 +50,7 @@ module GitSu
 
         def name
             names = emails_and_names.map {|email,name| name}
-            names.list
+            names.to_sentence
         end
 
         def email

@@ -37,7 +37,7 @@ module GitSu
         end
 
         def clear(*scopes)
-            scope_list = scopes.list
+            scope_list = scopes.to_sentence
 
             if scopes.include? :all
                 scopes = [:local, :global, :system]

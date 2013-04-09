@@ -1,5 +1,5 @@
 class Array
-    def list
+    def to_sentence
         if empty?
             ""
         elsif size == 1

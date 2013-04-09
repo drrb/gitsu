@@ -1,12 +1,12 @@
 require 'spec_helper'
 
 describe Array do
-    describe "#list" do
+    describe "#to_sentence" do
         context "when array is empty" do
             let(:array) { [] }
 
             it "returns an empty string" do
-                array.list.should == ""
+                array.to_sentence.should == ""
             end
         end
 
@@ -14,7 +14,7 @@ describe Array do
             let(:array) { [:apple] }
 
             it "returns the element as a string" do
-                array.list.should == "apple"
+                array.to_sentence.should == "apple"
             end
         end
 
@@ -22,7 +22,7 @@ describe Array do
             let(:array) { %w[apples oranges] }
 
             it "returns the elements with an 'and' in between" do
-                array.list.should == "apples and oranges"
+                array.to_sentence.should == "apples and oranges"
             end
         end
 
@@ -30,7 +30,7 @@ describe Array do
             let(:array) { %w[apples oranges bananas] }
 
             it "returns the elements as a sentence" do
-                array.list.should == "apples, oranges and bananas"
+                array.to_sentence.should == "apples, oranges and bananas"
             end
         end
     end
