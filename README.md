@@ -5,7 +5,8 @@
 [![Code Climate](https://codeclimate.com/github/drrb/gitsu.png)](https://codeclimate.com/github/drrb/gitsu)
 
 Gitsu helps to manage your Git users, by making it easy to switch
-between users. 
+between users. Gitsu also supports pair programming by allowing you
+switch to multiple users at once!
 
 ## Installation
 
@@ -32,6 +33,12 @@ To make it easier to switch users, tell Gitsu about some users.
     $ git su raphe
 
     Switched to user Raphe Rackstraw <rrack@example.com>
+
+To pair with your friend switch to both users at once
+
+    $ git su jg rr
+
+    Switched to user John Galt and Raphe Rackstraw <jgalt+rrack+dev@example.com>
 
 ## Documentation
 
