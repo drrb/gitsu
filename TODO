@@ -1,7 +1,7 @@
 Features
 --------
 + Don't match two search terms on the same user (e.g. 'git su j j' should select Johnny A and Johnny B)
-Enable interactive/noninteractive mode for multi/ambiguous user selection
++ Enable interactive/noninteractive mode for multi/ambiguous user selection
 Enable interactive adding of users
 Enable pairs to be specified in the config as arrays
 Make colors configurable because people like that stuff
