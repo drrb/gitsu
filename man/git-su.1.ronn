@@ -45,7 +45,7 @@ color.ui
 
 ## HOMEPAGE
 
-http://drrb.github.com/gitsu
+http://drrb.github.io/gitsu
 
 ## EXAMPLES
 

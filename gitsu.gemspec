@@ -14,7 +14,7 @@ Gem::Specification.new do |gem|
     Gitsu allows you to quickly configure and switch between Git users, for
     different projects and contexts
   EOF
-  gem.homepage      = "http://drrb.github.com/gitsu"
+  gem.homepage      = "http://drrb.github.io/gitsu"
 
   gem.files         = `git ls-files`.split($/)
   gem.executables   = gem.files.grep(%r{^bin/}).map{ |f| File.basename(f) }

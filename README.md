@@ -42,7 +42,7 @@ To pair with your friend switch to both users at once
 
 ## Documentation
 
-For more information, see [the documentation](http://drrb.github.com/gitsu)
+For more information, see [the documentation](http://drrb.github.io/gitsu)
 
 ## Contributing
 
