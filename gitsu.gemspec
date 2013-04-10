@@ -12,7 +12,7 @@ Gem::Specification.new do |gem|
   gem.description   = %q{Manage your Git users}
   gem.summary       = <<-EOF
     Gitsu allows you to quickly configure and switch between Git users, for
-    different projects and contexts
+    different projects and contexts, and pair programming.
   EOF
   gem.homepage      = "http://drrb.github.io/gitsu"
 

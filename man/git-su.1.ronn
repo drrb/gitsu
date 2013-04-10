@@ -3,7 +3,7 @@ git-su(1) -- Manage your Git Users
 
 ## SYNOPSIS
 
-git su [OPTIONS] [user]
+git su [OPTIONS] [user...]
 
 ## DESCRIPTION
 
@@ -12,6 +12,7 @@ Gitsu helps you to manage your projects' Git users.
 * quickly see which user Git will use to commit
 * quickly switch between Git users
 * configure a list of Git users to switch between
+* switch to multiple users at once for pairing
 
 ## OPTIONS
 
@@ -39,6 +40,9 @@ Gitsu supports the following configuration options, specified either in Git conf
 
 git-su.defaultSelectScope
     One of "local", "global", or "system" (without quotes). Specifies the default scope that the user is switched in when `git su` is run.
+
+git-su.groupEmailAddress
+    The group email address to use when switching to multiple users. E.g., if you specify "developers@company.org", pairing email addresses will look like "me+you+developers@example.org". Defaults to "dev@example.com".
 
 color.ui
     Gitsu respects the value of color.ui in the same way Git does. That is, output is colored only if color.ui is set to true, and stdout is a tty.
@@ -110,6 +114,16 @@ To clear the user for a specific scope
 
 `Clearing global user`
 
+### Pairing
+
+Gitsu supports switching to multiple users at once. When pairing, this lets you switch
+to attribute both users in each commit.
+
+E.g., to switch to two configured users:
+
+`$ git su joe rack`
+
+`Switched local user to Joseph Porter KCB and Raphe Rackstraw <jporter+rrack+dev@example.com>`
 
 ## AUTHOR
 
