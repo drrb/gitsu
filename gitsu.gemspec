@@ -7,7 +7,7 @@ Gem::Specification.new do |gem|
   gem.name          = "gitsu"
   gem.version       = GitSu::VERSION
   gem.authors       = ["drrb"]
-  gem.email         = ["drrb@github.com"]
+  gem.email         = ["drrrrrrrrrrrb@gmail.com"]
   gem.license       = "GPL-3"
   gem.description   = %q{Manage your Git users}
   gem.summary       = <<-EOF
