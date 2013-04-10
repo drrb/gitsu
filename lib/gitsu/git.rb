@@ -113,6 +113,12 @@ module GitSu
             @colors[color_name] ||= super
         end
 
+        def get_config(scope, key)
+            @config ||= {}
+            @config[scope] ||= {}
+            @config[scope][key] ||= super
+        end
+
         def color_output?
             @color_output.nil? ? @color_output = super : @color_output
         end
@@ -120,11 +126,6 @@ module GitSu
         def clear_user(scope)
             # Git complains if you try to clear the user when the config file is missing
             super unless selected_user(scope).none?
-        end
-
-        def selected_user(scope)
-            @selected_users ||= {}
-            @selected_users[scope] ||= super
         end
     end
 end

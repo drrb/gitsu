@@ -170,6 +170,11 @@ module GitSu
                 shell.should_receive(:capture).with("git config --global config.key").and_return "value"
                 git.get_config(:global, "config.key").should == "value"
             end
+            it "caches the result" do
+                shell.should_receive(:capture).with("git config --global config.key").and_return "value"
+                git.get_config(:global, "config.key").should == "value"
+                git.get_config(:global, "config.key").should == "value"
+            end
 
             context "when :derived scope is specified" do
                 it "looks up config in Git without specifying the scope" do
