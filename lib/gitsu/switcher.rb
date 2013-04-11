@@ -8,7 +8,7 @@ module GitSu
 
         def request(scope, *user_strings)
             begin
-                found_users = find_all user_strings
+                found_users = parse_or_find_all user_strings
                 found_user = combine_all found_users
                 select_user found_user, scope
             rescue RuntimeError => error
@@ -78,9 +78,9 @@ module GitSu
             end
         end
 
-        def find_all(user_strings)
+        def parse_or_find_all(user_strings)
             user_strings.map do |user_string|
-                found_user = find user_string
+                found_user = parse_or_find user_string
                 if found_user.none?
                     raise "No user found matching '#{user_string}'"
                 else
@@ -89,7 +89,7 @@ module GitSu
             end
         end
 
-        def find(user_string)
+        def parse_or_find(user_string)
             begin
                 User.parse(user_string)
             rescue User::ParseError => parse_error
