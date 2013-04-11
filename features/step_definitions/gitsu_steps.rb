@@ -37,7 +37,7 @@ end
 When /^I type "(.*?)"$/ do |command_line|
     arg_line = command_line.gsub(/^git su/, "")
     args = split_args_with_shell(arg_line)
-    gitsu.go args
+    runner.run { gitsu.go args }
 end
 
 Then /^I should see$/ do |expected_output|
@@ -169,6 +169,10 @@ end
 
 def gitsu
     factory.gitsu
+end
+
+def runner
+    factory.runner
 end
 
 def user_list

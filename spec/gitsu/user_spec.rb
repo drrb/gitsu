@@ -23,6 +23,24 @@ module GitSu
             end
         end
 
+        describe "#hash" do
+            it "is different if name is different" do
+                user_a = User.new("a", "a@a.com")
+                user_b = User.new("b", "a@a.com")
+                user_a.hash.should_not == user_b.hash
+            end
+            it "is different if email is different" do
+                user_a = User.new("a", "a@a.com")
+                user_b = User.new("a", "b@a.com")
+                user_a.hash.should_not == user_b.hash
+            end
+            it "is the same if name and email are the same" do
+                user_a = User.new("a", "a@a.com")
+                user_b = User.new("a", "a@a.com")
+                user_a.hash.should == user_b.hash
+            end
+        end
+
         describe "#to_ansi_s" do
             it "returns a colored string representation of the user" do
                 user = User.new("John Galt", "jg@example.com")
