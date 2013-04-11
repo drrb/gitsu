@@ -8,11 +8,13 @@ Make colors configurable because people like that stuff
 
 Tasks
 --------
-Change "git-su" config namespace to "gitsu"
++ Change "git-su" config namespace to "gitsu"
++ Fix URLs on acknowledgements page
 Use a prerelease version (e.g. "1.2.3.pre") for Gem working version
 
 Bugs
 --------
++ typing `git su --add user otheruser` adds the first user and switches to the second
 
 Tests
 --------
