@@ -86,17 +86,10 @@ module GitSu
         end
 
         def find_all(user_strings)
-            user_strings.map do |user_string|
-                find user_string
-            end
-        end
-
-        def find(user_string)
-            found_user = @user_list.find(user_string)
-            if found_user.none?
-                raise "No user found matching '#{user_string}'"
+            if user_strings.empty?
+                []
             else
-                found_user
+                @user_list.find *user_strings
             end
         end
 

@@ -32,18 +32,9 @@ module GitSu
                 end
             end
 
-            context "when no matching user found" do
+            context "when at least one user isn't found" do
                 it "does not switch user" do
-                    user_list.should_receive(:find).with('asdfasdf').and_return User::NONE
-                    output.should_receive(:puts).with("No user found matching 'asdfasdf'")
-                    switcher.request(:global, 'asdfasdf')
-                end
-            end
-
-            context "when at least one user of many aren't found" do
-                it "does not switch user" do
-                    user_list.should_receive(:find).with('john').and_return User.new("John Galt", "jg@example.com")
-                    user_list.should_receive(:find).with('xx').and_return User::NONE
+                    user_list.should_receive(:find).with('john', 'xx').and_raise "No user found matching 'xx'"
                     output.should_receive(:puts).with("No user found matching 'xx'")
                     switcher.request(:global, 'john', 'xx')
                 end
@@ -53,7 +44,7 @@ module GitSu
                 it "switches to requested user" do
                     user = User.new('John Galt', 'jgalt@example.com')
 
-                    user_list.should_receive(:find).with("john").and_return user 
+                    user_list.should_receive(:find).with("john").and_return [user ]
                     config_repository.should_receive(:group_email_address).and_return("dev@example.com")
                     git.should_receive(:select_user).with user, :global
                     git.should_receive(:render).with(user).and_return user.to_s
@@ -66,7 +57,7 @@ module GitSu
                 it "switches user in configured default scope" do
                     user = User.new('John Galt', 'jgalt@example.com')
 
-                    user_list.should_receive(:find).with("john").and_return user 
+                    user_list.should_receive(:find).with("john").and_return [user ]
                     config_repository.should_receive(:group_email_address).and_return("dev@example.com")
                     config_repository.should_receive(:default_select_scope).and_return(:global)
                     git.should_receive(:select_user).with user, :global

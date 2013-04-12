@@ -22,8 +22,8 @@ module GitSu
         end
 
         def read
-            yaml_list = YAML.load_file(@file) or return []
-            yaml_list.map do |email, name|
+            user_map = YAML.load_file(@file) or return []
+            user_map.map do |email, name|
                 User.new(name, email)
             end
         end

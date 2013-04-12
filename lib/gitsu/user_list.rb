@@ -1,7 +1,7 @@
 module GitSu
     class UserList
-        def initialize(file_name)
-            @user_file = UserFile.new(file_name) 
+        def initialize(user_file)
+            @user_file = user_file
         end
 
         def add(user)
@@ -12,13 +12,15 @@ module GitSu
             @user_file.read
         end
 
-        def find(search_term)
-            users = @user_file.read
-            matching_users = []
-            match_strategies.each do |strategy|
-                matching_users += users.select { |user| strategy.call(search_term, user) }
+        def find(*search_terms)
+            search_terms.map do |search_term|
+                users = list
+                matching_users = []
+                match_strategies.each do |strategy|
+                    matching_users += users.select { |user| strategy.call(search_term, user) }
+                end
+                matching_users.first or raise "No user found matching '#{search_term}'"
             end
-            matching_users.first || User::NONE
         end
 
         private

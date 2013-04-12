@@ -13,7 +13,11 @@ module GitSu
         end
 
         def user_list
-            @user_list ||= UserList.new(@user_list_file)
+            @user_list ||= UserList.new(user_file)
+        end
+
+        def user_file
+            UserFile.new(@user_list_file)
         end
 
         def switcher
