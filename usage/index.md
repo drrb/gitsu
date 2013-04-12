@@ -41,6 +41,7 @@ To add a user to Gitsu (the user will be saved in `~/.gitsu`)
 
 {% highlight console %}
 $ git su --add 'Raphe Rackstraw <rrack@example.com>'
+User 'Raphe Rackstraw <rrack@example.com>' added to users
 {% endhighlight %}
 
 You can also add users manually to `~/.gitsu` in the following format:
