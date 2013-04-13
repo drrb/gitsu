@@ -38,7 +38,7 @@ To pair with your friend switch to both users at once
 
     $ git su jg rr
 
-    Switched to user John Galt and Raphe Rackstraw <jgalt+rrack+dev@example.com>
+    Switched to user John Galt and Raphe Rackstraw <dev+jgalt+rrack@example.com>
 
 ## Documentation
 
