@@ -60,7 +60,9 @@ module GitSu
             else
                 email_prefixes = emails.map { |email| email.sub /@.*/, '' }
                 email_domain = emails.first.sub /^.*@/, ''
-                email_prefixes.join('+') + '+' + @group_email
+                group_email_prefix = @group_email.sub /@.*/, ''
+                group_email_domain = @group_email.sub /^.*@/, ''
+                group_email_prefix + '+' + email_prefixes.join('+') + '@' + group_email_domain
             end
         end
 

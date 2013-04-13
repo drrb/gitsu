@@ -13,7 +13,6 @@ Use a prerelease version (e.g. "1.2.3.pre") for Gem working version
 
 Bugs
 --------
-+ group email address is the wrong way around!
 + typing `git su --add user otheruser` adds the first user and switches to the second
 
 Tests

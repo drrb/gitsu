@@ -6,8 +6,8 @@ Feature: Switch to multiple users
     Scenario: Switch to fully qualified users
         Given no user is selected
         When I type "git su 'John Galt <jg@example.com>' 'Joseph Porter <jp@example.com>'"
-        Then I should see "Switched local user to John Galt and Joseph Porter <jg+jp+dev@example.com>"
-        And user "John Galt and Joseph Porter <jg+jp+dev@example.com>" should be selected in "local" scope
+        Then I should see "Switched local user to John Galt and Joseph Porter <dev+jg+jp@example.com>"
+        And user "John Galt and Joseph Porter <dev+jg+jp@example.com>" should be selected in "local" scope
 
     Scenario: Switch to stored users
         Given no user is selected
@@ -18,8 +18,8 @@ Feature: Switch to multiple users
         b@example.com: Johnny Y
         """
         When I type "git su jy jx jz"
-        Then I should see "Switched local user to Johnny Z, Johnny Y and Johnny X <a+b+c+dev@example.com>"
-        And user "Johnny Z, Johnny Y and Johnny X <a+b+c+dev@example.com>" should be selected in "local" scope
+        Then I should see "Switched local user to Johnny Z, Johnny Y and Johnny X <dev+a+b+c@example.com>"
+        And user "Johnny Z, Johnny Y and Johnny X <dev+a+b+c@example.com>" should be selected in "local" scope
 
     Scenario: User not found
         Given user list is
@@ -37,8 +37,8 @@ Feature: Switch to multiple users
         b@example.com: Johnny B
         """
         When I type "git su ja jb ja"
-        Then I should see "Switched local user to Johnny A and Johnny B <a+b+dev@example.com>"
-        And user "Johnny A and Johnny B <a+b+dev@example.com>" should be selected in "local" scope
+        Then I should see "Switched local user to Johnny A and Johnny B <dev+a+b@example.com>"
+        And user "Johnny A and Johnny B <dev+a+b@example.com>" should be selected in "local" scope
 
     Scenario: No group email configured
         Given the Git configuration has "gitsu.groupEmailAddress" set to ""
@@ -46,4 +46,4 @@ Feature: Switch to multiple users
     Scenario: Group email configured
         Given the Git configuration has "gitsu.groupEmailAddress" set to "pairs@example.org"
         When I type "git su 'John Galt <jg@example.com>' 'Joseph Porter <jp@example.com>'"
-        And user "John Galt and Joseph Porter <jg+jp+pairs@example.org>" should be selected in "local" scope
+        And user "John Galt and Joseph Porter <pairs+jg+jp@example.org>" should be selected in "local" scope

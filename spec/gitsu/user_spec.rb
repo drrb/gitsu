@@ -61,7 +61,7 @@ module GitSu
                 other = User.new("John B", "jb@example.com")
                 combined_user = user.combine other, "dev@example.com"
                 combined_user.name.should == "John A and John B"
-                combined_user.email.should == "ja+jb+dev@example.com"
+                combined_user.email.should == "dev+ja+jb@example.com"
             end
             it "accumulates users" do
                 user1 = User.new("John A", "ja@example.com")
@@ -69,7 +69,7 @@ module GitSu
                 user3 = User.new("John C", "jc@example.com")
                 combined_user = user1.combine(user2, "dev@example.com").combine(user3, "dev@example.com")
                 combined_user.name.should == "John A, John B and John C"
-                combined_user.email.should == "ja+jb+jc+dev@example.com"
+                combined_user.email.should == "dev+ja+jb+jc@example.com"
             end
             it "can be called with combined users" do
                 user1 = User.new("John A", "ja@example.com")
@@ -78,7 +78,7 @@ module GitSu
                 combined_user = user1.combine(user2, "dev@example.com")
                 combined_user = user3.combine(combined_user, "dev@example.com")
                 combined_user.name.should == "John A, John B and John C"
-                combined_user.email.should == "ja+jb+jc+dev@example.com"
+                combined_user.email.should == "dev+ja+jb+jc@example.com"
             end
             it "removes duplicate users by email" do
                 user = User.new("John A", "ja@example.com")
@@ -93,7 +93,7 @@ module GitSu
                 user3 = User.new("John Y", "jb@example.com")
                 combined_user = user1.combine(user2, "dev@example.com").combine(user3, "dev@example.com")
                 combined_user.name.should == "John Z, John Y and John X"
-                combined_user.email.should == "ja+jb+jc+dev@example.com"
+                combined_user.email.should == "dev+ja+jb+jc@example.com"
             end
             it "doesn't have side-effects" do
                 ja = User.new("John A", "ja@example.com")

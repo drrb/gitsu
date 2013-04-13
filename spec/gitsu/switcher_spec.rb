@@ -23,11 +23,11 @@ module GitSu
 
             context "when request is for multiple users" do
                 it "combines users" do
-                    combined_user = User.new('Johnny A, Johnny B and Johnny C', 'a+b+c+dev@example.com')
+                    combined_user = User.new('Johnny A, Johnny B and Johnny C', 'dev+a+b+c@example.com')
                     config_repository.should_receive(:group_email_address).and_return("dev@example.com")
                     git.should_receive(:select_user).with(combined_user, :global)
                     git.should_receive(:render).with(combined_user).and_return(combined_user.to_s)
-                    output.should_receive(:puts).with("Switched global user to Johnny A, Johnny B and Johnny C <a+b+c+dev@example.com>")
+                    output.should_receive(:puts).with("Switched global user to Johnny A, Johnny B and Johnny C <dev+a+b+c@example.com>")
                     switcher.request(:global, 'Johnny C <c@example.com>', 'Johnny B <b@example.com>', 'Johnny A <a@example.com>')
                 end
             end
