@@ -19,7 +19,7 @@ User 'Joseph Porter KCB <joe@example.com>' added to users
 Then, switch to them:
 {% highlight console %}
 $ git su joe rack
-Switched local user to 'Joseph Porter KCB and Raphe Rackstraw <joe+rrack+dev@example.com>'
+Switched local user to 'Joseph Porter KCB and Raphe Rackstraw <dev+joe+rrack@example.com>'
 {% endhighlight %}
 
 ### Switch to multiple users
@@ -29,7 +29,7 @@ If you need to switch to more than two users at once:
 $ git su --add 'Josephine Corcoran <jc@example.com>'
 User 'Josephine Corcoran <jc@example.com>' added to users
 $ git su joe rack jc
-Switched local user to 'Joseph Porter KCB, Josephine Corcoran and Raphe Rackstraw <joe+jc+rrack+dev@example.com>'
+Switched local user to 'Joseph Porter KCB, Josephine Corcoran and Raphe Rackstraw <dev+joe+jc+rrack@example.com>'
 {% endhighlight %}
 
 ### Configure group email
@@ -40,6 +40,6 @@ via a config entry
 {% highlight console %}
 $ git config --global git-su.groupEmailAddress 'web@pinafore.example.com'
 $ git su rack jc
-Switched local user to 'Josephine Corcoran and Raphe Rackstraw <joe+jc+rrack+web@pinafore.example.com>'
+Switched local user to 'Josephine Corcoran and Raphe Rackstraw <web+joe+jc+rrack@pinafore.example.com>'
 {% endhighlight %}
 
