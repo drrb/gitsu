@@ -8,7 +8,7 @@ title: Acknowledgements
 ## Git pairing concept
 
 The idea of having a tool to acknowledge multiple users in Git commits was taken
-from [this blog post](http://url).
+from [Hitch](https://github.com/therubymug/hitch).
 
 ## Site layout
 
