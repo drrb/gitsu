@@ -20,7 +20,7 @@ module GitSu
                     options[:clear] = true
                 end
 
-                opts.on('-a', '--add USER <EMAIL>', 'Add a user in email format (e.g. John Citizen <jcitizen@example.com>)') do |user|
+                opts.on('-a', '--add USER', 'Add a user in email format (e.g. John Citizen <jcitizen@example.com>)') do |user|
                     options[:add] = user
                 end
 
