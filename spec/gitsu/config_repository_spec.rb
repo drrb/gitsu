@@ -15,13 +15,13 @@ module GitSu
         describe "#group_email_address" do
             context "when a group email address is configured" do
                 it "returns the configured group email address" do
-                    git.should_receive(:get_config).with(:derived, "git-su.groupEmailAddress").and_return("pairs@example.org")
+                    git.should_receive(:get_config).with(:derived, "gitsu.groupEmailAddress").and_return("pairs@example.org")
                     repository.group_email_address.should == "pairs@example.org"
                 end
             end
             context "when no group email address is configured" do
                 it "returns the placeholder group email address" do
-                    git.should_receive(:get_config).with(:derived, "git-su.groupEmailAddress").and_return("")
+                    git.should_receive(:get_config).with(:derived, "gitsu.groupEmailAddress").and_return("")
                     repository.group_email_address.should == "dev@example.com"
                 end
             end
@@ -30,19 +30,19 @@ module GitSu
         describe "#default_select_scope" do
             context "when a default selecton scope is configured" do
                 it "returns the configured default scope" do
-                    git.should_receive(:get_config).with(:derived, "git-su.defaultSelectScope").and_return("global")
+                    git.should_receive(:get_config).with(:derived, "gitsu.defaultSelectScope").and_return("global")
                     repository.default_select_scope.should == :global
                 end
             end
             context "when no default selection scope is configured" do
                 it "returns the conventional default scope (local)" do
-                    git.should_receive(:get_config).with(:derived, "git-su.defaultSelectScope").and_return("")
+                    git.should_receive(:get_config).with(:derived, "gitsu.defaultSelectScope").and_return("")
                     repository.default_select_scope.should == :local
                 end
             end
             context "when an invalid default selection scope is configured" do
                 it "dies noisily" do
-                    git.should_receive(:get_config).with(:derived, "git-su.defaultSelectScope").and_return("xxxxxx")
+                    git.should_receive(:get_config).with(:derived, "gitsu.defaultSelectScope").and_return("xxxxxx")
                     expect {repository.default_select_scope}.to raise_error(ConfigRepository::InvalidConfigError)
                 end
             end

@@ -9,7 +9,6 @@ Make colors configurable because people like that stuff
 
 Tasks
 --------
-+ Change "git-su" config namespace to "gitsu"
 + Fix URLs on acknowledgements page
 Use a prerelease version (e.g. "1.2.3.pre") for Gem working version
 

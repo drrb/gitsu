@@ -8,6 +8,6 @@ Feature: Configure default scope
         Then I should see "Switched local user to John Galt <jgalt@example.com>"
 
     Scenario: Default scope specified
-        Given the Git configuration has "git-su.defaultSelectScope" set to "global"
+        Given the Git configuration has "gitsu.defaultSelectScope" set to "global"
         When I type "git su 'John Galt <jgalt@example.com>'"
         Then I should see "Switched global user to John Galt <jgalt@example.com>"
