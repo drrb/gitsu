@@ -8,6 +8,7 @@ Make colors configurable because people like that stuff
 
 Tasks
 --------
++ Remove old search search and improve error messages for when matches aren't found
 Use a prerelease version (e.g. "1.2.3.pre") for Gem working version
 
 Bugs
