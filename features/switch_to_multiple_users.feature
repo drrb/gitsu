@@ -30,15 +30,14 @@ Feature: Switch to multiple users
         Then I should see "No user found matching 'frances'"
         And no user should be selected in "local" scope
 
-    Scenario: Switch to stored users
+    Scenario: User already matched
         Given user list is
         """
         a@example.com: Johnny A
         b@example.com: Johnny B
         """
         When I type "git su ja jb ja"
-        Then I should see "Switched local user to Johnny A and Johnny B <dev+a+b@example.com>"
-        And user "Johnny A and Johnny B <dev+a+b@example.com>" should be selected in "local" scope
+        Then I should see "No user found matching 'ja' (already matched 'Johnny A <a@example.com>')"
 
     Scenario: No group email configured
         Given the Git configuration has "gitsu.groupEmailAddress" set to ""

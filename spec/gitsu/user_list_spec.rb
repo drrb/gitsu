@@ -72,12 +72,40 @@ module GitSu
                         User.new("Johnny B", "jb@example.com")
                     ]
                 end
+                it "returns other matched users when first match already found" do
+                    user_file.add("Johnny A", "ja@example.com")
+                    user_file.add("Johnny B", "jb@example.com")
+
+                    user_list.find("j", "j").should == [
+                        User.new("Johnny A", "ja@example.com"),
+                        User.new("Johnny B", "jb@example.com")
+                    ]
+                end
 
                 context "when no matching user exists for a search term" do
                     it "raises an error" do
                         user_file.add("Johnny A", "ja@example.com")
 
                         expect {user_list.find("ja", "jb")}.to raise_error "No user found matching 'jb'"
+                    end
+                end
+                context "when a search term only matches users that were already matched" do
+                    it "raises an error" do
+                        user_file.add("Johnny A", "ja@example.com")
+                        user_file.add("Johnny B", "jb@example.com")
+
+                        expect {user_list.find("ja", "jb", "j")}.to raise_error "No user found matching 'j' (already matched 'Johnny A <ja@example.com>' and 'Johnny B <jb@example.com>')"
+                    end
+                end
+                context "when a search term only matches a user that was already matched, but the matching search term matched multiple users" do
+                    it "adjusts the selection so that both terms match" do
+                        user_file.add("Johnny A", "ja@example.com")
+                        user_file.add("Johnny B", "jb@example.com")
+
+                        user_list.find("j", "ja").sort_by{|u| u.name}.should == [
+                            User.new("Johnny A", "ja@example.com"),
+                            User.new("Johnny B", "jb@example.com")
+                        ]
                     end
                 end
             end
