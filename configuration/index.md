@@ -13,7 +13,7 @@ Specifies the default scope that the user is switched in when `git su` is run.
 
 `gitsu.groupEmailAddress`
 The group email address to use when switching to multiple users.
-E.g., if you specify "developers@company.org", pairing email addresses will look like "me+you+developers@example.org".
+E.g., if you specify "developers@company.org", pairing email addresses will look like "developers+me+you@example.org".
 Defaults to "dev@example.com".
 
 `color.ui`
