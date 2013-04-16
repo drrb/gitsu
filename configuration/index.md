@@ -7,11 +7,11 @@ title: Configuration
 Gitsu supports the following configuration options, specified either in Git config
 files, or by executing `git config`:
 
-`git-su.defaultSelectScope`
+`gitsu.defaultSelectScope`
 One of "local", "global", or "system" (without quotes).
 Specifies the default scope that the user is switched in when `git su` is run.
 
-`git-su.groupEmailAddress`
+`gitsu.groupEmailAddress`
 The group email address to use when switching to multiple users.
 E.g., if you specify "developers@company.org", pairing email addresses will look like "me+you+developers@example.org".
 Defaults to "dev@example.com".
