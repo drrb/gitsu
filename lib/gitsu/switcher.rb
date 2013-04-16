@@ -10,8 +10,8 @@ module GitSu
             begin
                 parsed, not_parsed = try_to_parse_all user_strings
                 found = find_all not_parsed
-                user = combine_all(parsed + found)
-                select_user user, scope
+                combined_user = combine_all(parsed + found)
+                select_user combined_user, scope
             rescue RuntimeError => error
                 @output.puts error.message
             end
