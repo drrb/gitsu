@@ -8,6 +8,7 @@ Make colors configurable because people like that stuff
 
 Tasks
 --------
+Generate man page when building
 Use a prerelease version (e.g. "1.2.3.pre") for Gem working version
 
 Bugs
