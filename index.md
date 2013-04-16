@@ -10,9 +10,7 @@ between users.
 
 Gitsu lets you:
 
-- quickly see which user Git will use to commit
 - quickly switch between Git users
-- configure a list of Git users to switch between
 - switch to multiple users at once for pair programming
 
 Want to [see some examples](/gitsu/usage)?
