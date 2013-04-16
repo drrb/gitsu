@@ -37,7 +37,7 @@ Feature: Switch to multiple users
         b@example.com: Johnny B
         """
         When I type "git su ja jb ja"
-        Then I should see "No user found matching 'ja' (already matched 'Johnny A <a@example.com>')"
+        Then I should see "Couldn't find a combination of unique users matching 'ja', 'jb' and 'ja'"
 
     Scenario: No group email configured
         Given the Git configuration has "gitsu.groupEmailAddress" set to ""

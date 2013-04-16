@@ -13,47 +13,44 @@ module GitSu
         end
 
         def find(*search_terms)
-            found_users_per_search = find_all(search_terms)
-            results = search_terms.zip(found_users_per_search).map do |search_term, matches|
-                ResultSet.new(search_term, matches)
+            all_users = list
+            searches = all_matching_users(all_users, search_terms)
+            searches.each do |search|
+                if search.matches.empty?
+                    raise "No user found matching '#{search.term}'"
+                end
             end
-            allocate_search_terms_to_names results
+
+            find_unique_combination(searches) or raise "Couldn't find a combination of unique users matching #{search_terms.map {|t| "'#{t}'" }.to_sentence}"
         end
 
         private
-        def find_all(search_terms)
-            users = list
-            found_users_per_search = []
-            search_terms.each do |search_term|
-                matching_users = []
+        class Search
+            attr_accessor :term, :matches
+            def initialize(term)
+                @term, @matches = term, []
+            end
+        end
+
+        def all_matching_users(all_users, search_terms)
+            searches = search_terms.map {|search_term| Search.new(search_term)}
+            searches.each do |search|
                 match_strategies.each do |strategy|
-                    matching_users += users.select { |user| strategy.call(search_term, user) }
+                    search.matches += all_users.select { |user| strategy.call(search.term, user) }
                 end
-                found_users_per_search << matching_users.uniq
-            end
-            found_users_per_search
-        end
-
-        class ResultSet
-            attr_accessor :search_term, :matches
-            def initialize(search_term, matches)
-                @search_term, @matches = search_term, matches
+                search.matches.uniq!
             end
         end
 
-        def allocate_search_terms_to_names(results)
-            find_unique_combination(results) or find_users_the_simple_way(results)
-        end
-
-        def find_unique_combination(results)
-            results = results.clone
+        def find_unique_combination(searches)
+            searches = searches.clone
             # Generate all combinations
             combinations = [[]]
-            results.each do |result_set|
+            searches.each do |search|
                 previous_combos = combinations.clone
                 combinations = []
                 previous_combos.each do |combo|
-                    result_set.matches.each do |match|
+                    search.matches.each do |match|
                         combo_extension = combo.clone
                         combo_extension << match
                         combinations << combo_extension
@@ -63,23 +60,6 @@ module GitSu
             combinations.find do |combo|
                 combo.uniq.size == combo.size
             end
-        end
-
-        def find_users_the_simple_way(results)
-            matched_users = []
-            results.each do |result|
-                match = result.matches.find {|u| ! matched_users.include? u }
-                unless match
-                    if result.matches.empty?
-                        raise "No user found matching '#{result.search_term}'"
-                    else
-                        matched_user_list = result.matches.map {|u| "'#{u}'"}.to_sentence
-                        raise "No user found matching '#{result.search_term}' (already matched #{matched_user_list})"
-                    end
-                end
-                matched_users << match
-            end
-            matched_users
         end
 
         def match_strategies
