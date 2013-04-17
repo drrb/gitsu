@@ -17,15 +17,12 @@ Global: Raphe Rackstraw <rrack@example.com>
 System: (none)
 {% endhighlight %}
 
-Show the current Git users in specified scopes
+Show the current Git users in specified scopes (simplified output for use in scripts)
 
 {% highlight console %}
 $ git su --local --global
-Current user: Raphe Rackstraw <rrack@example.com>
-
-Local: Raphe Rackstraw <rrack@github.com>
-Global: Raphe Rackstraw <rrack@example.com>
-System: (none)
+Raphe Rackstraw <rrack@myproject.example.com>
+Raphe Rackstraw <rrack@mycompany.example.com>
 {% endhighlight %}
 
 Show the current Git user that Git would use to commit
@@ -53,18 +50,25 @@ rrack@example.com: Raphe Rackstraw
 
 ### Switching users
 
+Switch to fully-qalified users
+
+{% highlight console %}
+$ git su 'Joseph Porter KCB <jporter@example.com>'
+Switched local user to Joseph Porter KCB <jporter@example.com>
+{% endhighlight %}
+
 Switch to configured users by initials
 
 {% highlight console %}
 $ git su jp
-Switched to Joseph Porter KCB <jporter@example.com>
+Switched local user to Joseph Porter KCB <jporter@example.com>
 {% endhighlight %}
 
 or by part of their name
 
 {% highlight console %}
 $ git su straw
-Switched to Raphe Rackstraw <rrack@example.com>
+Switched local user to Raphe Rackstraw <rrack@example.com>
 {% endhighlight %}
 
 To clear all Git users
@@ -77,7 +81,7 @@ Clearing all users from Git config
 ### Scopes
 
 Gitsu supports Git's configuration scopes: local (current repository), 
-global (current OS user), and system (everyone on the system). As in Git, if you 
+global (current OS user), and system (everyone on the system). As with Git, if you 
 don't specify a scope, local scope is assumed.
 
 To change the user for a specific scope
@@ -92,4 +96,26 @@ To clear the user for a specific scope
 {% highlight console %}
 $ git su --clear --global
 Clearing Git user in global scope
+{% endhighlight %}
+
+### Miscellaneous Features
+
+To display the options available for Gitsu
+
+{% highlight console %}
+$ git su --help
+{% endhighlight %}
+
+To list all the users Gitsu knows about
+
+{% highlight console %}
+$ git su --list
+Joseph Porter KCB <joe@example.com>
+John Galt <john@example.com>
+{% endhighlight %}
+
+To open the Gitsu config file in an editor (the same one Git uses)
+
+{% highlight console %}
+$ git su --edit
 {% endhighlight %}
