@@ -127,7 +127,7 @@ E.g., to switch to two configured users:
 
 ## AUTHOR
 
-drrb at the git hub
+drrrrrrrrrrrb at g mail
 
 ## LICENSE
 
