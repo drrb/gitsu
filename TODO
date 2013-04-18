@@ -13,8 +13,6 @@ Use a prerelease version (e.g. "1.2.3.pre") for Gem working version
 
 Bugs
 --------
-+ switcher favours middle initial over first initial in single letter match
-+ typing `git su --add user otheruser` adds the first user and switches to the second
 
 Tests
 --------
