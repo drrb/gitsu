@@ -1,6 +1,5 @@
 Features
 --------
-+ Add GPL text to help listing
 + Add fully-qualified users to config when you switch to them (if they're not already in there)
 Enable interactive/noninteractive mode for multi/ambiguous user selection
 Enable interactive adding of users

@@ -10,7 +10,14 @@ module GitSu
         def go(args)
             options = {}
             optparse = OptionParser.new do |opts|
-                opts.banner = "Usage: git-su [options] user"
+                opts.banner = <<-BANNER
+Gitsu Copyright (C) 2013  drrb
+This program comes with ABSOLUTELY NO WARRANTY.
+This is free software, and you are welcome to redistribute it under
+certain conditions; see <http://www.gnu.org/licenses/> for details.
+
+Usage: git-su [options] user
+                BANNER
 
                 opts.on('-t', '--list', 'List the configured users') do
                     options[:list] = true
