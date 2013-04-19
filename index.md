@@ -24,3 +24,8 @@ You need Gitsu when:
 - you have different users sharing the same machines with the same credentials
 
 Ready to [get started](/gitsu/getting-started)?
+
+## License
+
+Gitsu is licensed under the Gnu Public License, v3. For details, see 
+
