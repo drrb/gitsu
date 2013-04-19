@@ -21,6 +21,11 @@ Feature: Switch to fully qualified user
 
     Scenario: Switch to fully qualified user
         Given no user is selected
+        And user list is empty
         When I type "git su 'John Galt <jg@example.com>'"
         Then I should see "Switched local user to John Galt <jg@example.com>"
         And user "John Galt <jg@example.com>" should be selected in "local" scope
+        And user list should be
+            """
+            jg@example.com : John Galt
+            """

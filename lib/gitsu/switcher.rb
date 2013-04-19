@@ -28,6 +28,7 @@ module GitSu
                 found = find_all not_parsed
                 combined_user = combine_all(parsed + found)
                 select_user combined_user, scope
+                parsed.each {|user| add_parsed_user(user) }
             rescue RuntimeError => error
                 @output.puts error.message
             end
@@ -79,12 +80,7 @@ module GitSu
                 @output.puts parse_error.message
                 return
             end
-            if @user_list.list.include? user
-                @output.puts "User '#{user}' already in user list"
-            else
-                @user_list.add user
-                @output.puts "User '#{user}' added to users"
-            end
+            add_parsed_user user
         end
 
         private
@@ -99,6 +95,15 @@ module GitSu
                 end
             end
             return [parsed, not_parsed]
+        end
+
+        def add_parsed_user(user)
+            if @user_list.list.include? user
+                @output.puts "User '#{user}' already in user list"
+            else
+                @user_list.add user
+                @output.puts "User '#{user}' added to users"
+            end
         end
 
         def find_all(user_strings)

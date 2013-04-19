@@ -43,7 +43,7 @@ Given /^user list is$/ do |user_list|
 end
 
 Then /^user list should be$/ do |user_list|
-    read_user_list.should eq user_list
+    read_user_list.strip.should eq user_list
 end
 
 And /^user list contains user "(.*?)" with email "(.*?)"$/ do |name, email|

@@ -27,12 +27,14 @@ module GitSu
 
         describe '#request' do
             context "when request is a fully-qualified user string (e.g. 'John Galt <jgalt@example.com>'" do
-                it "switches to user" do
+                it "switches to user and adds them" do
                     user = User.new('John Galt', 'jgalt@example.com')
                     config_repository.should_receive(:group_email_address).and_return("dev@example.com")
                     git.should_receive(:select_user).with(user, :global)
                     git.should_receive(:render).with(user).and_return(user.to_s)
                     output.should_receive(:puts).with("Switched global user to John Galt <jgalt@example.com>")
+                    user_list.should_receive(:list).and_return []
+                    user_list.should_receive(:add).with(user)
                     switcher.request(:global, 'John Galt <jgalt@example.com>')
                 end
             end
@@ -44,6 +46,14 @@ module GitSu
                     git.should_receive(:select_user).with(combined_user, :global)
                     git.should_receive(:render).with(combined_user).and_return(combined_user.to_s)
                     output.should_receive(:puts).with("Switched global user to Johnny A, Johnny B and Johnny C <dev+a+b+c@example.com>")
+                    
+                    # TODO: how do you do times in rspec again?
+                    user_list.should_receive(:list).and_return []
+                    user_list.should_receive(:add).with User.new("Johnny A", "a@example.com")
+                    user_list.should_receive(:list).and_return []
+                    user_list.should_receive(:add).with User.new("Johnny B", "b@example.com")
+                    user_list.should_receive(:list).and_return []
+                    user_list.should_receive(:add).with User.new("Johnny C", "c@example.com")
                     switcher.request(:global, 'Johnny C <c@example.com>', 'Johnny B <b@example.com>', 'Johnny A <a@example.com>')
                 end
             end
