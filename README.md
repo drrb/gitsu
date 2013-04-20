@@ -4,6 +4,8 @@
 [![Coverage Status](https://coveralls.io/repos/drrb/gitsu/badge.png?branch=master)](https://coveralls.io/r/drrb/gitsu)
 [![Code Climate](https://codeclimate.com/github/drrb/gitsu.png)](https://codeclimate.com/github/drrb/gitsu)
 
+[![Gem Version](https://badge.fury.io/rb/gitsu.png)](http://badge.fury.io/rb/gitsu)
+
 Gitsu helps to manage your Git users, by making it easy to switch
 between users. Gitsu also supports pair programming by allowing you
 switch to multiple users at once!
@@ -48,9 +50,11 @@ For more information, see [the documentation](http://drrb.github.io/gitsu)
 
 1. Fork it
 2. Create your feature branch (`git checkout -b my-new-feature`)
-3. Commit your changes (`git commit -am 'Add some feature'`)
-4. Push to the branch (`git push origin my-new-feature`)
-5. Create new Pull Request
+3. Make your changes, and add tests for them
+4. Test your changes (`rake`)
+5. Commit your changes (`git commit -am 'Add some feature'`)
+6. Push to the branch (`git push origin my-new-feature`)
+7. Create new Pull Request
 
 ## License
 
