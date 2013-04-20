@@ -3,9 +3,9 @@ layout: minimal
 title: Pairing
 ---
 
-## Pairing with Git using Gitsu
+### Pairing with Gitsu
 
-### Switch to two users
+#### Switch to two users
 
 First, add some users:
 
@@ -22,7 +22,7 @@ $ git su joe rack
 Switched local user to 'Joseph Porter KCB and Raphe Rackstraw <dev+joe+rrack@example.com>'
 {% endhighlight %}
 
-### Switch to multiple users
+#### Switch to multiple users
 
 If you need to switch to more than two users at once:
 {% highlight console %}
@@ -32,7 +32,7 @@ $ git su joe rack jc
 Switched local user to 'Joseph Porter KCB, Josephine Corcoran and Raphe Rackstraw <dev+joe+jc+rrack@example.com>'
 {% endhighlight %}
 
-### Configure group email
+#### Configure group email
 
 You can change the group email that Gitsu uses when combining your users' email addresses,
 via a config entry

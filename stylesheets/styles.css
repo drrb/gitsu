@@ -101,11 +101,16 @@ header {
   position:fixed;
 }
 
-header ul {
+.navbar {
+    margin: 0 -50px;
+}
+
+header ul.buttons {
   list-style:none;
   height:40px;
   
   padding:0;
+  margin-left: 0;
   
   background: #eee;
   background: -moz-linear-gradient(top, #f8f8f8 0%, #dddddd 100%);
@@ -121,14 +126,14 @@ header ul {
   width:270px;
 }
 
-header li {
+header ul.buttons li {
   width:89px;
   float:left;
   border-right:1px solid #d2d2d2;
   height:40px;
 }
 
-header ul a {
+header ul.buttons a {
   line-height:1;
   font-size:11px;
   color:#999;
@@ -143,17 +148,17 @@ strong {
   font-weight:700;
 }
 
-header ul li + li {
+header ul.buttons li + li {
   width:88px;
   border-left:1px solid #fff;
 }
 
-header ul li + li + li {
+header ul.buttons li + li + li {
   border-right:none;
   width:89px;
 }
 
-header ul a strong {
+header ul.buttons a strong {
   font-size:14px;
   display:block;
   color:#222;
@@ -177,7 +182,7 @@ hr {
 }
 
 footer {
-  width:270px;
+  width:275px;
   float:left;
   position:fixed;
   bottom:50px;
@@ -206,8 +211,8 @@ footer {
   
   section {
     border:1px solid #e5e5e5;
-    border-width:1px 0;
-    padding:20px 0;
+    border-width:0 0 1px;
+    padding:0 0 20px;
     margin:0 0 20px;
   }
   
@@ -215,7 +220,7 @@ footer {
     display:inline;
   }
   
-  header ul {
+  header ul.buttons {
     position:absolute;
     right:50px;
     top:52px;
@@ -231,12 +236,12 @@ footer {
     padding:0;
   }
   
-  header ul, header p.view {
+  header ul.buttons, header p.view {
     position:static;
   }
   
   pre, code {
-    word-wrap:normal;
+    /*word-wrap:normal;*/
   }
 }
 
@@ -244,8 +249,12 @@ footer {
   body {
     padding:15px;
   }
+
+  .navbar {
+      margin: 0;
+  }
   
-  header ul {
+  header ul.buttons {
     display:none;
   }
 }

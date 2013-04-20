@@ -3,14 +3,14 @@ layout: minimal
 title: Command Line Reference
 ---
 
-## Gitsu Command Line Reference
+### Command Line Reference
 
-### Usage
+#### Usage
 
 `git su [OPTIONS] [user...]`
 
 
-### Options
+#### Options
 
 `-a, --add USER`
 

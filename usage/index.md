@@ -2,9 +2,9 @@
 layout: minimal
 title: Usage
 ---
-## Usage Examples
+### Usage Examples
 
-### Checking current users
+#### Checking current users
 
 Show current Git users in all scopes
 
@@ -32,7 +32,7 @@ $ git whoami
 Raphe Rackstraw <rrack@example.com>
 {% endhighlight %}
 
-### Adding users
+#### Adding users
 
 To add a user to Gitsu (the user will be saved in `~/.gitsu`)
 
@@ -48,7 +48,7 @@ jporter@example.com: Sir Joseph Porter KCB
 rrack@example.com: Raphe Rackstraw
 {% endhighlight %}
 
-### Switching users
+#### Switching users
 
 Switch to fully-qalified users
 
@@ -78,7 +78,7 @@ $ git su --clear
 Clearing all users from Git config
 {% endhighlight %}
 
-### Scopes
+#### Scopes
 
 Gitsu supports Git's configuration scopes: local (current repository), 
 global (current OS user), and system (everyone on the system). As with Git, if you 
@@ -98,7 +98,7 @@ $ git su --clear --global
 Clearing Git user in global scope
 {% endhighlight %}
 
-### Miscellaneous Features
+#### Miscellaneous Features
 
 To display the options available for Gitsu
 

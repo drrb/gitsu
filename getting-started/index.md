@@ -3,7 +3,7 @@ layout: minimal
 title: Getting Started
 ---
 
-## Installation
+### Installation
 
 Gitsu can be installed as [a Ruby Gem](https://rubygems.org/gems/gitsu)
 
@@ -11,7 +11,7 @@ Gitsu can be installed as [a Ruby Gem](https://rubygems.org/gems/gitsu)
 $ gem install gitsu
 {% endhighlight %}
 
-## Getting Started
+### Getting Started
 
 Gitsu is intended to be used from the command line, through Git. Note that all command line
 switches also have [short versions](/gitsu/cli).

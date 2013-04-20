@@ -2,7 +2,7 @@
 layout: minimal
 title: Configuration
 ---
-## Configuration
+### Configuration
 
 Gitsu supports the following configuration options, specified either in Git config
 files, or by executing `git config`:

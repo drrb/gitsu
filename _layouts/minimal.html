@@ -24,14 +24,37 @@
         <![endif]-->
     </head>
     <body>
+        <div class="navbar navbar-inverse navbar-fixed-top hidden-desktop">
+            <div class="navbar-inner">
+                <div class="container">
+                    <a class="btn btn-navbar" data-toggle="collapse" data-target=".nav-collapse">
+                        <span class="icon-bar"></span>
+                        <span class="icon-bar"></span>
+                        <span class="icon-bar"></span>
+                    </a>
+                    <a class="brand" href="/gitsu/">Gitsu</a>
+                    <div class="nav-collapse collapse">
+                        <ul class="nav">
+                            <li {% if page.url == '/index.html' %}class="active"{% endif %}><a href="/gitsu/">About</a></li>
+                            <li {% if page.url == '/getting-started/index.html' %}class="active"{% endif %}><a href="/gitsu/getting-started/">Getting Started</a></li>
+                            <li {% if page.url == '/usage/index.html' %}class="active"{% endif %}><a href="/gitsu/usage/">Usage</a></li>
+                            <li {% if page.url == '/pairing/index.html' %}class="active"{% endif %}><a href="/gitsu/pairing/">Pairing</a></li>
+                            <li {% if page.url == '/cli/index.html' %}class="active"{% endif %}><a href="/gitsu/cli/">Command Line Reference</a></li>
+                            <li {% if page.url == '/configuration/index.html' %}class="active"{% endif %}><a href="/gitsu/configuration/">Configuration</a></li>
+                            <li {% if page.url == '/acknowledgement/index.html' %}class="active"{% endif %}><a href="/gitsu/acknowledgements/">Acknowledgements</a></li>
+                        </ul>
+                    </div>
+                </div>
+            </div>
+        </div>
         <div class="wrapper">
-            <header>
+            <header class="visible-desktop" >
                 <h1>Gitsu</h1>
                 <p>Manage your Git users</p>
 
                 <p class="view"><a href="https://github.com/drrb/gitsu">View the Project on GitHub <small>drrb/gitsu</small></a></p>
 
-                <ul>
+                <ul class="buttons">
                     <li>
                         <a href="https://github.com/drrb/gitsu/zipball/master">Download <strong>ZIP File</strong></a>
                     </li>
@@ -43,13 +66,15 @@
                     </li>
                 </ul>
 
-                <p class="sidebar"><a href="/gitsu/">About</a></p>
-                <p class="sidebar"><a href="/gitsu/getting-started/">Getting Started</a></p>
-                <p class="sidebar"><a href="/gitsu/usage/">Usage</a></p>
-                <p class="sidebar"><a href="/gitsu/pairing/">Pairing</a></p>
-                <p class="sidebar"><a href="/gitsu/cli/">Command Line Reference</a></p>
-                <p class="sidebar"><a href="/gitsu/configuration/">Configuration</a></p>
-                <p class="sidebar"><a href="/gitsu/acknowledgements/">Acknowledgements</a></p>
+                <ul class="nav">
+                    <li><a href="/gitsu/">About</a></p></li>
+                    <li><a href="/gitsu/getting-started/">Getting Started</a></p></li>
+                    <li><a href="/gitsu/usage/">Usage</a></p></li>
+                    <li><a href="/gitsu/pairing/">Pairing</a></p></li>
+                    <li><a href="/gitsu/cli/">Command Line Reference</a></p></li>
+                    <li><a href="/gitsu/configuration/">Configuration</a></p></li>
+                    <li><a href="/gitsu/acknowledgements/">Acknowledgements</a></p></li>
+                </ul>
             </header>
             <section>
                 {{ content }}
