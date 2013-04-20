@@ -28,17 +28,17 @@ To make it easier to switch users, tell Gitsu about some users.
     $ git su --add "Raphe Rackstraw <rrack@example.com>"
     $ git su jg
 
-    Switched to user John Galt <jgalt@example.com>
+    Switched local user to John Galt <jgalt@example.com>
 
     $ git su raphe
 
-    Switched to user Raphe Rackstraw <rrack@example.com>
+    Switched local user to Raphe Rackstraw <rrack@example.com>
 
 To pair with your friend switch to both users at once
 
     $ git su jg rr
 
-    Switched to user John Galt and Raphe Rackstraw <dev+jgalt+rrack@example.com>
+    Switched local user to John Galt and Raphe Rackstraw <dev+jgalt+rrack@example.com>
 
 ## Documentation
 
