@@ -37,4 +37,11 @@ $ git su raphe
 Switched to user Raphe Rackstraw <rack@example.com>
 {% endhighlight %}
 
+You can also switch to multiple users, for pairing:
+
+{% highlight console %}
+$ git su jg rr
+Switched to user 'John Galt and Raphe Rackstraw <dev+jgalt+rack@example.com>'
+{% endhighlight %}
+
 Now check out the [usage examples](/gitsu/usage).
