@@ -4,50 +4,6 @@ title: Usage
 ---
 ### Usage Examples
 
-#### Checking current users
-
-Show current Git users in all scopes
-
-{% highlight console %}
-$ git su
-Current user: Raphe Rackstraw <rrack@example.com>
-
-Local: Raphe Rackstraw <rrack@github.com>
-Global: Raphe Rackstraw <rrack@example.com>
-System: (none)
-{% endhighlight %}
-
-Show the current Git users in specified scopes (simplified output for use in scripts)
-
-{% highlight console %}
-$ git su --local --global
-Raphe Rackstraw <rrack@myproject.example.com>
-Raphe Rackstraw <rrack@mycompany.example.com>
-{% endhighlight %}
-
-Show the current Git user that Git would use to commit
-
-{% highlight console %}
-$ git whoami
-Raphe Rackstraw <rrack@example.com>
-{% endhighlight %}
-
-#### Adding users
-
-To add a user to Gitsu (the user will be saved in `~/.gitsu`)
-
-{% highlight console %}
-$ git su --add 'Raphe Rackstraw <rrack@example.com>'
-User 'Raphe Rackstraw <rrack@example.com>' added to users
-{% endhighlight %}
-
-You can also add users manually to `~/.gitsu` in the following format:
-
-{% highlight yaml %}
-jporter@example.com: Sir Joseph Porter KCB 
-rrack@example.com: Raphe Rackstraw
-{% endhighlight %}
-
 #### Switching users
 
 Switch to fully-qalified users
@@ -76,6 +32,50 @@ To clear all Git users
 {% highlight console %}
 $ git su --clear
 Clearing all users from Git config
+{% endhighlight %}
+
+#### Adding users
+
+To add a user to Gitsu (the user will be saved in `~/.gitsu`)
+
+{% highlight console %}
+$ git su --add 'Raphe Rackstraw <rrack@example.com>'
+User 'Raphe Rackstraw <rrack@example.com>' added to users
+{% endhighlight %}
+
+You can also add users manually to `~/.gitsu` in the following format:
+
+{% highlight yaml %}
+jporter@example.com: Sir Joseph Porter KCB 
+rrack@example.com: Raphe Rackstraw
+{% endhighlight %}
+
+#### Checking current users
+
+Show current Git users in all scopes
+
+{% highlight console %}
+$ git su
+Current user: Raphe Rackstraw <rrack@example.com>
+
+Local: Raphe Rackstraw <rrack@github.com>
+Global: Raphe Rackstraw <rrack@example.com>
+System: (none)
+{% endhighlight %}
+
+Show the current Git users in specified scopes (simplified output for use in scripts)
+
+{% highlight console %}
+$ git su --local --global
+Raphe Rackstraw <rrack@myproject.example.com>
+Raphe Rackstraw <rrack@mycompany.example.com>
+{% endhighlight %}
+
+Show the current Git user that Git would use to commit
+
+{% highlight console %}
+$ git whoami
+Raphe Rackstraw <rrack@example.com>
 {% endhighlight %}
 
 #### Scopes

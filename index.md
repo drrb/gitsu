@@ -11,19 +11,19 @@ between users.
 Gitsu lets you:
 
 - quickly switch between Git users
-- switch to multiple users at once for pair programming
+- switch to multiple users at once for paring
 
-Want to [see some examples](/gitsu/usage)?
+Ready to [get started](/gitsu/getting-started)?
 
 ### When you need Gitsu
 
 You need Gitsu when:
 
 - you are pairing with another developer, and you want to attribute them in commit messages
-- you have different email addresses for different projects
-- you have different users sharing the same machines with the same credentials
+- you have different email addresses for different projects or
+- you have different users sharing the same machines
 
-Ready to [get started](/gitsu/getting-started)?
+Want to [see some examples](/gitsu/usage)?
 
 ### License
 
