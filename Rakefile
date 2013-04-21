@@ -64,5 +64,5 @@ end
 
 def update_version(new_version)
     system(%q[sed -i '' -E 's/VERSION = ".*"/VERSION = "] + new_version.to_s + %q["/' lib/gitsu/version.rb])
-    GitSu::Version::VERSION = new_version.to_s
+    GitSu::Version::VERSION.replace new_version.to_s
 end
