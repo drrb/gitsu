@@ -38,8 +38,8 @@ You can change the group email that Gitsu uses when combining your users' email 
 via a config entry
 
 {% highlight console %}
-$ git config --global gitsu.groupEmailAddress 'web@pinafore.example.com'
+$ git config --global gitsu.groupEmailAddress 'web@example.org'
 $ git su rack jc
-Switched local user to 'Josephine Corcoran and Raphe Rackstraw <web+joe+jc+rrack@pinafore.example.com>'
+Switched local user to 'Josephine Corcoran and Raphe Rackstraw <web+joe+jc+rrack@example.org>'
 {% endhighlight %}
 
