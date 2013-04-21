@@ -25,10 +25,10 @@ Gem::Specification.new do |gem|
   gem.authors       = ["drrb"]
   gem.email         = ["drrrrrrrrrrrb@gmail.com"]
   gem.license       = "GPL-3"
-  gem.description   = %q{Manage your Git users}
+  gem.description   = %q{User management and pairing for Git}
   gem.summary       = <<-EOF
     Gitsu allows you to quickly configure and switch between Git users, for
-    different projects and contexts, and pair programming.
+    different projects and contexts, and pairing.
   EOF
   gem.homepage      = "http://drrb.github.io/gitsu"
 
