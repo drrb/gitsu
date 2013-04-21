@@ -60,12 +60,12 @@ module GitSu
         end
 
         describe "#next_minor" do
-            it "increments the minor version by 1" do
+            it "increments the minor version by 1 and resets the patch version to 0" do
                 version = Version.parse("1.2.3")
                 next_version = version.next_minor
                 next_version.major.should be 1
                 next_version.minor.should be 3
-                next_version.patch.should be 3
+                next_version.patch.should be 0
             end
         end
     end

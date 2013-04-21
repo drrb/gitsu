@@ -48,7 +48,7 @@ module GitSu
         end
 
         def next_minor
-            Version.new(@major, @minor + 1, @patch)
+            Version.new(@major, @minor + 1, 0)
         end
 
         def ==(other)
