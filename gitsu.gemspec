@@ -38,9 +38,10 @@ Gem::Specification.new do |gem|
   gem.require_paths = ["lib"]
 
   # Dependencies
-  gem.add_development_dependency('coveralls', '>= 0.6.3')
-  gem.add_development_dependency('json') # Coveralls needs it
-  gem.add_development_dependency('rake')
-  gem.add_development_dependency('rspec')
-  gem.add_development_dependency('cucumber')
+  gem.add_development_dependency 'bundler', '~> 1.3'
+  gem.add_development_dependency 'rake'
+  gem.add_development_dependency 'coveralls', '>= 0.6.3'
+  gem.add_development_dependency 'json' # Coveralls needs it
+  gem.add_development_dependency 'rspec'
+  gem.add_development_dependency 'cucumber'
 end
