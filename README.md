@@ -4,7 +4,8 @@
 [![Coverage Status](https://coveralls.io/repos/drrb/gitsu/badge.png?branch=master)](https://coveralls.io/r/drrb/gitsu)
 [![Code Climate](https://codeclimate.com/github/drrb/gitsu.png)](https://codeclimate.com/github/drrb/gitsu)
 
-[![Gem Version](https://badge.fury.io/rb/gitsu.png)](http://badge.fury.io/rb/gitsu)
+[![Gem Version](https://badge.fury.io/rb/gitsu.png)](https://badge.fury.io/rb/gitsu)
+[![Dependency Status](https://gemnasium.com/drrb/gitsu.png)](https://gemnasium.com/drrb/gitsu)
 
 Gitsu helps to manage your Git users, by making it easy to switch
 between users. Gitsu also supports pair programming by allowing you
