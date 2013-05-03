@@ -68,4 +68,18 @@ describe Array do
             end
         end
     end
+
+    describe "#quote" do
+        let(:array) { [:apple, :orange] }
+
+        it "quotes all elements in the array" do
+            array.quote.should == ["'apple'", "'orange'"]
+        end
+
+        context "when the array is empty" do
+            it "returns an empty array" do
+                [].quote.should == []
+            end
+        end
+    end
 end

@@ -21,11 +21,15 @@ class Array
         elsif size == 1
             last.to_s
         else
-            "#{self[0..-2].map{|e| e.to_s}.join(", ")} and #{last.to_s}"
+            "#{self[0...-1].map{|e| e.to_s}.join(", ")} and #{last.to_s}"
         end
     end
 
     def pluralize(word)
         size > 1 ? word + "s" : word
+    end
+
+    def quote
+        map { |element| "'#{element}'" }
     end
 end
