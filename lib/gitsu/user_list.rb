@@ -88,8 +88,7 @@ module GitSu
 
             # Initials
             lambda do |search_term, user|
-                initials = user.name.split(" ").map { |word| word.chars.first }.join
-                initials =~ /#{search_term}/i
+                user.initials =~ /#{search_term}/i
             end,
 
             # Segment anywhere in name or email

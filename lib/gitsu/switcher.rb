@@ -99,7 +99,7 @@ module GitSu
 
         def add_parsed_user(user)
             if @user_list.list.include? user
-                @output.puts "User '#{user}' already in user list"
+                @output.puts "User '#{user}' already in user list (try switching to them with 'git su #{user.initials}')"
             else
                 @user_list.add user
                 @output.puts "User '#{user}' added to users"

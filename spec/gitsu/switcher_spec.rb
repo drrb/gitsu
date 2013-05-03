@@ -173,7 +173,7 @@ module GitSu
             context "when the user already exists in the user list" do
                 it "doesn't add the user to the user list" do
                     user_list.should_receive(:list).and_return [User.new('John Galt', 'jgalt@example.com')]
-                    output.should_receive(:puts).with("User 'John Galt <jgalt@example.com>' already in user list")
+                    output.should_receive(:puts).with("User 'John Galt <jgalt@example.com>' already in user list (try switching to them with 'git su jg')")
                     switcher.add("John Galt <jgalt@example.com>")
                 end
             end

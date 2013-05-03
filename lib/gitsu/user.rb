@@ -82,6 +82,10 @@ module GitSu
             end
         end
 
+        def initials
+            names.join(" ").split(" ").map { |word| word.chars.first }.join.downcase
+        end
+
         def none?
             self === NONE
         end
