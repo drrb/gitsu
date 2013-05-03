@@ -53,7 +53,7 @@ module GitSu
                 end
             end
 
-            find_unique_combination(searches) or raise "Couldn't find a combination of unique users matching #{search_terms.quote.to_sentence}"
+            find_unique_combination(searches) or raise "Couldn't find a combination of users matching #{search_terms.quote.to_sentence}"
         end
 
         private

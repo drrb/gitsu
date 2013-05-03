@@ -110,7 +110,7 @@ module GitSu
                         user_file.add("Johnny A", "ja@example.com")
                         user_file.add("Johnny B", "jb@example.com")
 
-                        expect {user_list.find("ja", "jb", "j")}.to raise_error "Couldn't find a combination of unique users matching 'ja', 'jb' and 'j'"
+                        expect {user_list.find("ja", "jb", "j")}.to raise_error "Couldn't find a combination of users matching 'ja', 'jb' and 'j'"
                     end
                 end
                 context "when a search term only matches a user that was already matched, but the matching search term matched multiple users" do
