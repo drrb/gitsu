@@ -62,6 +62,10 @@ task 'check-license' do
     end
 end
 
+task 'version' do
+    puts GitSu::VERSION
+end
+
 def update_version(new_version)
     system(%q[sed -i '' -E 's/VERSION = ".*"/VERSION = "] + new_version.to_s + %q["/' lib/gitsu/version.rb])
     GitSu::VERSION.replace new_version.to_s
