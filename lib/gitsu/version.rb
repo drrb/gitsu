@@ -15,7 +15,7 @@
 # along with this program.  If not, see <http://www.gnu.org/licenses/>.
 
 module GitSu
-    VERSION = "2.1.0"
+    VERSION = "2.0.3"
 
     class Version
         class ParseError < StandardError
@@ -49,6 +49,10 @@ module GitSu
 
         def next_minor
             Version.new(@major, @minor + 1, 0)
+        end
+
+        def next_patch
+            Version.new(@major, @minor, @patch + 1)
         end
 
         def ==(other)

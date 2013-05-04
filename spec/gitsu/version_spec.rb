@@ -68,5 +68,15 @@ module GitSu
                 next_version.patch.should be 0
             end
         end
+
+        describe "#next_patch" do
+            it "increments the patch number by 1" do
+                version = Version.parse("1.2.3")
+                next_version = version.next_patch
+                next_version.major.should be 1
+                next_version.minor.should be 2
+                next_version.patch.should be 4
+            end
+        end
     end
 end

@@ -40,7 +40,7 @@ task 'push-release' => ['check-license', :verify] do
     end
 
     version = GitSu::Version.prompt($stdin, $stdout, "Enter the version to release", GitSu::Version.current)
-    next_version = GitSu::Version.prompt($stdin, $stdout, "Enter the next development version", version.next_minor)
+    next_version = GitSu::Version.prompt($stdin, $stdout, "Enter the next development version", version.next_patch)
 
     puts "Releasing #{version} and preparing for #{next_version}"
 
