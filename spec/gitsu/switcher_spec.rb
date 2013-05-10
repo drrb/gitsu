@@ -47,12 +47,9 @@ module GitSu
                     git.should_receive(:render).with(combined_user).and_return(combined_user.to_s)
                     output.should_receive(:puts).with("Switched global user to Johnny A, Johnny B and Johnny C <dev+a+b+c@example.com>")
                     
-                    # TODO: how do you do times in rspec again?
-                    user_list.should_receive(:list).and_return []
+                    user_list.should_receive(:list).exactly(3).times.and_return []
                     user_list.should_receive(:add).with User.new("Johnny A", "a@example.com")
-                    user_list.should_receive(:list).and_return []
                     user_list.should_receive(:add).with User.new("Johnny B", "b@example.com")
-                    user_list.should_receive(:list).and_return []
                     user_list.should_receive(:add).with User.new("Johnny C", "c@example.com")
                     switcher.request(:global, 'Johnny C <c@example.com>', 'Johnny B <b@example.com>', 'Johnny A <a@example.com>')
                 end
