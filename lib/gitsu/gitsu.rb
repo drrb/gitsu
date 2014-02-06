@@ -1,5 +1,5 @@
 # Gitsu
-# Copyright (C) 2013 drrb
+# Copyright (C) 2014 drrb
 # 
 # This program is free software: you can redistribute it and/or modify
 # it under the terms of the GNU General Public License as published by
@@ -26,6 +26,7 @@ module GitSu
         def go(args)
             options = {}
             optparse = OptionParser.new do |opts|
+                opts.version = GitSu::VERSION
                 opts.banner = <<-BANNER
 Gitsu Copyright (C) 2013  drrb
 This program comes with ABSOLUTELY NO WARRANTY.
