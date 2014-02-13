@@ -29,7 +29,7 @@ RSpec::Core::RakeTask.new(:spec)
 task :default => [:spec, :features, 'coveralls:push']
 
 task :verify do
-    system "rvm all do rake"
+    system "rvm all do bundle exec rake" or fail "Some tests failed"
 end
 
 task 'push-release' => ['check-license', :verify] do
