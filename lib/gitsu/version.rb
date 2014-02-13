@@ -15,7 +15,7 @@
 # along with this program.  If not, see <http://www.gnu.org/licenses/>.
 
 module GitSu
-    VERSION = "2.0.4"
+    VERSION = "2.0.5"
 
     class Version
         class ParseError < StandardError
