@@ -13,6 +13,16 @@ Gitsu lets you:
 - quickly switch between Git users
 - switch to multiple users at once for paring
 
+_Examples_
+{% highlight console %}
+$ git su jg
+Switched to user John Galt <jgalt@example.com>
+$ git su raphe
+Switched to user Raphe Rackstraw <rack@example.com>
+$ git su jg rr
+Switched to user 'John Galt and Raphe Rackstraw <dev+jgalt+rack@example.com>'
+{% endhighlight %}
+
 Ready to [get started](/gitsu/getting-started)?
 
 ### When you need Gitsu
