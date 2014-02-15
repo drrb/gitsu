@@ -16,6 +16,15 @@
             body {
                 padding-top: 60px;
             }
+
+            /* Don't wrap code blocks */
+            pre {
+                word-break: keep-all;
+            }
+            pre code {
+                white-space: pre;
+                overflow: auto;
+            }
         </style>
         <link href="/gitsu/lib/bootstrap/css/bootstrap-responsive.css" rel="stylesheet">
 
