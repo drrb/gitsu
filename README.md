@@ -2,7 +2,7 @@
 
 [![Build Status](https://travis-ci.org/drrb/gitsu.svg)](https://travis-ci.org/drrb/gitsu)
 [![Coverage Status](https://img.shields.io/coveralls/drrb/gitsu.svg)](https://coveralls.io/r/drrb/gitsu)
-[![Code Climate](https://codeclimate.com/github/drrb/gitsu.svg)](https://codeclimate.com/github/drrb/gitsu)
+[![Code Climate](https://img.shields.io/codeclimate/github/drrb/gitsu.svg)](https://codeclimate.com/github/drrb/gitsu)
 
 [![Gem Version](https://badge.fury.io/rb/gitsu.svg)](https://badge.fury.io/rb/gitsu)
 [![Dependency Status](https://gemnasium.com/drrb/gitsu.svg)](https://gemnasium.com/drrb/gitsu)
